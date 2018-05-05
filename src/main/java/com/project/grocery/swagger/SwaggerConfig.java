@@ -42,7 +42,7 @@ public class SwaggerConfig extends WebMvcConfigurerAdapter {
 	public Docket api() {
 		LOG.info("swagger implementation");
 		return new Docket(DocumentationType.SWAGGER_2).select()
-				.apis(RequestHandlerSelectors.basePackage("com.samir.grocery.controller")).paths(PathSelectors.any())
+				.apis(RequestHandlerSelectors.basePackage("com.project.grocery.controller")).paths(PathSelectors.any())
 				.build();
 	}
 

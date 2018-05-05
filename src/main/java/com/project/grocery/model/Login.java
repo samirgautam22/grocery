@@ -48,13 +48,15 @@ public class Login extends MainEntity implements Serializable {
 
 	@NotNull
 	@Column
-	private String email;
+	private String username;
 
 	private String password;
 
 	@Enumerated(EnumType.STRING)
 	@Column(name = "login_type")
 	private LoginType loginType;
+	
+	private String deviceId;
 
 	/**
 	 * @return the user
@@ -101,19 +103,20 @@ public class Login extends MainEntity implements Serializable {
 		this.loginStatus = loginStatus;
 	}
 
+	
+
 	/**
-	 * @return the email
+	 * @return the username
 	 */
-	public String getEmail() {
-		return email;
+	public String getUsername() {
+		return username;
 	}
 
 	/**
-	 * @param email
-	 *            the email to set
+	 * @param username the username to set
 	 */
-	public void setEmail(String email) {
-		this.email = email;
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
 	/**
@@ -175,5 +178,21 @@ public class Login extends MainEntity implements Serializable {
 	public void setStore(Store store) {
 		this.store = store;
 	}
+
+	/**
+	 * @return the deviceId
+	 */
+	public String getDeviceId() {
+		return deviceId;
+	}
+
+	/**
+	 * @param deviceId the deviceId to set
+	 */
+	public void setDeviceId(String deviceId) {
+		this.deviceId = deviceId;
+	}
+	
+	
 
 }
