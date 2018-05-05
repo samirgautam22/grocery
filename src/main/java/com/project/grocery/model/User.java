@@ -5,22 +5,26 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+
+import com.project.grocery.util.UserRoles;
 
 /**
  * @author:Samir Gautam
  * @Version:1.0
- * @Date:May 3, 2018
+ * @Date:May 5, 2018
  * 
  */
 @SuppressWarnings("serial")
 @Entity
-@Table(name = "customer")
-public class Customer extends MainEntity implements Serializable {
-
+@Table(name="user")
+public class User extends MainEntity implements Serializable {
+	
 	@Column(name = "full_name")
 	private String fullName;
 	private String gender;
@@ -30,22 +34,24 @@ public class Customer extends MainEntity implements Serializable {
 	@Size(min = 5, max = 30, message = "Username must between 5 and 30")
 	private String username;
 	
-	@OneToMany(mappedBy="customer",fetch=FetchType.LAZY)
-	private List<Address> address;
-	
-	@OneToMany(mappedBy="customer",fetch=FetchType.LAZY)
+	@NotNull
+	@Enumerated(EnumType.STRING)
+	private UserRoles userRole;
+
+	@OneToMany(mappedBy = "user")
 	private List<Login> logins;
 	
+
 	/**
 	 * 
 	 */
-	public Customer() {
+	public User() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 	
-	
-	public Customer(Long id) {
+	public User(Long id) {
+		
 		this.id=id;
 	}
 
@@ -57,8 +63,7 @@ public class Customer extends MainEntity implements Serializable {
 	}
 
 	/**
-	 * @param fullName
-	 *            the fullName to set
+	 * @param fullName the fullName to set
 	 */
 	public void setFullName(String fullName) {
 		this.fullName = fullName;
@@ -72,8 +77,7 @@ public class Customer extends MainEntity implements Serializable {
 	}
 
 	/**
-	 * @param gender
-	 *            the gender to set
+	 * @param gender the gender to set
 	 */
 	public void setGender(String gender) {
 		this.gender = gender;
@@ -87,8 +91,7 @@ public class Customer extends MainEntity implements Serializable {
 	}
 
 	/**
-	 * @param email
-	 *            the email to set
+	 * @param email the email to set
 	 */
 	public void setEmail(String email) {
 		this.email = email;
@@ -102,8 +105,7 @@ public class Customer extends MainEntity implements Serializable {
 	}
 
 	/**
-	 * @param phoneNo
-	 *            the phoneNo to set
+	 * @param phoneNo the phoneNo to set
 	 */
 	public void setPhoneNo(Long phoneNo) {
 		this.phoneNo = phoneNo;
@@ -117,25 +119,24 @@ public class Customer extends MainEntity implements Serializable {
 	}
 
 	/**
-	 * @param username
-	 *            the username to set
+	 * @param username the username to set
 	 */
 	public void setUsername(String username) {
 		this.username = username;
 	}
 
 	/**
-	 * @return the address
+	 * @return the userRole
 	 */
-	public List<Address> getAddress() {
-		return address;
+	public UserRoles getUserRole() {
+		return userRole;
 	}
 
 	/**
-	 * @param address the address to set
+	 * @param userRole the userRole to set
 	 */
-	public void setAddress(List<Address> address) {
-		this.address = address;
+	public void setUserRole(UserRoles userRole) {
+		this.userRole = userRole;
 	}
 
 	/**
@@ -151,6 +152,7 @@ public class Customer extends MainEntity implements Serializable {
 	public void setLogins(List<Login> logins) {
 		this.logins = logins;
 	}
+	
 	
 	
 

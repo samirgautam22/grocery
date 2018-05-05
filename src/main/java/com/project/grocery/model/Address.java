@@ -17,7 +17,7 @@ import javax.persistence.ManyToOne;
  */
 @SuppressWarnings("serial")
 @Entity
-public class StoreAddress implements Serializable {
+public class Address implements Serializable {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
@@ -26,10 +26,9 @@ public class StoreAddress implements Serializable {
 	private String district;
 	private String vdc;
 	private Long wardNo;
-	
 	@ManyToOne
-	@JoinColumn(name="store_id")
-	private Store store;
+	@JoinColumn(name = "customer_id")
+	private Customer customer;
 
 	/**
 	 * @return the id
@@ -39,7 +38,8 @@ public class StoreAddress implements Serializable {
 	}
 
 	/**
-	 * @param id the id to set
+	 * @param id
+	 *            the id to set
 	 */
 	public void setId(Long id) {
 		this.id = id;
@@ -53,7 +53,8 @@ public class StoreAddress implements Serializable {
 	}
 
 	/**
-	 * @param zone the zone to set
+	 * @param zone
+	 *            the zone to set
 	 */
 	public void setZone(String zone) {
 		this.zone = zone;
@@ -67,7 +68,8 @@ public class StoreAddress implements Serializable {
 	}
 
 	/**
-	 * @param district the district to set
+	 * @param district
+	 *            the district to set
 	 */
 	public void setDistrict(String district) {
 		this.district = district;
@@ -81,7 +83,8 @@ public class StoreAddress implements Serializable {
 	}
 
 	/**
-	 * @param vdc the vdc to set
+	 * @param vdc
+	 *            the vdc to set
 	 */
 	public void setVdc(String vdc) {
 		this.vdc = vdc;
@@ -95,26 +98,26 @@ public class StoreAddress implements Serializable {
 	}
 
 	/**
-	 * @param wardNo the wardNo to set
+	 * @param wardNo
+	 *            the wardNo to set
 	 */
 	public void setWardNo(Long wardNo) {
 		this.wardNo = wardNo;
 	}
 
 	/**
-	 * @return the store
+	 * @return the customer
 	 */
-	public Store getStore() {
-		return store;
+	public Customer getCustomer() {
+		return customer;
 	}
 
 	/**
-	 * @param store the store to set
+	 * @param customer
+	 *            the customer to set
 	 */
-	public void setStore(Store store) {
-		this.store = store;
+	public void setCustomer(Customer customer) {
+		this.customer = customer;
 	}
-	
-	
 
 }
