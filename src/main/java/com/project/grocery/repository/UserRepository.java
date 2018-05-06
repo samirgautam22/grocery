@@ -28,17 +28,12 @@ public interface UserRepository extends JpaRepository<User,Long> {
 	 */
 	User findUserById(Long id);
 
-	/**
-	 * @param username
-	 * @return
-	 */
-//	User findByUsernameAndStatusNot(String username);
 
 	/**
 	 * @param username
 	 * @param delete
 	 * @return
 	 */
-//	User findByUsernameAndStatusNot(String username, Status delete);
+	User findByUsernameAndStatusNot(String username, Status delete);
 
 }

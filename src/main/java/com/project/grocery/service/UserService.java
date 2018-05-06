@@ -119,11 +119,11 @@ public class UserService {
 		}
 		User user = userRepository.findUserById(userEditRequest.getId());
 
-		//User u = userRepository.findByUsernameAndStatusNot(userEditRequest.getUsername(), Status.DELETE);
+		User u = userRepository.findByUsernameAndStatusNot(userEditRequest.getUsername(), Status.DELETE);
 
-//		if (u != null) {
-//			throw new AlreadyExitException("Username Already Eits");
-//		}
+		if (u != null) {
+			throw new AlreadyExitException("Username Already Eits");
+		}
 
 		if (user == null) {
 			throw new NotFoundException("User not foud");

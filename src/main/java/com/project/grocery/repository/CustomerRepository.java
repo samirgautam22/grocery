@@ -1,6 +1,10 @@
 package com.project.grocery.repository;
 
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
+
+import com.project.grocery.model.Customer;
+import com.project.grocery.util.Status;
 
 /**
  * @author:Samir Gautam
@@ -9,6 +13,18 @@ import org.springframework.stereotype.Repository;
  * 
  */
 @Repository
-public interface CustomerRepository {
+public interface CustomerRepository extends JpaRepository<Customer ,Long> {
+
+	/**
+	 * @param email
+	 * @return
+	 */
+	Customer findByEmailAndStatusNot(String email,Status delete);
+
+	/**
+	 * @param id
+	 * @return
+	 */
+	Customer findCustomerById(long id);
 
 }

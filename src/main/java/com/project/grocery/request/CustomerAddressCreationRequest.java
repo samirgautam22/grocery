@@ -1,50 +1,21 @@
-package com.project.grocery.model;
+package com.project.grocery.request;
 
 import java.io.Serializable;
-
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 
 /**
  * @author:Samir Gautam
  * @Version:1.0
- * @Date:May 3, 2018
+ * @Date:May 6, 2018
  * 
  */
 @SuppressWarnings("serial")
-@Entity
-public class Address implements Serializable {
-	
-	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
-	private Long id;
+public class CustomerAddressCreationRequest implements Serializable {
+
 	private String zone;
 	private String district;
 	private String vdc;
 	private Long wardNo;
 	private String homeNo;
-	@ManyToOne
-	@JoinColumn(name = "customer_id")
-	private Customer customer;
-
-	/**
-	 * @return the id
-	 */
-	public Long getId() {
-		return id;
-	}
-
-	/**
-	 * @param id
-	 *            the id to set
-	 */
-	public void setId(Long id) {
-		this.id = id;
-	}
 
 	/**
 	 * @return the zone
@@ -107,21 +78,6 @@ public class Address implements Serializable {
 	}
 
 	/**
-	 * @return the customer
-	 */
-	public Customer getCustomer() {
-		return customer;
-	}
-
-	/**
-	 * @param customer
-	 *            the customer to set
-	 */
-	public void setCustomer(Customer customer) {
-		this.customer = customer;
-	}
-
-	/**
 	 * @return the homeNo
 	 */
 	public String getHomeNo() {
@@ -129,11 +85,11 @@ public class Address implements Serializable {
 	}
 
 	/**
-	 * @param homeNo the homeNo to set
+	 * @param homeNo
+	 *            the homeNo to set
 	 */
 	public void setHomeNo(String homeNo) {
 		this.homeNo = homeNo;
 	}
-	
 
 }
