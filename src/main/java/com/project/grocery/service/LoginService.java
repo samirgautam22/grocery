@@ -81,4 +81,12 @@ public class LoginService {
 		return null;
 	}
 
+	/**
+	 * @param login
+	 */
+	public void saveLogin(Login login) {
+		
+		loginRepository.save(login);
+	}
+
 }

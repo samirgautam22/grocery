@@ -28,4 +28,16 @@ public interface LoginRepository extends JpaRepository<Login,Long> {
 	 */
 	Login findByUserId(Long userId);
 
+	/**
+	 * @param username
+	 * @return
+	 */
+	Login findLoginByUsername(String username);
+
+	/**
+	 * @param username
+	 * @return
+	 */
+	Login findByUsername(String username);
+
 }
