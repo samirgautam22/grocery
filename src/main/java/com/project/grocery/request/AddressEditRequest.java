@@ -16,7 +16,24 @@ public class AddressEditRequest implements Serializable {
 	private String vdc;
 	private Long wardNo;
 	private String homeNo;
+	private String wardName;
 	private Long id;
+
+	
+	
+	/**
+	 * @return the wardName
+	 */
+	public String getWardName() {
+		return wardName;
+	}
+
+	/**
+	 * @param wardName the wardName to set
+	 */
+	public void setWardName(String wardName) {
+		this.wardName = wardName;
+	}
 
 	/**
 	 * @return the homeNo

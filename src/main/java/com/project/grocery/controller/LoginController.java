@@ -35,7 +35,7 @@ public class LoginController {
 	private LoginService loginService;
 	
 	
-	@RequestMapping(value="/logins",method=RequestMethod.POST)
+	@RequestMapping(value="/login",method=RequestMethod.POST)
 	public ResponseEntity<Object> login(@Valid @RequestBody LoginDto loginDto)  {
 		LOG.debug("Login Request",loginDto.getUsername());
 		LoginResponceDto loginResponceDto=loginService.logInUser(loginDto.getUsername(),
@@ -46,9 +46,7 @@ public class LoginController {
 	
 	@RequestMapping(value="/logout",method=RequestMethod.POST)
 	public ResponseEntity<Object> logout(@RequestHeader Long userId){
-		
 		loginService.logout(userId);
-		
 		return new ResponseEntity<Object>(HttpStatus.OK);
 	}
 }

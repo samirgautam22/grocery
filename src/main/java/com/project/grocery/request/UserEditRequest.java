@@ -1,6 +1,5 @@
 package com.project.grocery.request;
 
-import com.project.grocery.util.UserRoles;
 
 /**
  * @author:Samir Gautam
@@ -16,7 +15,6 @@ public class UserEditRequest {
 	private Long phoneNo;
 	private String username;
 	private String password;
-	private UserRoles userRole;
 	private Long id;
 	
 	
@@ -105,19 +103,8 @@ public class UserEditRequest {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	/**
-	 * @return the userRole
-	 */
-	public UserRoles getUserRole() {
-		return userRole;
-	}
-	/**
-	 * @param userRole the userRole to set
-	 */
-	public void setUserRole(UserRoles userRole) {
-		this.userRole = userRole;
-	}
 	
+
 	
 
 }

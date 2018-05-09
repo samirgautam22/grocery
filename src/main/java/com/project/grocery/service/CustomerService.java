@@ -58,7 +58,7 @@ public class CustomerService {
 	 * @param customerCreationRequest
 	 */
 	@Transactional
-	public Customer saveCustomer(Long userId,CustomerCreationRequest customerCreationRequest) {
+	public Customer saveCustomer(CustomerCreationRequest customerCreationRequest) {
 		LOG.debug("Customer Creation started..");
 		Login l = loginRepository.findByUsernameAndStatusNot(customerCreationRequest.getUsername(), Status.DELETE);
 		if (l != null && !!l.getUser().getStatus().equals(Status.DELETE)) {
@@ -77,9 +77,8 @@ public class CustomerService {
 		customer.setPhoneNo(customerCreationRequest.getPhoneNo());
 		customer.setStatus(Status.ACTIVE);
 		customer.setUsername(customerCreationRequest.getUsername());
-		customerCreationRequest.setUserRole(customerCreationRequest.getUserRole());
 		customer.setCreatedDate(new Date());
-		customer.setCreatedBy(new User(userId));
+	
 
 		LOG.debug("Customer Adding..");
 		Customer savedCustomer = customerRepository.save(customer);
@@ -108,7 +107,9 @@ public class CustomerService {
 						addresses.setVdc(add.getVdc());
 						addresses.setWardNo(add.getWardNo());
 						addresses.setHomeNo(add.getHomeNo());
+						addresses.setWardName(add.getWardName());
 						addresses.setCustomer(savedCustomer);
+					
 						addressRepository.save(addresses);
 						LOG.debug("Address Add");
 					}
@@ -207,6 +208,10 @@ public class CustomerService {
 					add.setWardNo(address.getWardNo());
 				}
 				
+				if (null != address.getWardName()) {
+					add.setWardName(address.getWardName());
+				}
+				
 				if (null != address.getHomeNo()) {
 					add.setHomeNo(address.getHomeNo());
 				}
@@ -219,12 +224,13 @@ public class CustomerService {
 		}
 		
 		customer.setModifyDate(new Date());
-		
+		customer.setModifyBy(new User(editRequest.getId()));
 		return customer;
 	}
 	
 	
 	private void emailDuplication(String email, Customer customer) {
+		LOG.debug("Check for Email dublication");
 
 		Customer c = customerRepository.findByEmailAndStatusNot(email, Status.DELETE);
 		if (c!= null && customer.getId().equals( c.getId())) {
@@ -235,7 +241,7 @@ public class CustomerService {
 	}
 		
 		private void usernameDuplication(String username, Customer customer) {
-
+			LOG.debug("Check for Username dublication");
 			Customer c = customerRepository.findByUsernameAndStatusNot(username, Status.DELETE);
 			if (c!= null && customer.getId().equals( c.getId())) {
 

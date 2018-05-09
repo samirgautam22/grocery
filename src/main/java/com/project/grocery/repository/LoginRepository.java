@@ -22,12 +22,7 @@ public interface LoginRepository extends JpaRepository<Login,Long> {
 	 */
 	 Login findByUsernameAndStatusNot(String username, Status delete);
 
-	/**
-	 * @param userId
-	 * @return
-	 */
-	Login findByUserId(Long userId);
-
+	
 	/**
 	 * @param username
 	 * @return
@@ -39,5 +34,12 @@ public interface LoginRepository extends JpaRepository<Login,Long> {
 	 * @return
 	 */
 	Login findByUsername(String username);
+
+
+	/**
+	 * @param userId
+	 * @return
+	 */
+	Login findLoginById(Long userId);
 
 }

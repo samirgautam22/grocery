@@ -52,7 +52,7 @@ public class UserService {
 	public User saveUser(Long userId, UserCreationRequest userDto) {
 		LOG.debug("User Creation...");
 		Login l = loginRepository.findLoginByUsername(userDto.getUsername());
-		if (l != null && !l.getUser().getStatus().equals(Status.DELETE)) {
+		if (l != null ) {
 			throw new AlreadyExitException("Username Already Exits");
 		}
 
@@ -86,7 +86,7 @@ public class UserService {
 				login.setCreatedDate(new Date());
 				login.setUsername(userDto.getUsername());
 				login.setUser(savedUser);
-				login.setLoginType(LoginType.CUSTOMER);
+				login.setLoginType(LoginType.ADMIN);
 				login.setStatus(Status.ACTIVE);
 				loginService.saveLogin(login);
 			} catch (NoSuchAlgorithmException e) {
@@ -161,8 +161,6 @@ public class UserService {
 			user.setPhoneNo(userEditRequest.getPhoneNo());
 		}
 
-		if (userEditRequest.getUserRole() != null)
-			user.setUserRole(userEditRequest.getUserRole());
 
 		user.setModifyDate(new Date());
 		User userSave = userRepository.save(user);

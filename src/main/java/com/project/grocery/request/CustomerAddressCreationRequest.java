@@ -15,6 +15,7 @@ public class CustomerAddressCreationRequest implements Serializable {
 	private String district;
 	private String vdc;
 	private Long wardNo;
+	private String wardName;
 	private String homeNo;
 
 	/**
@@ -91,5 +92,20 @@ public class CustomerAddressCreationRequest implements Serializable {
 	public void setHomeNo(String homeNo) {
 		this.homeNo = homeNo;
 	}
+
+	/**
+	 * @return the wardName
+	 */
+	public String getWardName() {
+		return wardName;
+	}
+
+	/**
+	 * @param wardName the wardName to set
+	 */
+	public void setWardName(String wardName) {
+		this.wardName = wardName;
+	}
+	
 
 }

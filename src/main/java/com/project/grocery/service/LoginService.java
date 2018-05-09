@@ -75,7 +75,7 @@ public class LoginService {
 	public Login logout(Long userId) {
 		
 		if (userId != null) {
-			Login user = loginRepository.findByUserId(userId);
+			Login user = loginRepository.findLoginById(userId);
 			if (user == null) {
 				throw new LogoutFailException("User id mismatch");
 			}

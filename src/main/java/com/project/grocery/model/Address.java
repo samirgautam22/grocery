@@ -26,7 +26,7 @@ public class Address implements Serializable {
 	private String district;
 	private String vdc;
 	private Long wardNo;
-	private String name;
+	private String wardName;
 	private String homeNo;
 	
 	@ManyToOne
@@ -35,18 +35,19 @@ public class Address implements Serializable {
 
 	
 	
+
 	/**
-	 * @return the name
+	 * @return the wardname
 	 */
-	public String getName() {
-		return name;
+	public String getWardName() {
+		return wardName;
 	}
 
 	/**
-	 * @param name the name to set
+	 * @param wardname the wardname to set
 	 */
-	public void setName(String name) {
-		this.name = name;
+	public void setWardName(String wardname) {
+		this.wardName = wardname;
 	}
 
 	/**
@@ -152,6 +153,8 @@ public class Address implements Serializable {
 	public void setHomeNo(String homeNo) {
 		this.homeNo = homeNo;
 	}
+
+	
 	
 
 }

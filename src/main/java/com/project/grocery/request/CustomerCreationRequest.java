@@ -3,7 +3,6 @@ package com.project.grocery.request;
 import java.io.Serializable;
 import java.util.List;
 
-import com.project.grocery.util.UserRoles;
 
 /**
  * @author:Samir Gautam
@@ -20,7 +19,6 @@ public class CustomerCreationRequest implements Serializable {
 	private Long phoneNo;
 	private String username;
 	private String password;
-	private UserRoles userRole;
 	
 	List<CustomerAddressCreationRequest> address;
 
@@ -108,19 +106,6 @@ public class CustomerCreationRequest implements Serializable {
 		this.password = password;
 	}
 
-	/**
-	 * @return the userRole
-	 */
-	public UserRoles getUserRole() {
-		return userRole;
-	}
-
-	/**
-	 * @param userRole the userRole to set
-	 */
-	public void setUserRole(UserRoles userRole) {
-		this.userRole = userRole;
-	}
 
 	/**
 	 * @return the address
