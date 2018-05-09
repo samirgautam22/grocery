@@ -33,20 +33,21 @@ public class CustomerController {
 	private static final Logger LOG = LoggerFactory.getLogger(CustomerController.class);
 	
 	@RequestMapping(method=RequestMethod.POST)
-	public ResponseEntity<Object> createCustomer(@Validated @RequestBody CustomerCreationRequest 
-			customerCreationRequest,@RequestHeader Long userId){
+	public ResponseEntity<Object> createCustomer(@RequestHeader Long userId,@Validated @RequestBody CustomerCreationRequest 
+			customerCreationRequest){
 		   LOG.debug("Customer Creation request");
 		   customerService.saveCustomer(userId,customerCreationRequest);
 		return new ResponseEntity<Object>(HttpStatus.CREATED);
 	}
 	
 	@RequestMapping(value="/{id}",method=RequestMethod.DELETE)
-	public ResponseEntity<Object> deleteCustomer(@PathVariable ("id") long id){
+	public ResponseEntity<Object> deleteCustomer(@PathVariable ("id") Long id){
 		  LOG.debug("Customer Delete Request");
 		customerService.deleteCustomer(id);
 		return new ResponseEntity<Object>(HttpStatus.OK);
 	}
 	
+	@RequestMapping(method=RequestMethod.PUT)
 	public ResponseEntity<Object> editCustomer(@Validated @RequestBody CustomerEditRequest editRequest ){
 		 LOG.debug("Customer Edit Request");
 		 customerService.editCustomer(editRequest);

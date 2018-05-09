@@ -17,7 +17,7 @@ import javax.persistence.OneToMany;
 @SuppressWarnings("serial")
 @Entity
 public class Store extends MainEntity implements Serializable {
-	
+
 	@Column(name="store_name")
 	private String storeName;
 	@Column(name="store_address")
@@ -27,6 +27,20 @@ public class Store extends MainEntity implements Serializable {
 	private Long storeNo;
 	@Column(name="phone_no")
 	private Long phoneNo;
+	private Long panNo;
+	
+	/**
+	 * @return the panNo
+	 */
+	public Long getPanNo() {
+		return panNo;
+	}
+	/**
+	 * @param panNo the panNo to set
+	 */
+	public void setPanNo(Long panNo) {
+		this.panNo = panNo;
+	}
 	/**
 	 * @return the storeName
 	 */

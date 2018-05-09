@@ -1,6 +1,7 @@
 package com.project.grocery.service;
 
 
+import java.security.NoSuchAlgorithmException;
 import java.util.Date;
 
 import javax.transaction.Transactional;
@@ -14,6 +15,7 @@ import com.project.grocery.exception.LogoutFailException;
 import com.project.grocery.model.Login;
 import com.project.grocery.repository.LoginRepository;
 import com.project.grocery.util.LoginStatus;
+import com.project.grocery.util.Md5Hashing;
 import com.project.grocery.util.Status;
 
 /**
@@ -43,12 +45,16 @@ public class LoginService {
 			
 			throw new LoginFailException("Sorry,Username not found !!");
 		}
-		if(password.equals(login.getPassword())) {
-			login.setLastlogin(new Date());
-			login.setLoginStatus(LoginStatus.LOGGEDIN);
-			login.setDeviceId(deviceId);
-			LoginResponceDto responce = getLoginResponce(login);
-			return responce;
+		try {
+			if(Md5Hashing.getPw(password).equals(login.getPassword())) {
+				login.setLastlogin(new Date());
+				login.setLoginStatus(LoginStatus.LOGGEDIN);
+				login.setDeviceId(deviceId);
+				LoginResponceDto responce = getLoginResponce(login);
+				return responce;
+			}
+		} catch (NoSuchAlgorithmException e) {
+			e.printStackTrace();
 		}
 		
 		throw new LoginFailException("Username and Password missmatch");

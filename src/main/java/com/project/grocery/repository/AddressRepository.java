@@ -14,4 +14,6 @@ import com.project.grocery.model.Address;
 @Repository
 public interface AddressRepository extends JpaRepository<Address, Long> {
 
+
+
 }

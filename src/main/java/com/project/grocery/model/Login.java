@@ -25,6 +25,7 @@ import com.project.grocery.util.LoginType;
 @SuppressWarnings("serial")
 @Entity
 public class Login extends MainEntity implements Serializable {
+	
 
 	@ManyToOne
 	@JoinColumn(name = "user_id")
@@ -57,6 +58,22 @@ public class Login extends MainEntity implements Serializable {
 	private LoginType loginType;
 	
 	private String deviceId;
+	
+
+	
+	/**
+	 * @return the id
+	 */
+	public Long getId() {
+		return id;
+	}
+
+	/**
+	 * @param id the id to set
+	 */
+	public void setId(Long id) {
+		this.id = id;
+	}
 
 	/**
 	 * @return the user
@@ -66,8 +83,7 @@ public class Login extends MainEntity implements Serializable {
 	}
 
 	/**
-	 * @param user
-	 *            the user to set
+	 * @param user the user to set
 	 */
 	public void setUser(User user) {
 		this.user = user;

@@ -27,10 +27,9 @@ import com.project.grocery.util.Status;
 @SuppressWarnings("serial")
 @MappedSuperclass
 public abstract class MainEntity implements Serializable {
-
+	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "id")
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	protected Long id;
 
 	@Temporal(TemporalType.TIMESTAMP)
@@ -52,20 +51,7 @@ public abstract class MainEntity implements Serializable {
 	@Enumerated(EnumType.STRING)
 	protected Status status;
 
-	/**
-	 * @return the id
-	 */
-	public Long getId() {
-		return id;
-	}
-
-	/**
-	 * @param id
-	 *            the id to set
-	 */
-	public void setId(Long id) {
-		this.id = id;
-	}
+	
 
 	/**
 	 * @return the createdDate

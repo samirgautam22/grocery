@@ -25,6 +25,7 @@ import com.project.grocery.util.UserRoles;
 @Table(name="user")
 public class User extends MainEntity implements Serializable {
 	
+	
 	@Column(name = "full_name")
 	private String fullName;
 	private String gender;
@@ -41,6 +42,20 @@ public class User extends MainEntity implements Serializable {
 	@OneToMany(mappedBy = "user")
 	private List<Login> logins;
 	
+
+	/**
+	 * @return the id
+	 */
+	public Long getId() {
+		return id;
+	}
+
+	/**
+	 * @param id the id to set
+	 */
+	public void setId(Long id) {
+		this.id = id;
+	}
 
 	/**
 	 * 

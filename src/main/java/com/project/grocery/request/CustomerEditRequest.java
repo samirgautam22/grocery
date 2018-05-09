@@ -21,7 +21,7 @@ public class CustomerEditRequest implements Serializable {
 	private String username;
 	private UserRoles userRole;
 	private Long id;
-	List<CustomerAddressCreationRequest> address;
+	List<AddressEditRequest> address;
 
 	/**
 	 * @return the fullName
@@ -131,7 +131,7 @@ public class CustomerEditRequest implements Serializable {
 	/**
 	 * @return the address
 	 */
-	public List<CustomerAddressCreationRequest> getAddress() {
+	public List<AddressEditRequest> getAddress() {
 		return address;
 	}
 
@@ -139,7 +139,7 @@ public class CustomerEditRequest implements Serializable {
 	 * @param address
 	 *            the address to set
 	 */
-	public void setAddress(List<CustomerAddressCreationRequest> address) {
+	public void setAddress(List<AddressEditRequest> address) {
 		this.address = address;
 	}
 

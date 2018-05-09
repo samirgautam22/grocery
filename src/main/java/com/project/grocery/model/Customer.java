@@ -10,6 +10,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
 
+
 /**
  * @author:Samir Gautam
  * @Version:1.0
@@ -20,7 +21,6 @@ import javax.validation.constraints.Size;
 @Entity
 @Table(name = "customer")
 public class Customer extends MainEntity implements Serializable {
-
 	@Column(name = "full_name")
 	private String fullName;
 	private String gender;
@@ -29,13 +29,16 @@ public class Customer extends MainEntity implements Serializable {
 	private Long phoneNo;
 	@Size(min = 5, max = 30, message = "Username must between 5 and 30")
 	private String username;
-	
-	@OneToMany(mappedBy="customer",fetch=FetchType.LAZY)
+
+	@OneToMany(mappedBy = "customer", fetch = FetchType.LAZY)
 	private List<Address> address;
-	
-	@OneToMany(mappedBy="customer",fetch=FetchType.LAZY)
+
+	@OneToMany(mappedBy = "customer", fetch = FetchType.LAZY)
 	private List<Login> logins;
 	
+	@OneToMany(mappedBy = "customer", fetch = FetchType.LAZY)
+	private List<Order> order;
+
 	/**
 	 * 
 	 */
@@ -43,10 +46,21 @@ public class Customer extends MainEntity implements Serializable {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	
-	
+
 	public Customer(Long id) {
-		this.id=id;
+		this.id = id;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	/**
+	 * @param id
+	 *            the id to set
+	 */
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	/**
@@ -132,7 +146,8 @@ public class Customer extends MainEntity implements Serializable {
 	}
 
 	/**
-	 * @param address the address to set
+	 * @param address
+	 *            the address to set
 	 */
 	public void setAddress(List<Address> address) {
 		this.address = address;
@@ -146,12 +161,27 @@ public class Customer extends MainEntity implements Serializable {
 	}
 
 	/**
-	 * @param logins the logins to set
+	 * @param logins
+	 *            the logins to set
 	 */
 	public void setLogins(List<Login> logins) {
 		this.logins = logins;
 	}
-	
+
+	/**
+	 * @return the order
+	 */
+	public List<Order> getOrder() {
+		return order;
+	}
+
+	/**
+	 * @param order the order to set
+	 */
+	public void setOrder(List<Order> order) {
+		this.order = order;
+	}
+
 	
 
 }

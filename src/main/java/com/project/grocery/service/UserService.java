@@ -1,5 +1,6 @@
 package com.project.grocery.service;
 
+import java.security.NoSuchAlgorithmException;
 import java.util.Date;
 
 import javax.transaction.Transactional;
@@ -22,6 +23,7 @@ import com.project.grocery.request.UserCreationRequest;
 import com.project.grocery.request.UserEditRequest;
 import com.project.grocery.util.LoginStatus;
 import com.project.grocery.util.LoginType;
+import com.project.grocery.util.Md5Hashing;
 import com.project.grocery.util.Status;
 
 /**
@@ -77,14 +79,20 @@ public class UserService {
 		if (user != null) {
 			Login login = new Login();
 
-			login.setLoginStatus(LoginStatus.LOGOUT);
-			login.setPassword(userDto.getPassword());
-			login.setCreatedDate(new Date());
-			login.setUsername(userDto.getUsername());
-			login.setUser(savedUser);
-			login.setLoginType(LoginType.CUSTOMER);
-			login.setStatus(Status.ACTIVE);
-			loginService.saveLogin(login);
+			
+			try {
+				login.setPassword(Md5Hashing.getPw(userDto.getPassword()));
+				login.setLoginStatus(LoginStatus.LOGOUT);
+				login.setCreatedDate(new Date());
+				login.setUsername(userDto.getUsername());
+				login.setUser(savedUser);
+				login.setLoginType(LoginType.CUSTOMER);
+				login.setStatus(Status.ACTIVE);
+				loginService.saveLogin(login);
+			} catch (NoSuchAlgorithmException e) {
+				e.printStackTrace();
+			}
+			
 
 		}
 
@@ -189,7 +197,7 @@ public class UserService {
 
 		Login login = loginRepository.findByUsername(passwordEditRequest.getUsername());
 		if (login == null) {
-			throw new ValidationException("Email not found");
+			throw new ValidationException("Username not found");
 
 		}
 		if (!userId.equals(login.getUser().getId())) {

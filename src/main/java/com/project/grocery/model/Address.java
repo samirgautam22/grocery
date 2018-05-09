@@ -26,10 +26,28 @@ public class Address implements Serializable {
 	private String district;
 	private String vdc;
 	private Long wardNo;
+	private String name;
 	private String homeNo;
+	
 	@ManyToOne
 	@JoinColumn(name = "customer_id")
 	private Customer customer;
+
+	
+	
+	/**
+	 * @return the name
+	 */
+	public String getName() {
+		return name;
+	}
+
+	/**
+	 * @param name the name to set
+	 */
+	public void setName(String name) {
+		this.name = name;
+	}
 
 	/**
 	 * @return the id

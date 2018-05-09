@@ -16,15 +16,12 @@ public enum UserRoles {
 	
 	USER("USER","user");
 	
-	private final String value;
-	private final String description;
 
 	
 
-	/**
-	 * @param value
-	 * @param description
-	 */
+	private final String value;
+	private final String description;
+
 	private UserRoles(String value, String description) {
 		this.value = value;
 		this.description = description;
@@ -51,6 +48,5 @@ public enum UserRoles {
 	public String toString() {
 		return this.value;
 	}
-
 
 }
