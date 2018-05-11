@@ -28,25 +28,31 @@ import com.project.grocery.util.Status;
 @RestController
 @RequestMapping(value = "/api/v1")
 public class LoginController {
-	
+
 	private static final Logger LOG = LoggerFactory.getLogger(LoginController.class);
-	
+
 	@Autowired
 	private LoginService loginService;
-	
-	
-	@RequestMapping(value="/login",method=RequestMethod.POST)
-	public ResponseEntity<Object> login(@Valid @RequestBody LoginDto loginDto)  {
-		LOG.debug("Login Request",loginDto.getUsername());
-		LoginResponceDto loginResponceDto=loginService.logInUser(loginDto.getUsername(),
-				loginDto.getPassword(),Status.ACTIVE,loginDto.getDeviceId());
-		return new ResponseEntity<Object>(new LoginResponce(loginResponceDto),HttpStatus.OK);
+
+	@RequestMapping(value = "/login", method = RequestMethod.POST)
+	public ResponseEntity<Object> login(@Valid @RequestBody LoginDto loginDto) {
+		LOG.debug("Login Request", loginDto.getUsername());
+		LoginResponceDto loginResponceDto = loginService.logInUser(loginDto.getUsername(), loginDto.getPassword(),
+				Status.ACTIVE, loginDto.getDeviceId());
+		return new ResponseEntity<Object>(new LoginResponce(loginResponceDto), HttpStatus.OK);
 	}
 
-	
-	@RequestMapping(value="/logout",method=RequestMethod.POST)
-	public ResponseEntity<Object> logout(@RequestHeader Long userId){
+	@RequestMapping(value = "/logout", method = RequestMethod.POST)
+	public ResponseEntity<Object> logout(@RequestHeader Long userId) {
+		
 		loginService.logout(userId);
+		return new ResponseEntity<Object>(HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "/forgetPassword", method = RequestMethod.POST)
+	public ResponseEntity<Object> forgetPassword(@RequestBody String Email){
+		LOG.debug("Request Accepted for Reset password");
+		loginService.resetPassword(Email);
 		return new ResponseEntity<Object>(HttpStatus.OK);
 	}
 }

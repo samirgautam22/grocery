@@ -1,7 +1,9 @@
 package com.project.grocery.service;
 
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.transaction.Transactional;
 
@@ -10,6 +12,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.project.grocery.dto.UserDto;
 import com.project.grocery.exception.AlreadyExitException;
 import com.project.grocery.exception.NotFoundException;
 import com.project.grocery.exception.RequiredException;
@@ -85,6 +88,7 @@ public class UserService {
 				login.setLoginStatus(LoginStatus.LOGOUT);
 				login.setCreatedDate(new Date());
 				login.setUsername(userDto.getUsername());
+				login.setEmail(userDto.getEmail());
 				login.setUser(savedUser);
 				login.setLoginType(LoginType.ADMIN);
 				login.setStatus(Status.ACTIVE);
@@ -209,5 +213,41 @@ public class UserService {
 		loginRepository.save(login);
 		LOG.debug("Password Changed");
 	}
+
+	
+	/**
+	 * @return
+	 */
+	public List<UserDto> listAllUsers() {
+		LOG.debug("Request Accepted to list all Users");
+		List<User> users=userRepository.findAllUserByStatusNot(Status.DELETE);
+		List<UserDto> user=new ArrayList<>();
+		if(users==null) {
+			throw new NotFoundException("User Not found!!");
+		}
+		users.parallelStream().forEach(u->{
+			UserDto userDto=new UserDto();
+			userDto.setId(u.getId());
+			userDto.setFullName(u.getFullName());
+			userDto.setEmail(u.getEmail());
+			userDto.setGender(u.getGender());
+			userDto.setPhoneNo(u.getPhoneNo());
+			userDto.setUsername(u.getUsername());
+			user.add(userDto);
+		});
+		LOG.debug("All User Are obtain");
+		
+		return user;
+	}
+
+	/**
+	 * @param userId
+	 * @return
+	 */
+	public List<UserDto> getUser(Long userId) {
+		return null;
+	}
+
+	
 
 }

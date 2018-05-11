@@ -47,6 +47,8 @@ public class Login extends MainEntity implements Serializable {
 	@Column(name = "login_status")
 	private LoginStatus loginStatus;
 
+	private String email;
+	
 	@NotNull
 	@Column
 	private String username;
@@ -73,6 +75,20 @@ public class Login extends MainEntity implements Serializable {
 	 */
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	/**
+	 * @return the email
+	 */
+	public String getEmail() {
+		return email;
+	}
+
+	/**
+	 * @param email the email to set
+	 */
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	/**

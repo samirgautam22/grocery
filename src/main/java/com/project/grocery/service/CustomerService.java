@@ -1,6 +1,6 @@
 package com.project.grocery.service;
 
-import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -11,9 +11,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.project.grocery.dto.CustomerDto;
 import com.project.grocery.exception.AlreadyExitException;
 import com.project.grocery.exception.NotFoundException;
 import com.project.grocery.exception.RequiredException;
+import com.project.grocery.exception.ValidationException;
 import com.project.grocery.model.Address;
 import com.project.grocery.model.Customer;
 import com.project.grocery.model.Login;
@@ -25,10 +27,13 @@ import com.project.grocery.request.AddressEditRequest;
 import com.project.grocery.request.CustomerAddressCreationRequest;
 import com.project.grocery.request.CustomerCreationRequest;
 import com.project.grocery.request.CustomerEditRequest;
+import com.project.grocery.request.PasswordEditRequest;
+import com.project.grocery.responce.AddressResponceDto;
+import com.project.grocery.responce.CustomerResponceDto;
 import com.project.grocery.util.LoginStatus;
 import com.project.grocery.util.LoginType;
-import com.project.grocery.util.Md5Hashing;
 import com.project.grocery.util.Status;
+import com.project.grocery.dto.AddressDto;
 
 /**
  * @author:Samir Gautam
@@ -86,36 +91,33 @@ public class CustomerService {
 		if (savedCustomer != null) {
 
 			
-			try {
-				Login login = new Login();
-				login.setLoginStatus(LoginStatus.LOGOUT);
-				login.setPassword(Md5Hashing.getPw(customerCreationRequest.getPassword()));
-				login.setCreatedDate(new Date());
-				login.setUsername(customerCreationRequest.getUsername());
-				login.setCustomer(savedCustomer);
-				login.setLoginType(LoginType.CUSTOMER);
-				login.setStatus(Status.ACTIVE);
-				loginService.saveLogin(login);
-				LOG.debug("Added.");
+			Login login = new Login();
+			login.setLoginStatus(LoginStatus.LOGOUT);
+			login.setPassword(customerCreationRequest.getPassword());
+			login.setCreatedDate(new Date());
+			login.setEmail(customerCreationRequest.getEmail());
+			login.setUsername(customerCreationRequest.getUsername());
+			login.setCustomer(savedCustomer);
+			login.setLoginType(LoginType.CUSTOMER);
+			login.setStatus(Status.ACTIVE);
+			loginService.saveLogin(login);
+			LOG.debug("Added.");
 
-				List<CustomerAddressCreationRequest> address = customerCreationRequest.getAddress();
-				if (address != null) {
-					for (CustomerAddressCreationRequest add : address) {
-						Address addresses = new Address();
-						addresses.setDistrict(add.getDistrict());
-						addresses.setZone(add.getZone());
-						addresses.setVdc(add.getVdc());
-						addresses.setWardNo(add.getWardNo());
-						addresses.setHomeNo(add.getHomeNo());
-						addresses.setWardName(add.getWardName());
-						addresses.setCustomer(savedCustomer);
-					
-						addressRepository.save(addresses);
-						LOG.debug("Address Add");
-					}
+			List<CustomerAddressCreationRequest> address = customerCreationRequest.getAddress();
+			if (address != null) {
+				for (CustomerAddressCreationRequest add : address) {
+					Address addresses = new Address();
+					addresses.setDistrict(add.getDistrict());
+					addresses.setZone(add.getZone());
+					addresses.setVdc(add.getVdc());
+					addresses.setWardNo(add.getWardNo());
+					addresses.setHomeNo(add.getHomeNo());
+					addresses.setWardName(add.getWardName());
+					addresses.setCustomer(savedCustomer);
+				
+					addressRepository.save(addresses);
+					LOG.debug("Address Add");
 				}
-			} catch (NoSuchAlgorithmException e) {
-				e.printStackTrace();
 			}
 			
 
@@ -127,7 +129,7 @@ public class CustomerService {
 	/**
 	 * @param id
 	 */
-	public void deleteCustomer(long id) {
+	public void deleteCustomer(Long id) {
 		LOG.debug("Deleting Customer..");
 		Customer c=customerRepository.findCustomerById(id);
 		if(c==null) {
@@ -155,6 +157,8 @@ public class CustomerService {
 		if(customer==null) {
 			throw new NotFoundException("User not foud");
 		}
+		
+		
 		
 		if(editRequest.getEmail()!=null) {
 			emailDuplication(editRequest.getEmail(), customer);
@@ -193,6 +197,10 @@ public class CustomerService {
 				Address add = null;
 				if (address.getId() == null) {
 					add = new Address();
+				}
+				
+				else {
+					add = addressRepository.findAddressById(address.getId());
 				}
 			
 				if (null != address.getDistrict()) {
@@ -250,5 +258,113 @@ public class CustomerService {
 			}
 		
 	}
+
+		/**
+		 * @param customerId
+		 * @param passwordEditRequest
+		 */
+		@Transactional
+		public void changePassword(Long customerId, PasswordEditRequest passwordEditRequest) {
+			LOG.debug("Request Acccepted to change password");
+			if (!passwordEditRequest.getNewPassword().equals(passwordEditRequest.getConfirmNewPassword())) {
+				throw new ValidationException("New password and confrom password doesnt match");
+
+			}
+
+			Login login = loginRepository.findByUsername(passwordEditRequest.getUsername());
+			if (login == null) {
+				throw new ValidationException("Username not found");
+
+			}
+			if (!customerId.equals(login.getCustomer().getId())) {
+				throw new ValidationException("You are not authorized");
+			}
+
+			if (!passwordEditRequest.getOldPassword().equals(login.getPassword())) {
+				throw new ValidationException("Old Password not match");
+			}
+			login.setPassword(passwordEditRequest.getNewPassword());
+			loginRepository.save(login);
+			LOG.debug("Password Changed");
+		}
+
+		/**
+		 * @param customerId
+		 * @return 
+		 */
+		public CustomerResponceDto getCustomer(Long customerId) {
+			LOG.debug("Request to get customer");
+			Customer customer=customerRepository.findByIdAndStatusNot(customerId,Status.DELETE);
+			if(customer==null) {
+				throw new NotFoundException("Customer Not found");
+			}
+			CustomerResponceDto customerResponceDto=new CustomerResponceDto();
+			customerResponceDto.setFullName(customer.getFullName());
+			customerResponceDto.setGender(customer.getGender());
+			customerResponceDto.setEmail(customer.getEmail());
+			customerResponceDto.setUsername(customer.getUsername());
+			customerResponceDto.setPhoneNo(customer.getPhoneNo());
+			
+			List<AddressResponceDto> adddresss=new ArrayList<>();
+			List<Address> add=customer.getAddress();
+			if (add != null) {
+				add.stream().forEach(u -> {
+					AddressResponceDto dd = new AddressResponceDto();
+					dd.setId(u.getId());
+					dd.setDistrict(u.getDistrict());
+					dd.setZone(u.getZone());
+					dd.setVdc(u.getVdc());
+					dd.setWardName(u.getWardName());
+					dd.setWardNo(u.getWardNo());
+					dd.setHomeNo(u.getHomeNo());
+					adddresss.add(dd);
+				});
+			}
+			customerResponceDto.setAddress(adddresss);
+			LOG.debug("Customer Obtain");
+			return customerResponceDto;
+		}
+
+		/**
+		 * @return
+		 */
+		public List<CustomerDto> listAllCustomer() {
+			LOG.debug("Request to get All customer");
+			List<Customer> customer=customerRepository.findAllCustomerByStatusNot(Status.DELETE);
+			List<CustomerDto> customers=new ArrayList<>();	
+			if(customer==null) {
+				throw new NotFoundException("Customer not found");
+			}
+			customer.stream().forEach(u->{
+			  CustomerDto customerDto=new CustomerDto();
+			  customerDto.setId(u.getId());
+			  customerDto.setFullName(u.getFullName());
+			  customerDto.setEmail(u.getEmail());
+			  customerDto.setGender(u.getGender());
+			  customerDto.setUsername(u.getUsername());
+			  customerDto.setPhoneNo(u.getPhoneNo());
+			  List<AddressDto> adddresss=new ArrayList<>();
+			  List<Address> add=u.getAddress();
+				if (add != null) {
+					add.stream().forEach(a -> {
+						AddressDto dd = new AddressDto();
+						dd.setId(a.getId());
+						dd.setDistrict(a.getDistrict());
+						dd.setZone(a.getZone());
+						dd.setVdc(a.getVdc());
+						dd.setWardName(a.getWardName());
+						dd.setWardNo(a.getWardNo());
+						dd.setHomeNo(a.getHomeNo());
+						adddresss.add(dd);
+					});
+				}
+				customerDto.setAddress(adddresss);
+				customers.add(customerDto);
+			  
+			});
+			LOG.debug("All customer Obtain");
+			return customers;
+		}
+		
 
 }

@@ -42,4 +42,12 @@ public interface LoginRepository extends JpaRepository<Login,Long> {
 	 */
 	Login findLoginById(Long userId);
 
+
+	/**
+	 * @param email
+	 * @param delete
+	 * @return
+	 */
+	Login findLoginByEmailAndStatusNot(String email, Status delete);
+
 }

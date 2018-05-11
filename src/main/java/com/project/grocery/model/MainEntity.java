@@ -15,6 +15,9 @@ import javax.persistence.MappedSuperclass;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
+
 import com.project.grocery.util.Status;
 
 
@@ -41,10 +44,14 @@ public abstract class MainEntity implements Serializable {
 	protected Date modifyDate;
 
 	@ManyToOne
+	@NotFound(
+	        action = NotFoundAction.IGNORE)
 	@JoinColumn(name = "created_by")
 	protected User createdBy;
 
 	@ManyToOne
+	@NotFound(
+	        action = NotFoundAction.IGNORE)
 	@JoinColumn(name = "modify_by")
 	protected User modifyBy;
 

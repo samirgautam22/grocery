@@ -1,5 +1,7 @@
 package com.project.grocery.repository;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -35,5 +37,11 @@ public interface UserRepository extends JpaRepository<User,Long> {
 	 * @return
 	 */
 	User findByUsernameAndStatusNot(String username, Status delete);
+
+	/**
+	 * @param delete
+	 * @return
+	 */
+	List<User> findAllUserByStatusNot(Status delete);
 
 }

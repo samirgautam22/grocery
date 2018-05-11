@@ -1,5 +1,9 @@
 package com.project.grocery.controller;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.project.grocery.dto.UserDto;
 import com.project.grocery.request.PasswordEditRequest;
 import com.project.grocery.request.UserCreationRequest;
 import com.project.grocery.request.UserEditRequest;
@@ -69,6 +74,23 @@ public class UserController {
 		userService.changePassword(userId,passwordEditRequest);
 		return new ResponseEntity<Object>(HttpStatus.OK);
 		
+	}
+	
+	
+	@RequestMapping(method=RequestMethod.GET)
+	public ResponseEntity<Object> listAllUser(){
+		List<UserDto> user=userService.listAllUsers();
+		Map<Object, Object> response = new HashMap<Object, Object>();
+		response.put("user", user);
+		return new ResponseEntity<Object>(response,HttpStatus.OK);
+	}
+	
+	@RequestMapping(method=RequestMethod.GET)
+	public ResponseEntity<Object> getCustomer(@RequestHeader Long userId){
+		List<UserDto> user=userService.getUser(userId);
+		Map<Object, Object> response = new HashMap<Object, Object>();
+		response.put("user", user);
+		return new ResponseEntity<Object>(response,HttpStatus.OK);
 	}
 	
 }	
