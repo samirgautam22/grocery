@@ -1,13 +1,16 @@
-package com.project.grocery.request;
+package com.project.grocery.responce;
 
+import java.io.Serializable;
 
 /**
  * @author:Samir Gautam
  * @Version:1.0
- * @Date:May 6, 2018
+ * @Date:May 12, 2018
  * 
  */
-public class UserEditRequest {
+
+@SuppressWarnings("serial")
+public class UserResponceDto implements Serializable {
 	
 	private Long id;
 	private String fullName;
@@ -15,11 +18,6 @@ public class UserEditRequest {
 	private String email;
 	private Long phoneNo;
 	private String username;
-	private String password;
-
-	
-	
-	
 	/**
 	 * @return the id
 	 */
@@ -92,20 +90,9 @@ public class UserEditRequest {
 	public void setUsername(String username) {
 		this.username = username;
 	}
-	/**
-	 * @return the password
-	 */
-	public String getPassword() {
-		return password;
-	}
-	/**
-	 * @param password the password to set
-	 */
-	public void setPassword(String password) {
-		this.password = password;
-	}
 	
-
+	
+	
 	
 
 }

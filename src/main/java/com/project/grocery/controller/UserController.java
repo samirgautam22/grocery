@@ -21,6 +21,7 @@ import com.project.grocery.dto.UserDto;
 import com.project.grocery.request.PasswordEditRequest;
 import com.project.grocery.request.UserCreationRequest;
 import com.project.grocery.request.UserEditRequest;
+import com.project.grocery.responce.UserResponceDto;
 import com.project.grocery.service.UserService;
 
 /**
@@ -85,9 +86,9 @@ public class UserController {
 		return new ResponseEntity<Object>(response,HttpStatus.OK);
 	}
 	
-	@RequestMapping(method=RequestMethod.GET)
-	public ResponseEntity<Object> getCustomer(@RequestHeader Long userId){
-		List<UserDto> user=userService.getUser(userId);
+	@RequestMapping(value="/{userId}",method=RequestMethod.GET)
+	public ResponseEntity<Object> getUser(@RequestHeader Long userId){
+		UserResponceDto user=userService.getUser(userId);
 		Map<Object, Object> response = new HashMap<Object, Object>();
 		response.put("user", user);
 		return new ResponseEntity<Object>(response,HttpStatus.OK);

@@ -23,12 +23,54 @@ public class Store extends MainEntity implements Serializable {
 	@Column(name="store_address")
 	@OneToMany(mappedBy="store",fetch=FetchType.LAZY)
 	private List<StoreAddress> storeAddress;
-	@Column(name="store_no")
-	private Long storeNo;
+
 	@Column(name="phone_no")
 	private Long phoneNo;
 	private Long panNo;
+	private String email;
+	private String username;
 	
+	
+	
+	/**
+	 * @return the username
+	 */
+	public String getUsername() {
+		return username;
+	}
+
+	/**
+	 * @param username the username to set
+	 */
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	/**
+	 * @param id
+	 *            the id to set
+	 */
+	public void setId(Long id) {
+		this.id = id;
+	}
+	
+	
+	/**
+	 * @return the email
+	 */
+	public String getEmail() {
+		return email;
+	}
+	/**
+	 * @param email the email to set
+	 */
+	public void setEmail(String email) {
+		this.email = email;
+	}
 	/**
 	 * @return the panNo
 	 */
@@ -65,18 +107,7 @@ public class Store extends MainEntity implements Serializable {
 	public void setStoreAddress(List<StoreAddress> storeAddress) {
 		this.storeAddress = storeAddress;
 	}
-	/**
-	 * @return the storeNo
-	 */
-	public Long getStoreNo() {
-		return storeNo;
-	}
-	/**
-	 * @param storeNo the storeNo to set
-	 */
-	public void setStoreNo(Long storeNo) {
-		this.storeNo = storeNo;
-	}
+	
 	/**
 	 * @return the phoneNo
 	 */

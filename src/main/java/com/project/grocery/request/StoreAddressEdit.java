@@ -1,38 +1,26 @@
-package com.project.grocery.model;
+package com.project.grocery.request;
 
 import java.io.Serializable;
-
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 
 /**
  * @author:Samir Gautam
  * @Version:1.0
- * @Date:May 3, 2018
+ * @Date:May 12, 2018
  * 
  */
 @SuppressWarnings("serial")
-@Entity
-public class StoreAddress implements Serializable {
-
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+public class StoreAddressEdit implements Serializable {
+	
 	private Long id;
 	private String zone;
 	private String district;
 	private String vdc;
 	private Long wardNo;
-	private String HomeNo;
 	private String wardName;
+	private String homeNo;
 
-	@ManyToOne
-	@JoinColumn(name = "store_id")
-	private Store store;
-
+	
+	
 	/**
 	 * @return the id
 	 */
@@ -40,29 +28,8 @@ public class StoreAddress implements Serializable {
 		return id;
 	}
 
-	
-	
 	/**
-	 * @return the homeNo
-	 */
-	public String getHomeNo() {
-		return HomeNo;
-	}
-
-
-
-	/**
-	 * @param homeNo the homeNo to set
-	 */
-	public void setHomeNo(String homeNo) {
-		HomeNo = homeNo;
-	}
-
-
-
-	/**
-	 * @param id
-	 *            the id to set
+	 * @param id the id to set
 	 */
 	public void setId(Long id) {
 		this.id = id;
@@ -129,21 +96,6 @@ public class StoreAddress implements Serializable {
 	}
 
 	/**
-	 * @return the store
-	 */
-	public Store getStore() {
-		return store;
-	}
-
-	/**
-	 * @param store
-	 *            the store to set
-	 */
-	public void setStore(Store store) {
-		this.store = store;
-	}
-
-	/**
 	 * @return the wardName
 	 */
 	public String getWardName() {
@@ -156,6 +108,21 @@ public class StoreAddress implements Serializable {
 	 */
 	public void setWardName(String wardName) {
 		this.wardName = wardName;
+	}
+
+	/**
+	 * @return the homeNo
+	 */
+	public String getHomeNo() {
+		return homeNo;
+	}
+
+	/**
+	 * @param homeNo
+	 *            the homeNo to set
+	 */
+	public void setHomeNo(String homeNo) {
+		this.homeNo = homeNo;
 	}
 
 }

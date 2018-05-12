@@ -116,7 +116,7 @@ public class CustomerService {
 					addresses.setCustomer(savedCustomer);
 				
 					addressRepository.save(addresses);
-					LOG.debug("Address Add");
+					LOG.debug("Address Added");
 				}
 			}
 			
@@ -147,7 +147,7 @@ public class CustomerService {
 	@Transactional
 	public Customer editCustomer(CustomerEditRequest editRequest) {
 		LOG.debug("Request for Customer edit");
-		if(editRequest==null) {
+		if(editRequest.getId()==null) {
 			throw new RequiredException("User id is needed");          
 			
 			

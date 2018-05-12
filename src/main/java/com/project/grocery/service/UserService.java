@@ -24,6 +24,7 @@ import com.project.grocery.repository.UserRepository;
 import com.project.grocery.request.PasswordEditRequest;
 import com.project.grocery.request.UserCreationRequest;
 import com.project.grocery.request.UserEditRequest;
+import com.project.grocery.responce.UserResponceDto;
 import com.project.grocery.util.LoginStatus;
 import com.project.grocery.util.LoginType;
 import com.project.grocery.util.Md5Hashing;
@@ -244,8 +245,21 @@ public class UserService {
 	 * @param userId
 	 * @return
 	 */
-	public List<UserDto> getUser(Long userId) {
-		return null;
+	public UserResponceDto getUser(Long userId) {
+		LOG.debug("Request Accepted for List A user");
+		User users=userRepository.findUserByIdAndStatusNot(userId,Status.DELETE);
+		if(users==null) {
+			throw new NotFoundException("User not found ");
+		}
+		UserResponceDto userResponceDto=new UserResponceDto();
+		userResponceDto.setId(users.getId());
+		userResponceDto.setFullName(users.getFullName());
+		userResponceDto.setEmail(users.getEmail());
+		userResponceDto.setGender(users.getGender());
+		userResponceDto.setPhoneNo(users.getPhoneNo());
+		userResponceDto.setUsername(users.getUsername());
+		LOG.debug("User obtain");
+		return userResponceDto;
 	}
 
 	

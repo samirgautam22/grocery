@@ -44,4 +44,11 @@ public interface UserRepository extends JpaRepository<User,Long> {
 	 */
 	List<User> findAllUserByStatusNot(Status delete);
 
+	/**
+	 * @param userId
+	 * @param delete
+	 * @return
+	 */
+	User findUserByIdAndStatusNot(Long userId, Status delete);
+
 }

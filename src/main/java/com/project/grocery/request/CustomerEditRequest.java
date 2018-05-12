@@ -12,13 +12,13 @@ import java.util.List;
  */
 @SuppressWarnings("serial")
 public class CustomerEditRequest implements Serializable {
-
+	private Long id;
 	private String fullName;
 	private String gender;
 	private String email;
 	private Long phoneNo;
 	private String username;
-	private Long id;
+	
 	List<AddressEditRequest> address;
 
 	/**
