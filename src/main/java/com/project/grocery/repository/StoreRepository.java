@@ -1,5 +1,7 @@
 package com.project.grocery.repository;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -37,5 +39,20 @@ public interface StoreRepository extends JpaRepository<Store, Long> {
 	 * @return
 	 */
 	Store findByEmailAndStatusNot(String email, Status delete);
+
+
+	/**
+	 * @param delete
+	 * @return
+	 */
+	List<Store> findAllStoreByStatusNot(Status delete);
+
+
+	/**
+	 * @param storeId
+	 * @param delete
+	 * @return
+	 */
+	Store findByIdAndStatusNot(Long storeId, Status delete);
 
 }

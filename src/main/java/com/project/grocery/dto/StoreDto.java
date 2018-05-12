@@ -1,9 +1,7 @@
-package com.project.grocery.request;
+package com.project.grocery.dto;
 
 import java.io.Serializable;
 import java.util.List;
-
-
 
 /**
  * @author:Samir Gautam
@@ -11,44 +9,16 @@ import java.util.List;
  * @Date:May 12, 2018
  * 
  */
-@SuppressWarnings("serial")
-public class StoreCreatationRequest implements Serializable {
 
-	private Long id;
+@SuppressWarnings("serial")
+public class StoreDto implements Serializable {
+
 	private String storeName;
 	private Long phoneNo;
 	private Long panNo;
 	private String email;
 	private String username;
-	private String password;
-	private List<StoreAddressCreatation> storeAddress;
-	
-	
-	
-	/**
-	 * @return the id
-	 */
-	public Long getId() {
-		return id;
-	}
-	/**
-	 * @param id the id to set
-	 */
-	public void setId(Long id) {
-		this.id = id;
-	}
-	/**
-	 * @return the email
-	 */
-	public String getEmail() {
-		return email;
-	}
-	/**
-	 * @param email the email to set
-	 */
-	public void setEmail(String email) {
-		this.email = email;
-	}
+	List<StoreAddressDto> address;
 	/**
 	 * @return the storeName
 	 */
@@ -86,16 +56,16 @@ public class StoreCreatationRequest implements Serializable {
 		this.panNo = panNo;
 	}
 	/**
-	 * @return the storeAddress
+	 * @return the email
 	 */
-	public List<StoreAddressCreatation> getStoreAddress() {
-		return storeAddress;
+	public String getEmail() {
+		return email;
 	}
 	/**
-	 * @param storeAddress the storeAddress to set
+	 * @param email the email to set
 	 */
-	public void setStoreAddress(List<StoreAddressCreatation> storeAddress) {
-		this.storeAddress = storeAddress;
+	public void setEmail(String email) {
+		this.email = email;
 	}
 	/**
 	 * @return the username
@@ -110,16 +80,17 @@ public class StoreCreatationRequest implements Serializable {
 		this.username = username;
 	}
 	/**
-	 * @return the password
+	 * @return the address
 	 */
-	public String getPassword() {
-		return password;
+	public List<StoreAddressDto> getAddress() {
+		return address;
 	}
 	/**
-	 * @param password the password to set
+	 * @param address the address to set
 	 */
-	public void setPassword(String password) {
-		this.password = password;
+	public void setAddress(List<StoreAddressDto> address) {
+		this.address = address;
 	}
+	
 	
 }

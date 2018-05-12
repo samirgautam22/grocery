@@ -1,16 +1,16 @@
-package com.project.grocery.dto;
+package com.project.grocery.responce;
 
 import java.io.Serializable;
 
 /**
  * @author:Samir Gautam
  * @Version:1.0
- * @Date:May 11, 2018
+ * @Date:May 12, 2018
  * 
  */
 @SuppressWarnings("serial")
-public class AddressDto implements Serializable {
-	
+public class StoreAddressResponce implements Serializable {
+
 	private Long id;
 	private String zone;
 	private String district;
@@ -18,8 +18,18 @@ public class AddressDto implements Serializable {
 	private Long wardNo;
 	private String wardName;
 	private String homeNo;
-	
-	
+	/**
+	 * @return the id
+	 */
+	public Long getId() {
+		return id;
+	}
+	/**
+	 * @param id the id to set
+	 */
+	public void setId(Long id) {
+		this.id = id;
+	}
 	/**
 	 * @return the zone
 	 */
@@ -69,18 +79,6 @@ public class AddressDto implements Serializable {
 		this.wardNo = wardNo;
 	}
 	/**
-	 * @return the homeNo
-	 */
-	public String getHomeNo() {
-		return homeNo;
-	}
-	/**
-	 * @param homeNo the homeNo to set
-	 */
-	public void setHomeNo(String homeNo) {
-		this.homeNo = homeNo;
-	}
-	/**
 	 * @return the wardName
 	 */
 	public String getWardName() {
@@ -93,18 +91,18 @@ public class AddressDto implements Serializable {
 		this.wardName = wardName;
 	}
 	/**
-	 * @return the id
+	 * @return the homeNo
 	 */
-	public Long getId() {
-		return id;
+	public String getHomeNo() {
+		return homeNo;
 	}
 	/**
-	 * @param id the id to set
+	 * @param homeNo the homeNo to set
 	 */
-	public void setId(Long id) {
-		this.id = id;
+	public void setHomeNo(String homeNo) {
+		this.homeNo = homeNo;
 	}
 	
 	
-
+	
 }

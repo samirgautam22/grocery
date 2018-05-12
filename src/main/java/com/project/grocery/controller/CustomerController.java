@@ -85,7 +85,7 @@ public class CustomerController {
 	public ResponseEntity<Object> listAllCustomer(){
 		List<CustomerDto> customer=customerService.listAllCustomer();
 		Map<Object, Object> response = new HashMap<Object, Object>();
-		response.put("customer", customer);
+		response.put("customers", customer);
 		return new ResponseEntity<Object>(response,HttpStatus.OK);
 	}
 	
