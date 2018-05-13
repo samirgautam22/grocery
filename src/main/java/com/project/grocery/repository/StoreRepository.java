@@ -55,4 +55,7 @@ public interface StoreRepository extends JpaRepository<Store, Long> {
 	 */
 	Store findByIdAndStatusNot(Long storeId, Status delete);
 
+
+	
+	
 }

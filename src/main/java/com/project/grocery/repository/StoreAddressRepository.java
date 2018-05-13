@@ -1,8 +1,11 @@
 package com.project.grocery.repository;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import com.project.grocery.model.Store;
 import com.project.grocery.model.StoreAddress;
 
 /**
@@ -19,5 +22,21 @@ public interface StoreAddressRepository extends JpaRepository<StoreAddress,Long>
 	 * @return
 	 */
 	StoreAddress findStoreAddressById(Long id);
+
+	/**
+	 * @param zone
+	 * @param district
+	 * @param vdc
+	 * @param wardNo
+	 * @return
+	 */
+	List<StoreAddress> findStoreByZoneAndDistrictAndVdcAndWardNo(String zone, String district, String vdc, Long wardNo);
+	
+	/**
+	 * @param storeName
+	 * @return
+	 */
+	List<Store> findAllStoreByStore(String storeName);
+
 
 }
