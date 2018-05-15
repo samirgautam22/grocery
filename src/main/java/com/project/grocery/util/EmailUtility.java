@@ -11,7 +11,7 @@ import javax.mail.internet.MimeMessage;
 
 public class EmailUtility {
 	
-	public static void sendEMail(String to,String from,String username,String name,String subject,String pass){
+	public static void sendVerification(String to,String token){
 		// Get the session object
 				Properties props = new Properties();
 				props.put("mail.smtp.host", "smtp.gmail.com");
@@ -20,20 +20,19 @@ public class EmailUtility {
 				props.put("mail.smtp.auth", "true");
 				props.put("mail.smtp.port", "465");
 
-				Session session = Session.getDefaultInstance(props, new javax.mail.Authenticator() {
+				Session session = Session.getInstance(props, new javax.mail.Authenticator() {
 					protected PasswordAuthentication getPasswordAuthentication() {
-						return new PasswordAuthentication(from, pass);// change
+						return new PasswordAuthentication("gautamsamir22@gmail.com","Sprite@987");// change
 																							// accordingly
 					}
 					});
 					try {
 						MimeMessage message1 = new MimeMessage(session);
-						message1.setFrom(new InternetAddress(from));// change
+						message1.setFrom(new InternetAddress("gautamsamir22@gmail.com"));// change
 																					// accordingly
 						message1.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
-						message1.setSubject("Message");
-						message1.setText("UserName:"+username);
-						message1.setText("Name:"+name);
+						message1.setSubject("Verify Account");
+						message1.setText("Click Here to verify your Account:" +"http://localhost:8080/swagger-ui.html#!/customer-controller/getVerificationUsingGET/"+token);
 						Transport.send(message1);
 
 						System.out.println("message sent successfully");
@@ -47,7 +46,7 @@ public class EmailUtility {
 	
 	//.............................................
 	
-	public static void sendNewPassword(String to, String password) {
+	public static void sendResetLink(String to,String token) {
 		// Get the session object
 		Properties props = new Properties();
 		props.put("mail.smtp.host", "smtp.gmail.com");
@@ -56,9 +55,9 @@ public class EmailUtility {
 		props.put("mail.smtp.auth", "true");
 		props.put("mail.smtp.port", "465");
 
-		Session session = Session.getDefaultInstance(props, new javax.mail.Authenticator() {
+		Session session = Session.getInstance(props, new javax.mail.Authenticator() {
 			protected PasswordAuthentication getPasswordAuthentication() {
-				return new PasswordAuthentication("deliversewa11@gmail.com","Delivery@987");// change
+				return new PasswordAuthentication("gautamsamir22@gmail.com","Sprite@987");// change
 				// accordingly
 			}
 		});
@@ -66,11 +65,11 @@ public class EmailUtility {
 		// compose message
 		try {
 			MimeMessage message = new MimeMessage(session);
-			message.setFrom(new InternetAddress("deliversewa11@gmail.com"));// change
+			message.setFrom(new InternetAddress("gautamsamir22@gmail.com"));// change
 																			// accordingly
 			message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
-			message.setSubject("Password Recovery ");
-			message.setText("Your new password is......." + password);
+			message.setSubject("Reset Password ");
+			message.setText("Click Here to Reset your password:" +"http://localhost:8080/swagger-ui.html#!/login-controller/resetPasswordUsingPOST/"+token);
 
 			// send message
 			Transport.send(message);

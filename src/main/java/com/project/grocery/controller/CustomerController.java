@@ -88,6 +88,12 @@ public class CustomerController {
 		response.put("customers", customer);
 		return new ResponseEntity<Object>(response,HttpStatus.OK);
 	}
+	@RequestMapping(value="/{value}",method=RequestMethod.GET)
+	public ResponseEntity<Object> getVerification(@PathVariable ("value") String token){
+		LOG.debug("Request To verify Account");
+		customerService.getVerify(token);
+		return new ResponseEntity<Object>(HttpStatus.OK);
+	}
 	
 	
 

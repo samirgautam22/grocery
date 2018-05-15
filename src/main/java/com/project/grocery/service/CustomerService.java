@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import com.project.grocery.dto.CustomerDto;
 import com.project.grocery.exception.AlreadyExitException;
+import com.project.grocery.exception.ExpireException;
 import com.project.grocery.exception.NotFoundException;
 import com.project.grocery.exception.RequiredException;
 import com.project.grocery.exception.ValidationException;
@@ -20,9 +21,11 @@ import com.project.grocery.model.Address;
 import com.project.grocery.model.Customer;
 import com.project.grocery.model.Login;
 import com.project.grocery.model.User;
+import com.project.grocery.model.Verification;
 import com.project.grocery.repository.AddressRepository;
 import com.project.grocery.repository.CustomerRepository;
 import com.project.grocery.repository.LoginRepository;
+import com.project.grocery.repository.VerificationRepository;
 import com.project.grocery.request.AddressEditRequest;
 import com.project.grocery.request.CustomerAddressCreationRequest;
 import com.project.grocery.request.CustomerCreationRequest;
@@ -30,9 +33,13 @@ import com.project.grocery.request.CustomerEditRequest;
 import com.project.grocery.request.PasswordEditRequest;
 import com.project.grocery.responce.AddressResponceDto;
 import com.project.grocery.responce.CustomerResponceDto;
+import com.project.grocery.util.DateUtil;
+import com.project.grocery.util.EmailUtility;
 import com.project.grocery.util.LoginStatus;
 import com.project.grocery.util.LoginType;
 import com.project.grocery.util.Status;
+import com.project.grocery.util.TokenGenerator;
+import com.project.grocery.util.VerificationStatus;
 import com.project.grocery.dto.AddressDto;
 
 /**
@@ -57,9 +64,14 @@ public class CustomerService {
 	
 	@Autowired
 	AddressRepository addressRepository;
+	
+	@Autowired
+	VerificationRepository verificationRepository;
+	
+	@Autowired
+	VerificationService verificationService;
 
 	/**
-	 * @param userId
 	 * @param customerCreationRequest
 	 */
 	@Transactional
@@ -99,8 +111,29 @@ public class CustomerService {
 			login.setUsername(customerCreationRequest.getUsername());
 			login.setCustomer(savedCustomer);
 			login.setLoginType(LoginType.CUSTOMER);
-			login.setStatus(Status.ACTIVE);
+			login.setStatus(Status.BLOCKED);
 			loginService.saveLogin(login);
+			
+			
+			TokenGenerator tg = new TokenGenerator();
+			String token = tg.generateToken(login.getUsername());
+			
+			Verification verification = verificationRepository.findVerificationByEmailAndStatusNot(customerCreationRequest.getEmail(),
+					VerificationStatus.EXPIRE);
+
+			
+			if(verification==null) {
+				Verification verifiy=new Verification();
+				verifiy.setEmail(login.getEmail());
+				verifiy.setCreatedDate(new Date());
+				verifiy.setExpeireDate(DateUtil.getTokenExpireDate(new Date()));
+				verifiy.setToken(token);
+				verifiy.setStatus(VerificationStatus.ACTIVE);
+				EmailUtility.sendVerification(customerCreationRequest.getEmail(), token);
+				verificationService.saveVerification(verifiy);
+			}
+			
+			
 			LOG.debug("Added.");
 
 			List<CustomerAddressCreationRequest> address = customerCreationRequest.getAddress();
@@ -120,7 +153,6 @@ public class CustomerService {
 				}
 			}
 			
-
 		}
 
 		return customer;
@@ -364,6 +396,27 @@ public class CustomerService {
 			});
 			LOG.debug("All customer Obtain");
 			return customers;
+		}
+
+		/**
+		 * @param token
+		 */
+		public void getVerify(String token) {
+			
+			Verification v = verificationRepository.findVerificationByTokenAndStatusNot(token,VerificationStatus.EXPIRE);
+			if (v == null) {
+				throw new ExpireException("The session in invallied");
+			}
+
+			if (DateUtil.compareDate(v.getCreatedDate(), v.getExpeireDate()) == false) {
+				throw new ExpireException("Sorry !! Token is expired");
+			}
+
+			Login l=loginRepository.findLoginByEmailAndStatus(v.getEmail(), Status.BLOCKED);
+			if(l!=null) {
+				l.setStatus(Status.ACTIVE);
+				loginRepository.save(l);
+			}
 		}
 		
 

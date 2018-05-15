@@ -50,4 +50,12 @@ public interface LoginRepository extends JpaRepository<Login,Long> {
 	 */
 	Login findLoginByEmailAndStatusNot(String email, Status delete);
 
+
+	/**
+	 * @param email
+	 * @param blocked
+	 * @return
+	 */
+	Login findLoginByEmailAndStatus(String email, Status blocked);
+
 }
