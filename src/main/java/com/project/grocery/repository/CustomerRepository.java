@@ -17,33 +17,7 @@ import com.project.grocery.util.Status;
 @Repository
 public interface CustomerRepository extends JpaRepository<Customer ,Long> {
 
-	/**
-	 * @param email
-	 * @return
-	 */
-	Customer findByEmailAndStatusNot(String email,Status delete);
-
-	/**
-	 * @param id
-	 * @return
-	 */
-	Customer findCustomerById(long id);
-
-	/**
-	 * @param username
-	 * @param delete
-	 * @return
-	 */
-	Customer findByUsernameAndStatusNot(String username, Status delete);
-
-
-	/**
-	 * @param customerId
-	 * @param delete
-	 * @return
-	 */
-	Customer findByIdAndStatusNot(Long customerId, Status delete);
-
+	
 	
 	/**
 	 * @param delete
@@ -57,5 +31,32 @@ public interface CustomerRepository extends JpaRepository<Customer ,Long> {
 	 * @return
 	 */
 	Customer findCustomerByIdAndStatusNot(Long customerId, Status delete);
+
+	/**
+	 * @param email
+	 * @param delete
+	 * @return
+	 */
+	Customer findByEmailAndStatusNot(String email, Status delete);
+
+	/**
+	 * @param id
+	 * @return
+	 */
+	Customer findCustomerById(Long id);
+
+	/**
+	 * @param username
+	 * @param delete
+	 * @return
+	 */
+	Customer findByUsernameAndStatusNot(String username, Status delete);
+
+	/**
+	 * @param customerId
+	 * @param delete
+	 * @return
+	 */
+	Customer findByIdAndStatusNot(Long customerId, Status delete);
 
 }

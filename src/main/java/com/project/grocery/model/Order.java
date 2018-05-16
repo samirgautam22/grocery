@@ -2,17 +2,14 @@ package com.project.grocery.model;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -38,13 +35,44 @@ public class Order implements Serializable {
 	@Column(name = "order_date")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date orderDate;
+	@Column(name="order_name")
+	private String orderName;
+	@Column(name="total_price")
+	private double totalPrice;
 
 	@ManyToOne
 	@JoinColumn(name = "customer_id")
 	private Customer customer;
 
-	@OneToMany(mappedBy = "order", fetch = FetchType.LAZY)
-	private List<OrderName> orderName;
+	
+
+	/**
+	 * @return the orderName
+	 */
+	public String getOrderName() {
+		return orderName;
+	}
+
+	/**
+	 * @param orderName the orderName to set
+	 */
+	public void setOrderName(String orderName) {
+		this.orderName = orderName;
+	}
+
+	/**
+	 * @return the totalPrice
+	 */
+	public double getTotalPrice() {
+		return totalPrice;
+	}
+
+	/**
+	 * @param totalPrice the totalPrice to set
+	 */
+	public void setTotalPrice(double totalPrice) {
+		this.totalPrice = totalPrice;
+	}
 
 	/**
 	 * @return the id
@@ -121,19 +149,5 @@ public class Order implements Serializable {
 		this.customer = customer;
 	}
 
-	/**
-	 * @return the orderName
-	 */
-	public List<OrderName> getOrderName() {
-		return orderName;
-	}
-
-	/**
-	 * @param orderName
-	 *            the orderName to set
-	 */
-	public void setOrderName(List<OrderName> orderName) {
-		this.orderName = orderName;
-	}
 
 }

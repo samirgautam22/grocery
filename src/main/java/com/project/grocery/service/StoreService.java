@@ -85,7 +85,8 @@ public class StoreService {
 		store.setPhoneNo(storeCreatationRequest.getPhoneNo());
 		store.setStatus(Status.ACTIVE);
 		store.setCreatedDate(new Date());
-		store.setCreatedBy(new User(userId));
+		store.setCreatedBy(userId);
+		store.setUsername(storeCreatationRequest.getUsername());
 		store.setEmail(storeCreatationRequest.getEmail());
 		LOG.debug("Adding Store....");
 		Store ss = storeRepository.save(store);
@@ -146,9 +147,15 @@ public class StoreService {
 		User user = userRepository.findUserByIdAndStatusNot(userId, Status.DELETE);
 
 		if (user == null) {
-			throw new NotFoundException("Store Not found");
+			throw new NotFoundException("User Not found");
 
 		}
+		
+		Login l=loginRepository.findLoginByEmailAndStatusNot(store.getEmail(),Status.DELETE);
+		if(l==null) {
+			throw new NotFoundException("Store Not found !!");
+		}
+		l.setStatus(Status.DELETE);
 		store.setStatus(Status.DELETE);
 		LOG.debug("Store Deleted..");
 		storeRepository.save(store);

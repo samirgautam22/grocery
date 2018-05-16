@@ -1,7 +1,9 @@
 package com.project.grocery.request;
 
 import java.io.Serializable;
-import java.util.List;
+
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  * @author:Samir Gautam
@@ -12,26 +14,62 @@ import java.util.List;
 @SuppressWarnings("serial")
 public class OrderCreatationRequest implements Serializable {
 
-	private List<OrderNameCreatation> orderName;
-	
-	
-	
+	@JsonIgnore
+	private Long id;
+	private double price;
+	private Long item;
+	private String orderName;
+	/**
+	 * @return the id
+	 */
+	public Long getId() {
+		return id;
+	}
+	/**
+	 * @param id the id to set
+	 */
+	public void setId(Long id) {
+		this.id = id;
+	}
+	/**
+	 * @return the price
+	 */
+	public double getPrice() {
+		return price;
+	}
+	/**
+	 * @param price the price to set
+	 */
+	public void setPrice(double price) {
+		this.price = price;
+	}
+	/**
+	 * @return the item
+	 */
+	public Long getItem() {
+		return item;
+	}
+	/**
+	 * @param item the item to set
+	 */
+	public void setItem(Long item) {
+		this.item = item;
+	}
 	/**
 	 * @return the orderName
 	 */
-	public List<OrderNameCreatation> getOrderName() {
+	public String getOrderName() {
 		return orderName;
 	}
 	/**
 	 * @param orderName the orderName to set
 	 */
-	public void setOrderName(List<OrderNameCreatation> orderName) {
+	public void setOrderName(String orderName) {
 		this.orderName = orderName;
 	}
-	
-	
-	
-	
+	/**
+	 * @return the totalPrice
+	 */
 	
 
 }

@@ -1,12 +1,22 @@
 package com.project.grocery.model;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+import com.project.grocery.util.Status;
 
 /**
  * @author:Samir Gautam
@@ -16,22 +26,36 @@ import javax.persistence.OneToMany;
  */
 @SuppressWarnings("serial")
 @Entity
-public class Store extends MainEntity implements Serializable {
+public class Store implements Serializable {
 
-	@Column(name="store_name")
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long id;
+	@Column(name = "store_name")
 	private String storeName;
-	@Column(name="store_address")
-	@OneToMany(mappedBy="store",fetch=FetchType.LAZY)
+	@Column(name = "store_address")
+	@OneToMany(mappedBy = "store", fetch = FetchType.LAZY)
 	private List<StoreAddress> storeAddress;
 
-	@Column(name="phone_no")
+	@Column(name = "phone_no")
 	private Long phoneNo;
 	private Long panNo;
 	private String email;
 	private String username;
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "created_date")
+	private Date createdDate;
+
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "modify_date")
+	private Date modifyDate;
 	
-	
-	
+	@Column(name="createdBy")
+	private Long createdBy;
+
+	@Enumerated(EnumType.STRING)
+	protected Status status;
+
 	/**
 	 * @return the username
 	 */
@@ -40,7 +64,8 @@ public class Store extends MainEntity implements Serializable {
 	}
 
 	/**
-	 * @param username the username to set
+	 * @param username
+	 *            the username to set
 	 */
 	public void setUsername(String username) {
 		this.username = username;
@@ -57,71 +82,140 @@ public class Store extends MainEntity implements Serializable {
 	public void setId(Long id) {
 		this.id = id;
 	}
-	
-	
+
 	/**
 	 * @return the email
 	 */
 	public String getEmail() {
 		return email;
 	}
+
 	/**
-	 * @param email the email to set
+	 * @param email
+	 *            the email to set
 	 */
 	public void setEmail(String email) {
 		this.email = email;
 	}
+
 	/**
 	 * @return the panNo
 	 */
 	public Long getPanNo() {
 		return panNo;
 	}
+
 	/**
-	 * @param panNo the panNo to set
+	 * @param panNo
+	 *            the panNo to set
 	 */
 	public void setPanNo(Long panNo) {
 		this.panNo = panNo;
 	}
+
 	/**
 	 * @return the storeName
 	 */
 	public String getStoreName() {
 		return storeName;
 	}
+
 	/**
-	 * @param storeName the storeName to set
+	 * @param storeName
+	 *            the storeName to set
 	 */
 	public void setStoreName(String storeName) {
 		this.storeName = storeName;
 	}
+
 	/**
 	 * @return the storeAddress
 	 */
 	public List<StoreAddress> getStoreAddress() {
 		return storeAddress;
 	}
+
 	/**
-	 * @param storeAddress the storeAddress to set
+	 * @param storeAddress
+	 *            the storeAddress to set
 	 */
 	public void setStoreAddress(List<StoreAddress> storeAddress) {
 		this.storeAddress = storeAddress;
 	}
-	
+
 	/**
 	 * @return the phoneNo
 	 */
 	public Long getPhoneNo() {
 		return phoneNo;
 	}
+
 	/**
-	 * @param phoneNo the phoneNo to set
+	 * @param phoneNo
+	 *            the phoneNo to set
 	 */
 	public void setPhoneNo(Long phoneNo) {
 		this.phoneNo = phoneNo;
 	}
-	
-	
-	
+
+	/**
+	 * @return the createdDate
+	 */
+	public Date getCreatedDate() {
+		return createdDate;
+	}
+
+	/**
+	 * @param createdDate
+	 *            the createdDate to set
+	 */
+	public void setCreatedDate(Date createdDate) {
+		this.createdDate = createdDate;
+	}
+
+	/**
+	 * @return the modifyDate
+	 */
+	public Date getModifyDate() {
+		return modifyDate;
+	}
+
+	/**
+	 * @param modifyDate
+	 *            the modifyDate to set
+	 */
+	public void setModifyDate(Date modifyDate) {
+		this.modifyDate = modifyDate;
+	}
+
+	/**
+	 * @return the createdBy
+	 */
+	public Long getCreatedBy() {
+		return createdBy;
+	}
+
+	/**
+	 * @param createdBy
+	 *            the createdBy to set
+	 */
+	public void setCreatedBy(Long createdBy) {
+		this.createdBy = createdBy;
+	}
+
+	/**
+	 * @return the status
+	 */
+	public Status getStatus() {
+		return status;
+	}
+
+	/**
+	 * @param status
+	 *            the status to set
+	 */
+	public void setStatus(Status status) {
+		this.status = status;
+	}
 
 }

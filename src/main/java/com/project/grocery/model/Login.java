@@ -7,6 +7,9 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
@@ -15,6 +18,7 @@ import javax.validation.constraints.NotNull;
 
 import com.project.grocery.util.LoginStatus;
 import com.project.grocery.util.LoginType;
+import com.project.grocery.util.Status;
 
 /**
  * @author:Samir Gautam
@@ -24,8 +28,11 @@ import com.project.grocery.util.LoginType;
  */
 @SuppressWarnings("serial")
 @Entity
-public class Login extends MainEntity implements Serializable {
+public class Login implements Serializable {
 	
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	private Long id;
 
 	@ManyToOne
 	@JoinColumn(name = "user_id")
@@ -61,8 +68,30 @@ public class Login extends MainEntity implements Serializable {
 	
 	private String deviceId;
 	
-
+	@Enumerated(EnumType.STRING)
+	protected Status status;
 	
+
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "created_date")
+	private Date createdDate;
+	
+	
+	
+	/**
+	 * @return the status
+	 */
+	public Status getStatus() {
+		return status;
+	}
+
+	/**
+	 * @param status the status to set
+	 */
+	public void setStatus(Status status) {
+		this.status = status;
+	}
+
 	/**
 	 * @return the id
 	 */
@@ -223,6 +252,20 @@ public class Login extends MainEntity implements Serializable {
 	 */
 	public void setDeviceId(String deviceId) {
 		this.deviceId = deviceId;
+	}
+
+	/**
+	 * @return the createdDate
+	 */
+	public Date getCreatedDate() {
+		return createdDate;
+	}
+
+	/**
+	 * @param createdDate the createdDate to set
+	 */
+	public void setCreatedDate(Date createdDate) {
+		this.createdDate = createdDate;
 	}
 	
 	

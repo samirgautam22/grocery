@@ -1,5 +1,7 @@
 package com.project.grocery.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 /**
  * @author:Samir Gautam
  * @Version:1.0
@@ -8,6 +10,7 @@ package com.project.grocery.dto;
  */
 public class LoginDto {
 	
+	@JsonIgnore
 	private String email;
 	private String username;
 	private String password;

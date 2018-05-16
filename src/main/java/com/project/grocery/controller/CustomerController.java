@@ -81,7 +81,7 @@ public class CustomerController {
 		
 	}
 	
-	@RequestMapping(method=RequestMethod.GET)
+	@RequestMapping(value="/listAll",method=RequestMethod.GET)
 	public ResponseEntity<Object> listAllCustomer(){
 		List<CustomerDto> customer=customerService.listAllCustomer();
 		Map<Object, Object> response = new HashMap<Object, Object>();

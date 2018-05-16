@@ -35,7 +35,6 @@ public class OrderController {
 		LOG.debug("Request Accepted To order item");
 		orderService.saveOrder(customerId,orderRequest);
 		return new ResponseEntity<Object>(HttpStatus.CREATED);
-		
 	}
 
 }

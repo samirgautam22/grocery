@@ -29,6 +29,7 @@ import com.project.grocery.util.LoginStatus;
 import com.project.grocery.util.LoginType;
 import com.project.grocery.util.Md5Hashing;
 import com.project.grocery.util.Status;
+import com.project.grocery.util.UserRoles;
 
 /**
  * @author:Samir Gautam
@@ -71,9 +72,9 @@ public class UserService {
 		user.setGender(userDto.getGender());
 		user.setPhoneNo(userDto.getPhoneNo());
 		user.setCreatedDate(new Date());
-		user.setCreatedBy(new User(userId));
+		user.setCreatedBy(userId);
 		user.setUsername(userDto.getUsername());
-		user.setUserRole(userDto.getUserRole());
+		user.setUserRole(UserRoles.ADMIN);
 		user.setStatus(Status.ACTIVE);
 
 		LOG.debug("User Adding");
@@ -115,6 +116,11 @@ public class UserService {
 			throw new NotFoundException("User not found");
 
 		}
+		Login l=loginRepository.findLoginByEmailAndStatusNot(user.getEmail(),Status.DELETE);
+		if(l==null) {
+			throw new NotFoundException("Customer Not found !!");
+		}
+		l.setStatus(Status.DELETE);
 		user.setStatus(Status.DELETE);
 		LOG.debug("User Deleted");
 		userRepository.save(user);

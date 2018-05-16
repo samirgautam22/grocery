@@ -2,6 +2,7 @@ package com.project.grocery.request;
 
 import java.io.Serializable;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.project.grocery.util.UserRoles;
 
 /**
@@ -19,6 +20,7 @@ public class UserCreationRequest implements Serializable {
 	private Long phoneNo;
 	private String username;
 	private String password;
+	@JsonIgnore
 	private UserRoles userRole;
 	/**
 	 * @return the fullName

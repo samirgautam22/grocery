@@ -1,17 +1,22 @@
 package com.project.grocery.model;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
+import com.project.grocery.util.Status;
 import com.project.grocery.util.UserRoles;
 
 /**
@@ -23,25 +28,39 @@ import com.project.grocery.util.UserRoles;
 @SuppressWarnings("serial")
 @Entity
 @Table(name="user")
-public class User extends MainEntity implements Serializable {
+public class User  implements Serializable {
 	
-	
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	private Long id;
 	@Column(name = "full_name")
 	private String fullName;
 	private String gender;
 	private String email;
 	@Column(name = "phone_no")
 	private Long phoneNo;
-	@Size(min = 5, max = 30, message = "Username must between 5 and 30")
 	private String username;
 	
-	@NotNull
 	@Enumerated(EnumType.STRING)
 	private UserRoles userRole;
 
 	@OneToMany(mappedBy = "user")
 	
 	private List<Login> logins;
+	
+	@Enumerated(EnumType.STRING)
+	protected Status status;
+	
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "created_date")
+	private Date createdDate;
+	
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "modify_date")
+	private Date modifyDate;
+	@Column(name="created_by")
+	private Long createdBy;
+
 	
 
 	/**
@@ -63,7 +82,6 @@ public class User extends MainEntity implements Serializable {
 	 */
 	public User() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 	
 	public User(Long id) {
@@ -168,8 +186,62 @@ public class User extends MainEntity implements Serializable {
 	public void setLogins(List<Login> logins) {
 		this.logins = logins;
 	}
-	
-	
-	
+
+	/**
+	 * @return the status
+	 */
+	public Status getStatus() {
+		return status;
+	}
+
+	/**
+	 * @param status the status to set
+	 */
+	public void setStatus(Status status) {
+		this.status = status;
+	}
+
+	/**
+	 * @return the createdDate
+	 */
+	public Date getCreatedDate() {
+		return createdDate;
+	}
+
+	/**
+	 * @param createdDate the createdDate to set
+	 */
+	public void setCreatedDate(Date createdDate) {
+		this.createdDate = createdDate;
+	}
+
+	/**
+	 * @return the modifyDate
+	 */
+	public Date getModifyDate() {
+		return modifyDate;
+	}
+
+	/**
+	 * @param modifyDate the modifyDate to set
+	 */
+	public void setModifyDate(Date modifyDate) {
+		this.modifyDate = modifyDate;
+	}
+
+	/**
+	 * @return the createdBy
+	 */
+	public Long getCreatedBy() {
+		return createdBy;
+	}
+
+	/**
+	 * @param createdBy the createdBy to set
+	 */
+	public void setCreatedBy(Long createdBy) {
+		this.createdBy = createdBy;
+	}
+
 
 }

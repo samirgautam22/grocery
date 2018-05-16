@@ -1,7 +1,6 @@
 package com.project.grocery.service;
 
 import java.util.Date;
-import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,12 +10,9 @@ import org.springframework.stereotype.Service;
 import com.project.grocery.exception.NotFoundException;
 import com.project.grocery.model.Customer;
 import com.project.grocery.model.Order;
-import com.project.grocery.model.OrderName;
 import com.project.grocery.repository.CustomerRepository;
-import com.project.grocery.repository.OrderNameRepository;
 import com.project.grocery.repository.OrderRepository;
 import com.project.grocery.request.OrderCreatationRequest;
-import com.project.grocery.request.OrderNameCreatation;
 import com.project.grocery.util.Status;
 
 /**
@@ -36,17 +32,13 @@ public class OrderService {
 	@Autowired
 	OrderRepository orderRepository;
 
-	@Autowired
-	OrderNameRepository orderNameRepository;
 	/**
 	 * @param customerId
 	 * @param orderRequest
 	 */
 	public Order saveOrder(Long customerId, OrderCreatationRequest orderRequest) {
 		LOG.debug("Request Accepted to Save order ");
-//		int item=0;
-//		double price=0;
-//		
+	
 		Customer customer = customerRepository.findCustomerByIdAndStatusNot(customerId, Status.DELETE);
 		if (customer == null) {
 			throw new NotFoundException("Customer Not Found");
@@ -55,28 +47,14 @@ public class OrderService {
 		Order order = new Order();
 		order.setOrderDate(new Date());
 		order.setCustomer(customer);
-		Order savedOrder = orderRepository.save(order);
+		order.setPrice(orderRequest.getPrice());
+		order.setItem(orderRequest.getItem());
+		order.setOrderName(orderRequest.getOrderName());
+		order.setTotalPrice(orderRequest.getPrice()*orderRequest.getItem());
+		orderRepository.save(order);
 		
-		if (savedOrder != null) {
+		LOG.debug("The customer order has been set");
 
-			List<OrderNameCreatation> orderNameCreatation = orderRequest.getOrderName();
-			LOG.debug("Order Name Requested...");
-			
-			if (orderNameCreatation != null) {
-				for (OrderNameCreatation name : orderNameCreatation) {
-					OrderName orderName = new OrderName();
-					orderName.setOrder(order);
-					orderName.setOrderName(name.getOrderName());
-					orderName.setPrice(name.getPrice());
-					orderNameRepository.save(orderName);
-					LOG.debug("Order Added");
-				}
-			}
-		}
-//		
-//		OrderName oo=new OrderName();
-//		OrderName o=orderNameRepository.findAllOrderNameById(oo.getId());
-//		List<>
 		return order;
 	}
 

@@ -22,7 +22,7 @@ public class EmailUtility {
 
 				Session session = Session.getInstance(props, new javax.mail.Authenticator() {
 					protected PasswordAuthentication getPasswordAuthentication() {
-						return new PasswordAuthentication("gautamsamir22@gmail.com","Sprite@987");// change
+						return new PasswordAuthentication("..","..");// change
 																							// accordingly
 					}
 					});
@@ -57,7 +57,7 @@ public class EmailUtility {
 
 		Session session = Session.getInstance(props, new javax.mail.Authenticator() {
 			protected PasswordAuthentication getPasswordAuthentication() {
-				return new PasswordAuthentication("gautamsamir22@gmail.com","Sprite@987");// change
+				return new PasswordAuthentication("..","..");// change
 				// accordingly
 			}
 		});

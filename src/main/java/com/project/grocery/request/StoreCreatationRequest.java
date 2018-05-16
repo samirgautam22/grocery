@@ -3,6 +3,8 @@ package com.project.grocery.request;
 import java.io.Serializable;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 
 
 /**
@@ -14,6 +16,7 @@ import java.util.List;
 @SuppressWarnings("serial")
 public class StoreCreatationRequest implements Serializable {
 
+	@JsonIgnore
 	private Long id;
 	private String storeName;
 	private Long phoneNo;

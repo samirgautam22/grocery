@@ -20,7 +20,6 @@ import com.project.grocery.exception.ValidationException;
 import com.project.grocery.model.Address;
 import com.project.grocery.model.Customer;
 import com.project.grocery.model.Login;
-import com.project.grocery.model.User;
 import com.project.grocery.model.Verification;
 import com.project.grocery.repository.AddressRepository;
 import com.project.grocery.repository.CustomerRepository;
@@ -168,6 +167,12 @@ public class CustomerService {
 			throw new NotFoundException("Customer Not found !!");
 			
 		}
+		
+		Login l=loginRepository.findLoginByEmailAndStatusNot(c.getEmail(),Status.DELETE);
+		if(l==null) {
+			throw new NotFoundException("Customer Not found !!");
+		}
+		l.setStatus(Status.DELETE);
 		c.setStatus(Status.DELETE);
 		LOG.debug("Customer Deleted");
 		customerRepository.save(c);
@@ -264,7 +269,6 @@ public class CustomerService {
 		}
 		
 		customer.setModifyDate(new Date());
-		customer.setModifyBy(new User(editRequest.getId()));
 		return customer;
 	}
 	

@@ -1,14 +1,24 @@
 package com.project.grocery.model;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.Size;
+
+import com.project.grocery.util.Status;
 
 
 /**
@@ -20,7 +30,11 @@ import javax.validation.constraints.Size;
 @SuppressWarnings("serial")
 @Entity
 @Table(name = "customer")
-public class Customer extends MainEntity implements Serializable {
+public class Customer implements Serializable {
+	
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	private Long id;
 	@Column(name = "full_name")
 	private String fullName;
 	private String gender;
@@ -38,6 +52,33 @@ public class Customer extends MainEntity implements Serializable {
 	
 	@OneToMany(mappedBy = "customer", fetch = FetchType.LAZY)
 	private List<Order> order;
+	
+	@Enumerated(EnumType.STRING)
+	protected Status status;
+	
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "created_date")
+	private Date createdDate;
+	
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "modify_date")
+	private Date modifyDate;
+
+	
+
+	/**
+	 * @return the createdDate
+	 */
+	public Date getCreatedDate() {
+		return createdDate;
+	}
+
+	/**
+	 * @param createdDate the createdDate to set
+	 */
+	public void setCreatedDate(Date createdDate) {
+		this.createdDate = createdDate;
+	}
 
 	/**
 	 * 
@@ -180,6 +221,34 @@ public class Customer extends MainEntity implements Serializable {
 	 */
 	public void setOrder(List<Order> order) {
 		this.order = order;
+	}
+
+	/**
+	 * @return the status
+	 */
+	public Status getStatus() {
+		return status;
+	}
+
+	/**
+	 * @param status the status to set
+	 */
+	public void setStatus(Status status) {
+		this.status = status;
+	}
+
+	/**
+	 * @return the modifyDate
+	 */
+	public Date getModifyDate() {
+		return modifyDate;
+	}
+
+	/**
+	 * @param modifyDate the modifyDate to set
+	 */
+	public void setModifyDate(Date modifyDate) {
+		this.modifyDate = modifyDate;
 	}
 
 	
