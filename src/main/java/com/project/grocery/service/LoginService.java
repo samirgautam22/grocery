@@ -61,10 +61,11 @@ public class LoginService {
 			throw new LoginFailException("Sorry,Username not found !!");
 		}
 		
-		Login l=loginRepository.findByUsernameAndStatusNot(username, Status.BLOCKED);
+		Login l=loginRepository.findByUsernameAndStatus(username, Status.BLOCKED);
 		if(l!=null) {
 			throw new VerificationException("Sorry Your Account is not verified Check Your Email");
 		}
+		
 		
 		
 		
@@ -167,6 +168,8 @@ public class LoginService {
 		}
 
 		if (DateUtil.compareDate(v.getCreatedDate(), v.getExpeireDate()) == false) {
+			v.setStatus(VerificationStatus.EXPIRE);
+			verificationService.saveVerification(v);
 			throw new ExpireException("Sorry !! Token is expired");
 		}
 

@@ -413,12 +413,16 @@ public class CustomerService {
 			}
 
 			if (DateUtil.compareDate(v.getCreatedDate(), v.getExpeireDate()) == false) {
+				v.setStatus(VerificationStatus.EXPIRE);
+				verificationService.saveVerification(v);
 				throw new ExpireException("Sorry !! Token is expired");
 			}
 
 			Login l=loginRepository.findLoginByEmailAndStatus(v.getEmail(), Status.BLOCKED);
 			if(l!=null) {
 				l.setStatus(Status.ACTIVE);
+				v.setStatus(VerificationStatus.EXPIRE);
+				verificationService.saveVerification(v);
 				loginRepository.save(l);
 			}
 		}

@@ -22,7 +22,7 @@ import javax.persistence.TemporalType;
  */
 @SuppressWarnings("serial")
 @Entity
-@Table(name="aorder")
+@Table(name="aOrder")
 public class Order implements Serializable {
 
 	@Id
@@ -43,6 +43,10 @@ public class Order implements Serializable {
 	@ManyToOne
 	@JoinColumn(name = "customer_id")
 	private Customer customer;
+	
+	@ManyToOne
+	@JoinColumn(name="store_id")
+	private Store store;
 
 	
 
@@ -147,6 +151,20 @@ public class Order implements Serializable {
 	 */
 	public void setCustomer(Customer customer) {
 		this.customer = customer;
+	}
+
+	/**
+	 * @return the store
+	 */
+	public Store getStore() {
+		return store;
+	}
+
+	/**
+	 * @param store the store to set
+	 */
+	public void setStore(Store store) {
+		this.store = store;
 	}
 
 

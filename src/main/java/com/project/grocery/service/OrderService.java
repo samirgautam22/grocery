@@ -1,6 +1,7 @@
 package com.project.grocery.service;
 
 import java.util.Date;
+import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,9 +11,11 @@ import org.springframework.stereotype.Service;
 import com.project.grocery.exception.NotFoundException;
 import com.project.grocery.model.Customer;
 import com.project.grocery.model.Order;
+import com.project.grocery.model.Store;
 import com.project.grocery.repository.CustomerRepository;
 import com.project.grocery.repository.OrderRepository;
 import com.project.grocery.request.OrderCreatationRequest;
+import com.project.grocery.responce.OrderResponceDto;
 import com.project.grocery.util.Status;
 
 /**
@@ -36,7 +39,7 @@ public class OrderService {
 	 * @param customerId
 	 * @param orderRequest
 	 */
-	public Order saveOrder(Long customerId, OrderCreatationRequest orderRequest) {
+	public Order saveOrder(Long customerId,Long storeId,OrderCreatationRequest orderRequest) {
 		LOG.debug("Request Accepted to Save order ");
 	
 		Customer customer = customerRepository.findCustomerByIdAndStatusNot(customerId, Status.DELETE);
@@ -51,11 +54,22 @@ public class OrderService {
 		order.setItem(orderRequest.getItem());
 		order.setOrderName(orderRequest.getOrderName());
 		order.setTotalPrice(orderRequest.getPrice()*orderRequest.getItem());
+		order.setCustomer(new Customer(customerId));
+		order.setStore(new Store(storeId));
 		orderRepository.save(order);
 		
 		LOG.debug("The customer order has been set");
 
 		return order;
+	}
+
+	/**
+	 * @return 
+	 * 
+	 */
+	public List<OrderResponceDto> listAllOrder() {
+		LOG.debug("Request Accepted to List All order");
+		return null;
 	}
 
 }

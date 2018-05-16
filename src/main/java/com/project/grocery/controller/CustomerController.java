@@ -70,7 +70,7 @@ public class CustomerController {
 		
 	}
 	
-	@RequestMapping(value="/{customerId}",method=RequestMethod.GET)
+	@RequestMapping(value="/customer/{customerId}",method=RequestMethod.GET)
 	public ResponseEntity<Object> getCustomer(@PathVariable Long customerId
 			){
 		LOG.debug("Request accepted to get customer.");

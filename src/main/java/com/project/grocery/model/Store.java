@@ -55,6 +55,32 @@ public class Store implements Serializable {
 
 	@Enumerated(EnumType.STRING)
 	protected Status status;
+	
+	@OneToMany(mappedBy = "store", fetch = FetchType.LAZY)
+	private List<Order> order;
+	
+	@OneToMany(mappedBy = "store", fetch = FetchType.LAZY)
+	private List<Items> items;
+
+	
+	
+	
+	/**
+	 * 
+	 */
+	public Store() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+
+	/**
+	 * @param userId
+	 */
+	public Store(Long id) {
+		this.id=id;
+	}
+	
 
 	/**
 	 * @return the username
@@ -217,5 +243,35 @@ public class Store implements Serializable {
 	public void setStatus(Status status) {
 		this.status = status;
 	}
+
+	/**
+	 * @return the order
+	 */
+	public List<Order> getOrder() {
+		return order;
+	}
+
+	/**
+	 * @param order the order to set
+	 */
+	public void setOrder(List<Order> order) {
+		this.order = order;
+	}
+
+	/**
+	 * @return the items
+	 */
+	public List<Items> getItems() {
+		return items;
+	}
+
+	/**
+	 * @param items the items to set
+	 */
+	public void setItems(List<Items> items) {
+		this.items = items;
+	}
+	
+	
 
 }
