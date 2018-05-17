@@ -59,4 +59,10 @@ public interface CustomerRepository extends JpaRepository<Customer ,Long> {
 	 */
 	Customer findByIdAndStatusNot(Long customerId, Status delete);
 
+	/**
+	 * @param customer
+	 * @return
+	 */
+	Customer findCustomerById(Customer customer);
+
 }

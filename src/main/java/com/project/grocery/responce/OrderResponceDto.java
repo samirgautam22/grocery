@@ -19,7 +19,35 @@ public class OrderResponceDto implements Serializable{
 	private String orderName;
 	private Date orderDate;
 	private String orderBy;
+	private String orderTo;
 	List<AddressResponceDto> address;
+	List<StoreAddressResponce> store;
+	
+	
+	/**
+	 * @return the store
+	 */
+	public List<StoreAddressResponce> getStore() {
+		return store;
+	}
+	/**
+	 * @param store the store to set
+	 */
+	public void setStore(List<StoreAddressResponce> store) {
+		this.store = store;
+	}
+	/**
+	 * @return the orderTo
+	 */
+	public String getOrderTo() {
+		return orderTo;
+	}
+	/**
+	 * @param orderTo the orderTo to set
+	 */
+	public void setOrderTo(String orderTo) {
+		this.orderTo = orderTo;
+	}
 	/**
 	 * @return the id
 	 */

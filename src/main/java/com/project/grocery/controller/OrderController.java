@@ -42,7 +42,7 @@ public class OrderController {
 		return new ResponseEntity<Object>(HttpStatus.CREATED);
 	}
 	
-	
+	@RequestMapping(method=RequestMethod.GET)
 	public ResponseEntity<Object> listAllOrder(){
 		LOG.debug("Request to list all users");
 		List<OrderResponceDto> responceDto= orderService.listAllOrder();
