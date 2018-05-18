@@ -136,7 +136,7 @@ public class OrderService {
 	
 			
 		});
-		
+		LOG.debug("The order is obtain");
 		return orderResponce;
 		
 	}
