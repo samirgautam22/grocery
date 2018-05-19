@@ -69,7 +69,7 @@ public class Login implements Serializable {
 	private String deviceId;
 	
 	@Enumerated(EnumType.STRING)
-	protected Status status;
+	private Status status;
 	
 
 	@Temporal(TemporalType.TIMESTAMP)

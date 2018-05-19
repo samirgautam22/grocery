@@ -14,6 +14,8 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.project.grocery.util.OrderStatus;
+
 /**
  * @author:Samir Gautam
  * @Version:1.0
@@ -47,6 +49,9 @@ public class Order implements Serializable {
 	@ManyToOne
 	@JoinColumn(name="store_id")
 	private Store store;
+	
+	@Column(name="order_status")
+	private OrderStatus orderStatus;
 
 	
 
@@ -167,5 +172,20 @@ public class Order implements Serializable {
 		this.store = store;
 	}
 
+	/**
+	 * @return the orderStatus
+	 */
+	public OrderStatus getOrderStatus() {
+		return orderStatus;
+	}
+
+	/**
+	 * @param orderStatus the orderStatus to set
+	 */
+	public void setOrderStatus(OrderStatus orderStatus) {
+		this.orderStatus = orderStatus;
+	}
+
+	
 
 }
