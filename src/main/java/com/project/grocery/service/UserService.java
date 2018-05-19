@@ -213,11 +213,16 @@ public class UserService {
 			throw new ValidationException("You are not authorized");
 		}
 
-		if (!passwordEditRequest.getOldPassword().equals(login.getPassword())) {
-			throw new ValidationException("Old Password not match");
+		try {
+			if (!Md5Hashing.getPw(passwordEditRequest.getOldPassword()).equals(Md5Hashing.getPw(login.getPassword()))) {
+				throw new ValidationException("Old Password not match");
+			}
+			login.setPassword(Md5Hashing.getPw(passwordEditRequest.getNewPassword()));
+			loginRepository.save(login);
+		} catch (NoSuchAlgorithmException e) {
+			e.printStackTrace();
 		}
-		login.setPassword(passwordEditRequest.getNewPassword());
-		loginRepository.save(login);
+		
 		LOG.debug("Password Changed");
 	}
 

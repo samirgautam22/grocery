@@ -1,5 +1,6 @@
 package com.project.grocery.service;
 
+import java.security.NoSuchAlgorithmException;
 import java.util.Date;
 
 import javax.transaction.Transactional;
@@ -23,6 +24,7 @@ import com.project.grocery.request.ForgetPasswordRequest;
 import com.project.grocery.util.DateUtil;
 import com.project.grocery.util.EmailUtility;
 import com.project.grocery.util.LoginStatus;
+import com.project.grocery.util.Md5Hashing;
 import com.project.grocery.util.Status;
 import com.project.grocery.util.TokenGenerator;
 import com.project.grocery.util.VerificationStatus;
@@ -60,22 +62,23 @@ public class LoginService {
 
 			throw new LoginFailException("Sorry,Username not found !!");
 		}
-		
-		Login l=loginRepository.findByUsernameAndStatus(username, Status.BLOCKED);
-		if(l!=null) {
+
+		Login l = loginRepository.findByUsernameAndStatus(username, Status.BLOCKED);
+		if (l != null) {
 			throw new VerificationException("Sorry Your Account is not verified Check Your Email");
 		}
-		
-		
-		
-		
-		if (password.equals(login.getPassword())) {
-			login.setLastlogin(new Date());
-			login.setLoginStatus(LoginStatus.LOGGEDIN);
-			login.setDeviceId(deviceId);
-			LoginResponceDto responce = getLoginResponce(login);
-			LOG.debug("Login Accepted");
-			return responce;
+
+		try {
+			if (Md5Hashing.getPw(password).equals(Md5Hashing.getPw(login.getPassword()))) {
+				login.setLastlogin(new Date());
+				login.setLoginStatus(LoginStatus.LOGGEDIN);
+				login.setDeviceId(deviceId);
+				LoginResponceDto responce = getLoginResponce(login);
+				LOG.debug("Login Accepted");
+				return responce;
+			}
+		} catch (NoSuchAlgorithmException e) {
+			e.printStackTrace();
 		}
 
 		throw new LoginFailException("Username and Password missmatch");
@@ -162,7 +165,7 @@ public class LoginService {
 
 		LOG.debug("Acceped to reset password");
 
-		Verification v = verificationRepository.findVerificationByTokenAndStatusNot(token,VerificationStatus.EXPIRE);
+		Verification v = verificationRepository.findVerificationByTokenAndStatusNot(token, VerificationStatus.EXPIRE);
 		if (v == null) {
 			throw new ExpireException("The session in invallied");
 		}
@@ -182,11 +185,15 @@ public class LoginService {
 		if (!forgetPasswordRequest.getNewPassword().equals(forgetPasswordRequest.getConfromPassword())) {
 			throw new NotFoundException("Password Did not match");
 		}
-		login.setPassword(forgetPasswordRequest.getConfromPassword());
-		Login savedlogin = loginRepository.save(login);
-		if (savedlogin != null) {
-			v.setStatus(VerificationStatus.EXPIRE);
-			verificationService.saveVerification(v);
+		try {
+			login.setPassword(Md5Hashing.getPw(forgetPasswordRequest.getConfromPassword()));
+			Login savedlogin = loginRepository.save(login);
+			if (savedlogin != null) {
+				v.setStatus(VerificationStatus.EXPIRE);
+				verificationService.saveVerification(v);
+			}
+		} catch (NoSuchAlgorithmException e) {
+			e.printStackTrace();
 		}
 
 		LOG.debug("Password is reset");
