@@ -199,9 +199,9 @@ public class CustomerService {
 			emailDuplication(editRequest.getEmail(), customer);
 		}
 
-		if (editRequest.getUsername() != null) {
-			usernameDuplication(editRequest.getUsername(), customer);
-		}
+//		if (editRequest.getUsername() != null) {
+//			usernameDuplication(editRequest.getUsername(), customer);
+//		}
 
 		if (editRequest.getGender() != null) {
 			customer.setGender(editRequest.getGender());
@@ -214,9 +214,9 @@ public class CustomerService {
 			customer.setPhoneNo(editRequest.getPhoneNo());
 		}
 
-		if (editRequest.getUsername() != null) {
-			customer.setUsername(editRequest.getUsername());
-		}
+//		if (editRequest.getUsername() != null) {
+//			customer.setUsername(editRequest.getUsername());
+//		}
 
 		if (editRequest.getFullName() != null) {
 			customer.setFullName(editRequest.getFullName());
@@ -277,17 +277,17 @@ public class CustomerService {
 
 		}
 	}
+//
+//	private void usernameDuplication(String username, Customer customer) {
+//		LOG.debug("Check for Username dublication");
+//		Customer c = customerRepository.findByUsernameAndStatusNot(username, Status.DELETE);
+//		if (c != null && customer.getId().equals(c.getId())) {
+//
+//			throw new AlreadyExitException("Username Already Exit");
+//
+//		}
 
-	private void usernameDuplication(String username, Customer customer) {
-		LOG.debug("Check for Username dublication");
-		Customer c = customerRepository.findByUsernameAndStatusNot(username, Status.DELETE);
-		if (c != null && customer.getId().equals(c.getId())) {
-
-			throw new AlreadyExitException("Username Already Exit");
-
-		}
-
-	}
+//	}
 
 	/**
 	 * @param customerId
@@ -313,7 +313,7 @@ public class CustomerService {
 			}
 
 			if (!Md5Hashing.getPw((passwordEditRequest.getOldPassword()))
-					.equals(Md5Hashing.getPw(login.getPassword()))) {
+					.equals(login.getPassword())) {
 				throw new ValidationException("Old Password not match");
 			}
 

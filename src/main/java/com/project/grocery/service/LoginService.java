@@ -69,7 +69,7 @@ public class LoginService {
 		}
 
 		try {
-			if (Md5Hashing.getPw(password).equals(Md5Hashing.getPw(login.getPassword()))) {
+			if (Md5Hashing.getPw(password).equals(login.getPassword())) {
 				login.setLastlogin(new Date());
 				login.setLoginStatus(LoginStatus.LOGGEDIN);
 				login.setDeviceId(deviceId);

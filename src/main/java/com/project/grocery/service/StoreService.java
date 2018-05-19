@@ -334,28 +334,28 @@ public class StoreService {
 	}
 
 
-	/**
-	 * @param zone
-	 * @param district
-	 * @param vdc
-	 * @param wardNo
-	 * @return
-	 */
-	public List<StoreDto> getStoreAddress(String zone, String district, String vdc, Long wardNo) {
-
-		List<StoreAddress> address = storeAddressRepository.findStoreByZoneAndDistrictAndVdcAndWardNo(zone, district,
-				vdc, wardNo);
-		if (address == null) {
-			throw new NotFoundException("No Store Found");
-
-		}
-		StoreAddress storeAddress=new StoreAddress();
-		
-		List<Store> store=storeRepository.findByStoreAddress(address);
-		System.out.println(store);
-
-		List<StoreDto> storeDto = new ArrayList<>();
-		return storeDto;
-
-	}
+//	/**
+//	 * @param zone
+//	 * @param district
+//	 * @param vdc
+//	 * @param wardNo
+//	 * @return
+//	 */
+//	public List<StoreDto> getStoreAddress(String zone, String district, String vdc, Long wardNo) {
+//
+//		List<StoreAddress> address = storeAddressRepository.findStoreByZoneAndDistrictAndVdcAndWardNo(zone, district,
+//				vdc, wardNo);
+//		if (address == null) {
+//			throw new NotFoundException("No Store Found");
+//
+//		}
+//		StoreAddress storeAddress=new StoreAddress();
+//		
+//		List<Store> store=storeRepository.findByStoreAddress(address);
+//		System.out.println(store);
+//
+//		List<StoreDto> storeDto = new ArrayList<>();
+//		return storeDto;
+//
+//	}
 }

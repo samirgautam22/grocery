@@ -83,7 +83,7 @@ public class OrderService {
 	 */
 	public List<OrderResponceDto> listAllOrder() {
 		LOG.debug("Request Accepted to List All order");
-		List<Order> order= orderRepository.findAllOrderAndOrderStatusNot(OrderStatus.AVIALIABLE);
+		List<Order> order= orderRepository.findOrderByOrderStatusNot(OrderStatus.AVIALIABLE);
 		List<OrderResponceDto> orderResponce=new ArrayList<>();
 		order.stream().forEach(u->{
 			Customer c=customerRepository.findCustomerById(u.getCustomer().getId());
@@ -151,7 +151,7 @@ public class OrderService {
 	 * @return
 	 */
 	public List<StoreOrderResponce> listAllorderByStore(Long storeId) {
-		
+		LOG.debug("List All Item in Store");
 		List<StoreOrderResponce> orderResponces=new ArrayList<>();
 		Store store=storeRepository.findStoreById(storeId);
 	
@@ -160,7 +160,7 @@ public class OrderService {
 		}
 		
 		
-		List<Order> order=orderRepository.findAllOrderByStoreStatusNot(store,OrderStatus.AVIALIABLE);
+		List<Order> order=orderRepository.findOrderByStoreAndOrderStatus(store,OrderStatus.AVIALIABLE);
 		
 		if(order==null) {
 			throw new NotFoundException("Order Not Avaliable in your store");
@@ -198,14 +198,67 @@ public class OrderService {
 			orderResponceDto.setAddress(addressResponceDtos);
 			orderResponces.add(orderResponceDto);
 		});
+		LOG.debug("List of all Avaliable order");
+		return orderResponces;
+	}
+	
+	
+	public List<StoreOrderResponce> deliverOrderByStore(Long storeId) {
+		LOG.debug("List All Deliver Item by Store");
+		List<StoreOrderResponce> orderResponces=new ArrayList<>();
+		Store store=storeRepository.findStoreById(storeId);
+	
+		if(store==null) {
+			throw new NotFoundException("Store not found");
+		}
 		
+		
+		List<Order> order=orderRepository.findOrderByStoreAndOrderStatus(store,OrderStatus.DELIVERED);
+		
+		if(order==null) {
+			throw new NotFoundException("Order Not Avaliable in your store");
+		}
+		
+		
+		order.stream().forEach(u->{
+			StoreOrderResponce orderResponceDto=new StoreOrderResponce();
+			System.out.println(u.getOrderName());
+			orderResponceDto.setId(u.getId());
+			orderResponceDto.setOrderName(u.getOrderName());
+			orderResponceDto.setItem(u.getItem());
+			orderResponceDto.setOrderDate(u.getOrderDate());
+			orderResponceDto.setPrice(u.getPrice());
+			orderResponceDto.setTotalPrice(u.getPrice()*u.getItem());
+			orderResponceDto.setOrderBy(u.getCustomer().getFullName());
+			
+			
+			List<AddressResponceDto> addressResponceDtos=new ArrayList<>();
+			List<Address> addresses=u.getCustomer().getAddress();
+			if(addresses!=null) {
+				addresses.stream().forEach(a->{
+					AddressResponceDto dto=new AddressResponceDto();
+					dto.setId(u.getId());
+					dto.setZone(a.getZone());
+					dto.setDistrict(a.getDistrict());
+					dto.setVdc(a.getVdc());
+					dto.setWardNo(a.getWardNo());
+					dto.setWardName(a.getWardName());
+					dto.setHomeNo(a.getHomeNo());
+					addressResponceDtos.add(dto);
+					
+				});
+			}
+			orderResponceDto.setAddress(addressResponceDtos);
+			orderResponces.add(orderResponceDto);
+		});
+		LOG.debug("List of all Avaliable order");
 		return orderResponces;
 	}
 	
 	
 	public List<OrderResponceDto> listAllDeliveredOrder() {
 		LOG.debug("Request Accepted to List All order");
-		List<Order> order= orderRepository.findAllOrderAndOrderStatusNot(OrderStatus.DELIVERED);
+		List<Order> order= orderRepository.findOrderByOrderStatusNot(OrderStatus.DELIVERED);
 		List<OrderResponceDto> orderResponce=new ArrayList<>();
 		order.stream().forEach(u->{
 			Customer c=customerRepository.findCustomerById(u.getCustomer().getId());
@@ -274,7 +327,7 @@ public class OrderService {
 	@Transactional
 	public void deleteOrder(Long orderId) {
 		LOG.debug("Request Accepted to Delete order");
-		Order order=orderRepository.findOrderByIdStatusNot(orderId,OrderStatus.DELETE);
+		Order order=orderRepository.findOrderByIdAndOrderStatusNot(orderId,OrderStatus.DELETE);
 		if(order==null) {
 			throw new NotFoundException("Order not found");
 		}

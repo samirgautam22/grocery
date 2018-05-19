@@ -25,19 +25,6 @@ public interface OrderRepository extends JpaRepository<Order,Long> {
 	List<Order> findAllOrderByStoreId(Long storeId);
 
 
-	/**
-	 * @param avialiable
-	 * @return
-	 */
-	List<Order> findAllOrderAndOrderStatusNot(OrderStatus avialiable);
-
-
-	/**
-	 * @param store
-	 * @param avialiable
-	 * @return
-	 */
-	List<Order> findAllOrderByStoreStatusNot(Store store, OrderStatus avialiable);
 
 
 	/**
@@ -45,6 +32,25 @@ public interface OrderRepository extends JpaRepository<Order,Long> {
 	 * @param delete
 	 * @return
 	 */
-	Order findOrderByIdStatusNot(Long orderId, OrderStatus delete);
+	Order findOrderByIdAndOrderStatusNot(Long orderId, OrderStatus delete);
+
+
+
+	/**
+	 * @param delivered
+	 * @return
+	 */
+	List<Order> findOrderByOrderStatusNot(OrderStatus delivered);
+
+
+
+	/**
+	 * @param store
+	 * @param avialiable
+	 * @return
+	 */
+	List<Order> findOrderByStoreAndOrderStatus(Store store, OrderStatus avialiable);
+
+
 
 }

@@ -6,7 +6,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import com.project.grocery.model.Store;
-import com.project.grocery.model.StoreAddress;
 import com.project.grocery.util.Status;
 
 /**
@@ -68,7 +67,7 @@ public interface StoreRepository extends JpaRepository<Store, Long> {
 	 * @param address
 	 * @return
 	 */
-	List<Store> findByStoreAddress(List<StoreAddress> address);
+//	List<Store> findByStoreAddress(List<StoreAddress> address);
 
 
 	

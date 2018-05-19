@@ -17,7 +17,6 @@ public class CustomerEditRequest implements Serializable {
 	private String gender;
 	private String email;
 	private Long phoneNo;
-	private String username;
 	
 	List<AddressEditRequest> address;
 
@@ -81,20 +80,6 @@ public class CustomerEditRequest implements Serializable {
 		this.phoneNo = phoneNo;
 	}
 
-	/**
-	 * @return the username
-	 */
-	public String getUsername() {
-		return username;
-	}
-
-	/**
-	 * @param username
-	 *            the username to set
-	 */
-	public void setUsername(String username) {
-		this.username = username;
-	}
 
 
 	/**

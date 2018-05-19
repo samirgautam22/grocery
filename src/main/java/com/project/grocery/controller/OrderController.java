@@ -59,7 +59,17 @@ public class OrderController {
 		LOG.debug("Request accepted to List all order by store");	
 		List<StoreOrderResponce> responceDto= orderService.listAllorderByStore(storeId);
 		Map<Object, Object> responce=new HashMap<>();
-		responce.put("order", responceDto);
+		responce.put("store", responceDto);
+		return new ResponseEntity<Object>(responce,HttpStatus.OK);
+	}
+	
+	
+	@RequestMapping(value="/deliverOrderByStore",method=RequestMethod.GET)
+	public ResponseEntity<Object> listAllDeliverdOrdereByStore(@RequestHeader Long storeId){
+		LOG.debug("Request accepted to List all order by store");	
+		List<StoreOrderResponce> responceDto= orderService.listAllorderByStore(storeId);
+		Map<Object, Object> responce=new HashMap<>();
+		responce.put("deliver", responceDto);
 		return new ResponseEntity<Object>(responce,HttpStatus.OK);
 	}
 	
@@ -68,14 +78,18 @@ public class OrderController {
 		LOG.debug("Request to list all delivered order");
 		List<OrderResponceDto> responceDto= orderService.listAllOrder();
 		Map<Object, Object> responce=new HashMap<>();
-		responce.put("order", responceDto);
+		responce.put("allDelivered", responceDto);
 		return new ResponseEntity<Object>(responce,HttpStatus.OK);
 	}
+	
+	
 	@RequestMapping(value="/{orderId}",method=RequestMethod.DELETE)
 	public ResponseEntity<Object> deleteOrder(@PathVariable ("orderId") Long orderId){
 		LOG.debug("Request Accepted to Delete order");
 		orderService.deleteOrder(orderId);
 		return new ResponseEntity<Object>(HttpStatus.OK);
 	}
+	
+	
 
 }

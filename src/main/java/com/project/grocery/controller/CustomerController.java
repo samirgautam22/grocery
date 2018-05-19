@@ -24,6 +24,8 @@ import com.project.grocery.request.PasswordEditRequest;
 import com.project.grocery.responce.CustomerResponceDto;
 import com.project.grocery.service.CustomerService;
 
+import io.swagger.annotations.ApiOperation;
+
 /**
  * @author:Samir Gautam
  * @Version:1.0
@@ -38,7 +40,7 @@ public class CustomerController {
 	CustomerService customerService;
 	
 	private static final Logger LOG = LoggerFactory.getLogger(CustomerController.class);
-	
+	@ApiOperation(value="Post customer",notes="Api to post customer")
 	@RequestMapping(method=RequestMethod.POST)
 	public ResponseEntity<Object> createCustomer(@Validated @RequestBody CustomerCreationRequest 
 			customerCreationRequest){
@@ -46,21 +48,21 @@ public class CustomerController {
 		   customerService.saveCustomer(customerCreationRequest);
 		return new ResponseEntity<Object>(HttpStatus.CREATED);
 	}
-	
+	@ApiOperation(value="delete customer",notes="Api to delete customer")
 	@RequestMapping(value="/{id}",method=RequestMethod.DELETE)
 	public ResponseEntity<Object> deleteCustomer(@PathVariable ("id") Long id){
 		  LOG.debug("Customer Delete Request");
 		customerService.deleteCustomer(id);
 		return new ResponseEntity<Object>(HttpStatus.OK);
 	}
-	
+	@ApiOperation(value="Edit customer",notes="Api to edit customer")
 	@RequestMapping(method=RequestMethod.PUT)
 	public ResponseEntity<Object> editCustomer(@Validated @RequestBody CustomerEditRequest editRequest ){
 		 LOG.debug("Customer Edit Request");
 		 customerService.editCustomer(editRequest);
 		return new ResponseEntity<Object>(HttpStatus.OK);
 	}
-	
+	@ApiOperation(value="change password",notes="Api to change password")
 	@RequestMapping(value="/changePassword",method=RequestMethod.PUT)
 	public ResponseEntity<Object> changePassword(@RequestHeader Long customerId,
 			@RequestBody PasswordEditRequest passwordEditRequest){
@@ -69,7 +71,7 @@ public class CustomerController {
 		return new ResponseEntity<Object>(HttpStatus.OK);
 		
 	}
-	
+	@ApiOperation(value="Get customer",notes="Api to get customer")
 	@RequestMapping(value="/customer/{customerId}",method=RequestMethod.GET)
 	public ResponseEntity<Object> getCustomer(@PathVariable Long customerId
 			){
@@ -80,7 +82,7 @@ public class CustomerController {
 		return new ResponseEntity<Object>(response,HttpStatus.OK);
 		
 	}
-	
+	@ApiOperation(value="List Customer",notes="Api to List Customer")
 	@RequestMapping(value="/listAll",method=RequestMethod.GET)
 	public ResponseEntity<Object> listAllCustomer(){
 		List<CustomerDto> customer=customerService.listAllCustomer();
@@ -88,6 +90,7 @@ public class CustomerController {
 		response.put("customers", customer);
 		return new ResponseEntity<Object>(response,HttpStatus.OK);
 	}
+	@ApiOperation(value="verifivation",notes="Api to get verification")
 	@RequestMapping(value="/{value}",method=RequestMethod.GET)
 	public ResponseEntity<Object> getVerification(@PathVariable ("value") String token){
 		LOG.debug("Request To verify Account");

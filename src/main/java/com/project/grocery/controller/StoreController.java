@@ -81,15 +81,15 @@ public class StoreController {
 		
 	}
 	
-	@RequestMapping(value="/address",method=RequestMethod.GET)
-	public ResponseEntity<Object> getStoreByAddress(@RequestHeader String zone,@RequestHeader String district, 
-			@RequestHeader String vdc,@RequestHeader Long wardNo){
-		LOG.debug("Request Accepted to get store By Address..");
-		List<StoreDto> addressresponce=storeService.getStoreAddress(zone,district,vdc,wardNo);
-		Map<Object,Object> responce=new HashMap<>();
-		responce.put("address", addressresponce);
-		return new ResponseEntity<Object>(responce,HttpStatus.OK);
-		
-	}
+//	@RequestMapping(value="/address",method=RequestMethod.GET)
+//	public ResponseEntity<Object> getStoreByAddress(@RequestHeader String zone,@RequestHeader String district, 
+//			@RequestHeader String vdc,@RequestHeader Long wardNo){
+//		LOG.debug("Request Accepted to get store By Address..");
+//		List<StoreDto> addressresponce=storeService.getStoreAddress(zone,district,vdc,wardNo);
+//		Map<Object,Object> responce=new HashMap<>();
+//		responce.put("address", addressresponce);
+//		return new ResponseEntity<Object>(responce,HttpStatus.OK);
+//		
+//	}
 
 }

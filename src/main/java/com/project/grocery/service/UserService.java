@@ -138,16 +138,7 @@ public class UserService {
 		}
 		User user = userRepository.findUserById(userEditRequest.getId());
 
-		User u = userRepository.findByUsernameAndStatusNot(userEditRequest.getUsername(), Status.DELETE);
-
-		if (u != null) {
-			throw new AlreadyExitException("Username Already Eits");
-		}
-
-		if (user == null) {
-			throw new NotFoundException("User not foud");
-		}
-
+		
 		if (userEditRequest.getEmail() != null) {
 			emailDuplication(userEditRequest.getEmail(), user);
 		}
@@ -164,9 +155,7 @@ public class UserService {
 			user.setGender(userEditRequest.getGender());
 		}
 
-		if (userEditRequest.getUsername() != null) {
-			user.setUsername(userEditRequest.getUsername());
-		}
+		
 
 		if (userEditRequest.getPhoneNo() != null) {
 			user.setPhoneNo(userEditRequest.getPhoneNo());
@@ -214,7 +203,7 @@ public class UserService {
 		}
 
 		try {
-			if (!Md5Hashing.getPw(passwordEditRequest.getOldPassword()).equals(Md5Hashing.getPw(login.getPassword()))) {
+			if (!Md5Hashing.getPw(passwordEditRequest.getOldPassword()).equals(login.getPassword())) {
 				throw new ValidationException("Old Password not match");
 			}
 			login.setPassword(Md5Hashing.getPw(passwordEditRequest.getNewPassword()));

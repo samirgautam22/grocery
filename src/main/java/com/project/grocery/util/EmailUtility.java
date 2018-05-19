@@ -2,12 +2,15 @@ package com.project.grocery.util;
 import java.util.Properties;
 
 import javax.mail.Message;
+import javax.mail.Message.RecipientType;
 import javax.mail.MessagingException;
 import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+
+import com.project.grocery.exception.NotFoundException;
 
 public class EmailUtility {
 	
@@ -22,7 +25,7 @@ public class EmailUtility {
 
 				Session session = Session.getInstance(props, new javax.mail.Authenticator() {
 					protected PasswordAuthentication getPasswordAuthentication() {
-						return new PasswordAuthentication("gautamsamir22@gmail.com","");// change
+						return new PasswordAuthentication("gautamsamir22@gmail.com","Networks@987");// change
 																							// accordingly
 					}
 					});
@@ -30,12 +33,17 @@ public class EmailUtility {
 						MimeMessage message1 = new MimeMessage(session);
 						message1.setFrom(new InternetAddress("gautamsamir22@gmail.com"));// change
 																					// accordingly
+						
+						RecipientType s=Message.RecipientType.TO;
+						System.out.println(s);
+						if(s==null) {
+							throw new NotFoundException("Email Address not found");
+						}
+						
 						message1.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
 						message1.setSubject("Verify Account");
 						message1.setText("Click Here to verify your Account:" +"http://localhost:8080/swagger-ui.html#!/customer-controller/getVerificationUsingGET/"+token);
 						Transport.send(message1);
-
-						System.out.println("message sent successfully");
 
 					} catch (MessagingException e) {
 						throw new RuntimeException(e);
@@ -57,7 +65,7 @@ public class EmailUtility {
 
 		Session session = Session.getInstance(props, new javax.mail.Authenticator() {
 			protected PasswordAuthentication getPasswordAuthentication() {
-				return new PasswordAuthentication("gautamsamir22@gmail.com","");// change
+				return new PasswordAuthentication("gautamsamir22@gmail.com","Networks@987");// change
 				// accordingly
 			}
 		});
@@ -71,7 +79,6 @@ public class EmailUtility {
 			message.setSubject("Reset Password ");
 			message.setText("Click Here to Reset your password:" +"http://localhost:8080/swagger-ui.html#!/login-controller/resetPasswordUsingPOST/"+token);
 
-			// send message
 			Transport.send(message);
 
 		} catch (MessagingException e) {
