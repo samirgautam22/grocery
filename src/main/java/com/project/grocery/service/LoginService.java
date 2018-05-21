@@ -24,11 +24,12 @@ import com.project.grocery.request.ForgetPasswordRequest;
 import com.project.grocery.util.DateUtil;
 import com.project.grocery.util.EmailUtility;
 import com.project.grocery.util.LoginStatus;
+import com.project.grocery.util.LoginType;
 import com.project.grocery.util.Md5Hashing;
+import com.project.grocery.util.RandomStrings;
 import com.project.grocery.util.Status;
 import com.project.grocery.util.TokenGenerator;
 import com.project.grocery.util.VerificationStatus;
-
 /**
  * @author:Samir Gautam
  * @Version:1.0
@@ -73,6 +74,7 @@ public class LoginService {
 				login.setLastlogin(new Date());
 				login.setLoginStatus(LoginStatus.LOGGEDIN);
 				login.setDeviceId(deviceId);
+				login.setToken(RandomStrings.getToken());
 				LoginResponceDto responce = getLoginResponce(login);
 				LOG.debug("Login Accepted");
 				return responce;
@@ -89,7 +91,12 @@ public class LoginService {
 	 * @return
 	 */
 	private LoginResponceDto getLoginResponce(Login login) {
-		return null;
+		LoginResponceDto loginResponceDto=new LoginResponceDto();
+		if(login.getLoginType().equals(LoginType.CUSTOMER)) {
+			loginResponceDto=new LoginResponceDto.Builder().id(login.getCustomer().getId())
+					.token(login.getToken()).build();
+		}
+		return loginResponceDto;
 	}
 
 	/**

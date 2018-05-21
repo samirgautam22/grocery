@@ -18,8 +18,9 @@ import com.project.grocery.util.UserRoles;
 @JsonInclude(Include.NON_NULL)
 public class LoginResponceDto implements Serializable {
 
-	private int id;
-	private String fullName;
+	private Long id;
+	private String firstName;
+	private String lastName;
 	private String gender;
 	private String email;
 	private Long phoneNo;
@@ -28,35 +29,77 @@ public class LoginResponceDto implements Serializable {
 	private Status status;
 	private UserRoles userRole;
 	private LoginType loginType;
+	private String token;
+
+	
+	
+	
+	/**
+	 * @return the token
+	 */
+	public String getToken() {
+		return token;
+	}
+
+	/**
+	 * @param token the token to set
+	 */
+	public void setToken(String token) {
+		this.token = token;
+	}
+
+	/**
+	 * 
+	 */
+	public LoginResponceDto() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	/**
+	 * @return the firstName
+	 */
+	public String getFirstName() {
+		return firstName;
+	}
+
+	/**
+	 * @param firstName
+	 *            the firstName to set
+	 */
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	/**
+	 * @return the lastName
+	 */
+	public String getLastName() {
+		return lastName;
+	}
+
+	/**
+	 * @param lastName
+	 *            the lastName to set
+	 */
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+
+	
 
 	/**
 	 * @return the id
 	 */
-	public int getId() {
+	public Long getId() {
 		return id;
 	}
 
 	/**
-	 * @param id
-	 *            the id to set
+	 * @param id the id to set
 	 */
-	public void setId(int id) {
+	public void setId(Long id) {
 		this.id = id;
-	}
-
-	/**
-	 * @return the fullName
-	 */
-	public String getFullName() {
-		return fullName;
-	}
-
-	/**
-	 * @param fullName
-	 *            the fullName to set
-	 */
-	public void setFullName(String fullName) {
-		this.fullName = fullName;
 	}
 
 	/**
@@ -179,4 +222,34 @@ public class LoginResponceDto implements Serializable {
 		this.loginType = loginType;
 	}
 
+	public static class Builder {
+		private Long id;
+		private String token;
+		
+		
+		public Builder id(Long id) {
+			this.id = id;
+			return this;
+		}
+		
+		public Builder token(String token) {
+			this.token = token;
+			return this;
+		}
+
+		/**
+		 * @return
+		 */
+			public LoginResponceDto build() {
+			return new LoginResponceDto(this);
+		}
+		
+		
+
+	}
+	
+	private LoginResponceDto(Builder builder) {
+		this.id = builder.id;
+		this.token = builder.token;
+	}
 }

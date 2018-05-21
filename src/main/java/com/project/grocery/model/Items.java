@@ -29,7 +29,7 @@ public class Items implements Serializable {
 	private double price;
 	
 	@Column(name="image_url")
-	private String ItemsImageUrl;
+	private String itemsPicture;
 
 	@ManyToOne
 	@JoinColumn(name="store_id")
@@ -38,6 +38,23 @@ public class Items implements Serializable {
 	@ManyToOne
 	@JoinColumn(name="user_id")
 	private User user;
+
+	
+	
+	
+	/**
+	 * @return the itemsPicture
+	 */
+	public String getItemsPicture() {
+		return itemsPicture;
+	}
+
+	/**
+	 * @param itemsPicture the itemsPicture to set
+	 */
+	public void setItemsPicture(String itemsPicture) {
+		this.itemsPicture = itemsPicture;
+	}
 
 	/**
 	 * @return the id
@@ -81,19 +98,6 @@ public class Items implements Serializable {
 		this.price = price;
 	}
 
-	/**
-	 * @return the itemsImageUrl
-	 */
-	public String getItemsImageUrl() {
-		return ItemsImageUrl;
-	}
-
-	/**
-	 * @param itemsImageUrl the itemsImageUrl to set
-	 */
-	public void setItemsImageUrl(String itemsImageUrl) {
-		ItemsImageUrl = itemsImageUrl;
-	}
 
 	/**
 	 * @return the store

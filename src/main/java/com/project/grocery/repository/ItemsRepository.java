@@ -14,4 +14,10 @@ import com.project.grocery.model.Items;
 @Repository
 public interface ItemsRepository  extends JpaRepository<Items, Long>{
 
+	/**
+	 * @param itemsName
+	 * @return
+	 */
+	Items findItemsByItemName(String itemsName);
+
 }

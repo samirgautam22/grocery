@@ -79,7 +79,7 @@ public class CustomerService {
 	public Customer saveCustomer(CustomerCreationRequest customerCreationRequest) {
 		LOG.debug("Customer Creation started..");
 		Login l = loginRepository.findByUsernameAndStatusNot(customerCreationRequest.getUsername(), Status.DELETE);
-		if (l != null && !!l.getUser().getStatus().equals(Status.DELETE)) {
+		if (l != null) {
 			throw new AlreadyExitException("Username Already Exits");
 		}
 
@@ -89,7 +89,8 @@ public class CustomerService {
 		}
 
 		Customer customer = new Customer();
-		customer.setFullName(customerCreationRequest.getFullName());
+		customer.setFirstName(customerCreationRequest.getFirstName());
+		customer.setLastName(customerCreationRequest.getLastName());
 		customer.setEmail(customerCreationRequest.getEmail());
 		customer.setGender(customerCreationRequest.getGender());
 		customer.setPhoneNo(customerCreationRequest.getPhoneNo());
@@ -207,7 +208,7 @@ public class CustomerService {
 			customer.setGender(editRequest.getGender());
 		}
 		if (editRequest.getEmail() != null) {
-			customer.setFullName(editRequest.getEmail());
+			customer.setEmail(editRequest.getEmail());
 		}
 
 		if (editRequest.getPhoneNo() != null) {
@@ -218,8 +219,12 @@ public class CustomerService {
 //			customer.setUsername(editRequest.getUsername());
 //		}
 
-		if (editRequest.getFullName() != null) {
-			customer.setFullName(editRequest.getFullName());
+		if(editRequest.getFirstName()!=null) {
+			customer.setFirstName(editRequest.getFirstName());
+		}
+		
+		if(editRequest.getLastName()!=null) {
+			customer.setFirstName(editRequest.getLastName());
 		}
 
 		if (editRequest.getAddress() != null) {
@@ -337,7 +342,8 @@ public class CustomerService {
 			throw new NotFoundException("Customer Not found");
 		}
 		CustomerResponceDto customerResponceDto = new CustomerResponceDto();
-		customerResponceDto.setFullName(customer.getFullName());
+	    customerResponceDto.setFirstName(customer.getFirstName());
+	    customerResponceDto.setLastName(customer.getLastName());
 		customerResponceDto.setGender(customer.getGender());
 		customerResponceDto.setEmail(customer.getEmail());
 		customerResponceDto.setUsername(customer.getUsername());
@@ -376,7 +382,8 @@ public class CustomerService {
 		customer.stream().forEach(u -> {
 			CustomerDto customerDto = new CustomerDto();
 			customerDto.setId(u.getId());
-			customerDto.setFullName(u.getFullName());
+			customerDto.setFirstName(u.getFirstName());
+			customerDto.setLastName(u.getLastName());
 			customerDto.setEmail(u.getEmail());
 			customerDto.setGender(u.getGender());
 			customerDto.setUsername(u.getUsername());

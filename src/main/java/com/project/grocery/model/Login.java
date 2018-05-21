@@ -29,9 +29,9 @@ import com.project.grocery.util.Status;
 @SuppressWarnings("serial")
 @Entity
 public class Login implements Serializable {
-	
+
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 
 	@ManyToOne
@@ -55,7 +55,7 @@ public class Login implements Serializable {
 	private LoginStatus loginStatus;
 
 	private String email;
-	
+
 	@NotNull
 	@Column
 	private String username;
@@ -65,19 +65,33 @@ public class Login implements Serializable {
 	@Enumerated(EnumType.STRING)
 	@Column(name = "login_type")
 	private LoginType loginType;
-	
+
 	private String deviceId;
-	
+
 	@Enumerated(EnumType.STRING)
 	private Status status;
-	
 
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "created_date")
 	private Date createdDate;
-	
-	
-	
+
+	private String token;
+
+	/**
+	 * @return the token
+	 */
+	public String getToken() {
+		return token;
+	}
+
+	/**
+	 * @param token
+	 *            the token to set
+	 */
+	public void setToken(String token) {
+		this.token = token;
+	}
+
 	/**
 	 * @return the status
 	 */
@@ -86,7 +100,8 @@ public class Login implements Serializable {
 	}
 
 	/**
-	 * @param status the status to set
+	 * @param status
+	 *            the status to set
 	 */
 	public void setStatus(Status status) {
 		this.status = status;
@@ -100,7 +115,8 @@ public class Login implements Serializable {
 	}
 
 	/**
-	 * @param id the id to set
+	 * @param id
+	 *            the id to set
 	 */
 	public void setId(Long id) {
 		this.id = id;
@@ -114,7 +130,8 @@ public class Login implements Serializable {
 	}
 
 	/**
-	 * @param email the email to set
+	 * @param email
+	 *            the email to set
 	 */
 	public void setEmail(String email) {
 		this.email = email;
@@ -128,7 +145,8 @@ public class Login implements Serializable {
 	}
 
 	/**
-	 * @param user the user to set
+	 * @param user
+	 *            the user to set
 	 */
 	public void setUser(User user) {
 		this.user = user;
@@ -164,8 +182,6 @@ public class Login implements Serializable {
 		this.loginStatus = loginStatus;
 	}
 
-	
-
 	/**
 	 * @return the username
 	 */
@@ -174,7 +190,8 @@ public class Login implements Serializable {
 	}
 
 	/**
-	 * @param username the username to set
+	 * @param username
+	 *            the username to set
 	 */
 	public void setUsername(String username) {
 		this.username = username;
@@ -248,7 +265,8 @@ public class Login implements Serializable {
 	}
 
 	/**
-	 * @param deviceId the deviceId to set
+	 * @param deviceId
+	 *            the deviceId to set
 	 */
 	public void setDeviceId(String deviceId) {
 		this.deviceId = deviceId;
@@ -262,12 +280,11 @@ public class Login implements Serializable {
 	}
 
 	/**
-	 * @param createdDate the createdDate to set
+	 * @param createdDate
+	 *            the createdDate to set
 	 */
 	public void setCreatedDate(Date createdDate) {
 		this.createdDate = createdDate;
 	}
-	
-	
 
 }

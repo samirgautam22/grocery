@@ -47,10 +47,6 @@ public class LoginController {
 
 	@RequestMapping(value = "/logout", method = RequestMethod.POST)
 	public ResponseEntity<Object> logout(@RequestHeader Long userId) {
-//		HttpServletRequest request = null;
-//		@SuppressWarnings("null")
-//		HttpSession httpSession=request.getSession(false);
-//		httpSession.invalidate();
 		loginService.logout(userId);
 		return new ResponseEntity<Object>(HttpStatus.OK);
 	}

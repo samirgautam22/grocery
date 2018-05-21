@@ -100,7 +100,7 @@ public class OrderService {
 			responceDto.setOrderName(u.getOrderName());
 			responceDto.setOrderDate(u.getOrderDate());
 			responceDto.setPrice(u.getPrice());
-			responceDto.setOrderBy(c.getFullName());
+			responceDto.setOrderBy(c.getFirstName()+" "+c.getLastName());
 			responceDto.getOrderBy();
 			
 			List<AddressResponceDto> adddresss=new ArrayList<>();
@@ -176,7 +176,7 @@ public class OrderService {
 			orderResponceDto.setOrderDate(u.getOrderDate());
 			orderResponceDto.setPrice(u.getPrice());
 			orderResponceDto.setTotalPrice(u.getPrice()*u.getItem());
-			orderResponceDto.setOrderBy(u.getCustomer().getFullName());
+			orderResponceDto.setOrderBy(u.getCustomer().getFirstName()+" "+u.getCustomer().getLastName());
 			
 			
 			List<AddressResponceDto> addressResponceDtos=new ArrayList<>();
@@ -229,7 +229,7 @@ public class OrderService {
 			orderResponceDto.setOrderDate(u.getOrderDate());
 			orderResponceDto.setPrice(u.getPrice());
 			orderResponceDto.setTotalPrice(u.getPrice()*u.getItem());
-			orderResponceDto.setOrderBy(u.getCustomer().getFullName());
+			orderResponceDto.setOrderBy(u.getCustomer().getFirstName()+" "+u.getCustomer().getLastName());
 			
 			
 			List<AddressResponceDto> addressResponceDtos=new ArrayList<>();
@@ -275,7 +275,7 @@ public class OrderService {
 			responceDto.setOrderName(u.getOrderName());
 			responceDto.setOrderDate(u.getOrderDate());
 			responceDto.setPrice(u.getPrice());
-			responceDto.setOrderBy(c.getFullName());
+			responceDto.setOrderBy(c.getFirstName()+" "+c.getLastName());
 			responceDto.getOrderBy();
 			
 			List<AddressResponceDto> adddresss=new ArrayList<>();
@@ -336,5 +336,4 @@ public class OrderService {
 		orderRepository.save(order);
 		LOG.debug("Order Deleted");
 	}
-
 }

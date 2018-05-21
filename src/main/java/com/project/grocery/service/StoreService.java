@@ -30,9 +30,11 @@ import com.project.grocery.request.StoreCreatationRequest;
 import com.project.grocery.request.StoreEditRequest;
 import com.project.grocery.responce.StoreAddressResponce;
 import com.project.grocery.responce.StoreResponceDto;
+import com.project.grocery.util.EmailUtility;
 import com.project.grocery.util.LoginStatus;
 import com.project.grocery.util.LoginType;
 import com.project.grocery.util.Md5Hashing;
+import com.project.grocery.util.RandomPassword;
 import com.project.grocery.util.Status;
 
 /**
@@ -110,9 +112,9 @@ public class StoreService {
 				}
 			}
 
+			Login login = new Login();
 			try {
-				Login login = new Login();
-				login.setPassword(Md5Hashing.getPw(storeCreatationRequest.getPassword()));
+				login.setPassword(Md5Hashing.getPw(RandomPassword.newPassword()));
 				login.setEmail(storeCreatationRequest.getEmail());
 				login.setLoginStatus(LoginStatus.LOGOUT);
 				login.setUsername(storeCreatationRequest.getUsername());
@@ -120,11 +122,17 @@ public class StoreService {
 				login.setCreatedDate(new Date());
 				login.setStatus(Status.ACTIVE);
 				login.setLoginType(LoginType.STOER);
-				loginService.saveLogin(login);
+				Login ll=loginRepository.save(login);
+				if(ll!=null) {
+					EmailUtility.sendNewPassword(storeCreatationRequest.getEmail(), ll.getPassword(), storeCreatationRequest.getUsername());
+				}
+				
 				LOG.debug("Login Added");
 			} catch (NoSuchAlgorithmException e) {
+				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			
 
 		}
 		return store;

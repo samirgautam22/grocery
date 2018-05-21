@@ -23,7 +23,6 @@ public class StoreCreatationRequest implements Serializable {
 	private Long panNo;
 	private String email;
 	private String username;
-	private String password;
 	private List<StoreAddressCreatation> storeAddress;
 	
 	
@@ -111,18 +110,6 @@ public class StoreCreatationRequest implements Serializable {
 	 */
 	public void setUsername(String username) {
 		this.username = username;
-	}
-	/**
-	 * @return the password
-	 */
-	public String getPassword() {
-		return password;
-	}
-	/**
-	 * @param password the password to set
-	 */
-	public void setPassword(String password) {
-		this.password = password;
 	}
 	
 }

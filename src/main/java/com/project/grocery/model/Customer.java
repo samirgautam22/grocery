@@ -36,7 +36,8 @@ public class Customer implements Serializable {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Long id;
 	@Column(name = "full_name")
-	private String fullName;
+	private String firstName;
+	private String lastName;
 	private String gender;
 	private String email;
 	@Column(name = "phone_no")
@@ -104,19 +105,33 @@ public class Customer implements Serializable {
 		this.id = id;
 	}
 
+	
 	/**
-	 * @return the fullName
+	 * @return the firstName
 	 */
-	public String getFullName() {
-		return fullName;
+	public String getFirstName() {
+		return firstName;
 	}
 
 	/**
-	 * @param fullName
-	 *            the fullName to set
+	 * @param firstName the firstName to set
 	 */
-	public void setFullName(String fullName) {
-		this.fullName = fullName;
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	/**
+	 * @return the lastName
+	 */
+	public String getLastName() {
+		return lastName;
+	}
+
+	/**
+	 * @param lastName the lastName to set
+	 */
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
 	}
 
 	/**
