@@ -43,7 +43,7 @@ public class StoreController {
 		LOG.debug("Request to Add store");
 		storeService.saveStore(userId,storeCreatationRequest);
 		
-		return new ResponseEntity<Object>(HttpStatus.CREATED);
+		return new ResponseEntity<Object>("Store Created",HttpStatus.CREATED);
 		
 	}
 	
@@ -51,7 +51,7 @@ public class StoreController {
 	public ResponseEntity<Object> deleteStore(@RequestHeader Long userId,@PathVariable ("id") Long id){
 		  LOG.debug("Store Delete Request");
 		  storeService.deleteCustomer(userId,id);
-		return new ResponseEntity<Object>(HttpStatus.OK);
+		return new ResponseEntity<Object>("Store Reported",HttpStatus.OK);
 	}
 	
 	@RequestMapping(method=RequestMethod.PUT)

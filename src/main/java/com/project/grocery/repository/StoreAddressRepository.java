@@ -23,14 +23,7 @@ public interface StoreAddressRepository extends JpaRepository<StoreAddress,Long>
 	 */
 	StoreAddress findStoreAddressById(Long id);
 
-	/**
-	 * @param zone
-	 * @param district
-	 * @param vdc
-	 * @param wardNo
-	 * @return
-	 */
-	List<StoreAddress> findStoreByZoneAndDistrictAndVdcAndWardNo(String zone, String district, String vdc, Long wardNo);
+	
 	
 	/**
 	 * @param storeName

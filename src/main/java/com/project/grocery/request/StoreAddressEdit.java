@@ -12,7 +12,7 @@ import java.io.Serializable;
 public class StoreAddressEdit implements Serializable {
 	
 	private Long id;
-	private String zone;
+	private String state;
 	private String district;
 	private String vdc;
 	private Long wardNo;
@@ -21,6 +21,20 @@ public class StoreAddressEdit implements Serializable {
 
 	
 	
+	/**
+	 * @return the state
+	 */
+	public String getState() {
+		return state;
+	}
+
+	/**
+	 * @param state the state to set
+	 */
+	public void setState(String state) {
+		this.state = state;
+	}
+
 	/**
 	 * @return the id
 	 */
@@ -35,20 +49,6 @@ public class StoreAddressEdit implements Serializable {
 		this.id = id;
 	}
 
-	/**
-	 * @return the zone
-	 */
-	public String getZone() {
-		return zone;
-	}
-
-	/**
-	 * @param zone
-	 *            the zone to set
-	 */
-	public void setZone(String zone) {
-		this.zone = zone;
-	}
 
 	/**
 	 * @return the district

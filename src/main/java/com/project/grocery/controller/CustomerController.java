@@ -46,14 +46,14 @@ public class CustomerController {
 			customerCreationRequest){
 		   LOG.debug("Customer Creation request");
 		   customerService.saveCustomer(customerCreationRequest);
-		return new ResponseEntity<Object>(HttpStatus.CREATED);
+		return new ResponseEntity<Object>("Registered Sucessfull !Check Email to verify your account.",HttpStatus.CREATED);
 	}
 	@ApiOperation(value="delete customer",notes="Api to delete customer")
 	@RequestMapping(value="/{id}",method=RequestMethod.DELETE)
 	public ResponseEntity<Object> deleteCustomer(@PathVariable ("id") Long id){
 		  LOG.debug("Customer Delete Request");
 		customerService.deleteCustomer(id);
-		return new ResponseEntity<Object>(HttpStatus.OK);
+		return new ResponseEntity<Object>("Customer Deleted",HttpStatus.OK);
 	}
 	@ApiOperation(value="Edit customer",notes="Api to edit customer")
 	@RequestMapping(method=RequestMethod.PUT)
@@ -68,7 +68,7 @@ public class CustomerController {
 			@RequestBody PasswordEditRequest passwordEditRequest){
 		LOG.debug("Request accepted to change password.");
 		customerService.changePassword(customerId,passwordEditRequest);
-		return new ResponseEntity<Object>(HttpStatus.OK);
+		return new ResponseEntity<Object>("Password changed",HttpStatus.OK);
 		
 	}
 	@ApiOperation(value="Get customer",notes="Api to get customer")
@@ -95,7 +95,7 @@ public class CustomerController {
 	public ResponseEntity<Object> getVerification(@PathVariable ("value") String token){
 		LOG.debug("Request To verify Account");
 		customerService.getVerify(token);
-		return new ResponseEntity<Object>(HttpStatus.OK);
+		return new ResponseEntity<Object>("Sucessfully Verified Login to continue",HttpStatus.OK);
 	}
 	
 	

@@ -16,6 +16,7 @@ import com.project.grocery.dto.CustomerDto;
 import com.project.grocery.exception.AlreadyExitException;
 import com.project.grocery.exception.ExpireException;
 import com.project.grocery.exception.NotFoundException;
+import com.project.grocery.exception.NotValideExpection;
 import com.project.grocery.exception.RequiredException;
 import com.project.grocery.exception.ValidationException;
 import com.project.grocery.model.Address;
@@ -87,7 +88,6 @@ public class CustomerService {
 		if (c != null) {
 			throw new AlreadyExitException("Email already Exits !!");
 		}
-
 		Customer customer = new Customer();
 		customer.setFirstName(customerCreationRequest.getFirstName());
 		customer.setLastName(customerCreationRequest.getLastName());
@@ -97,12 +97,31 @@ public class CustomerService {
 		customer.setStatus(Status.ACTIVE);
 		customer.setUsername(customerCreationRequest.getUsername());
 		customer.setCreatedDate(new Date());
+		
+		TokenGenerator tg = new TokenGenerator();
+		String token = tg.generateToken(customerCreationRequest.getUsername());
 
+		Verification verification = verificationRepository
+				.findVerificationByEmailAndStatusNot(customerCreationRequest.getEmail(), VerificationStatus.EXPIRE);
+
+		if (verification == null) {
+			Verification verifiy = new Verification();
+			verifiy.setEmail(customerCreationRequest.getEmail());
+			verifiy.setCreatedDate(new Date());
+			verifiy.setExpeireDate(DateUtil.getTokenExpireDate(new Date()));
+			verifiy.setToken(token);
+			verifiy.setStatus(VerificationStatus.ACTIVE);
+			EmailUtility.sendVerification(customerCreationRequest.getEmail(), token);
+			verificationService.saveVerification(verifiy);
+		}
+		
+	
+
+		LOG.debug("Added.");
 		LOG.debug("Customer Adding..");
 		Customer savedCustomer = customerRepository.save(customer);
 		LOG.debug("Customer Added");
 		if (savedCustomer != null) {
-
 			Login login = new Login();
 			login.setLoginStatus(LoginStatus.LOGOUT);
 			try {
@@ -118,31 +137,13 @@ public class CustomerService {
 				e.printStackTrace();
 			}
 
-			TokenGenerator tg = new TokenGenerator();
-			String token = tg.generateToken(login.getUsername());
-
-			Verification verification = verificationRepository
-					.findVerificationByEmailAndStatusNot(customerCreationRequest.getEmail(), VerificationStatus.EXPIRE);
-
-			if (verification == null) {
-				Verification verifiy = new Verification();
-				verifiy.setEmail(login.getEmail());
-				verifiy.setCreatedDate(new Date());
-				verifiy.setExpeireDate(DateUtil.getTokenExpireDate(new Date()));
-				verifiy.setToken(token);
-				verifiy.setStatus(VerificationStatus.ACTIVE);
-				EmailUtility.sendVerification(customerCreationRequest.getEmail(), token);
-				verificationService.saveVerification(verifiy);
-			}
-
-			LOG.debug("Added.");
-
+			
 			List<CustomerAddressCreationRequest> address = customerCreationRequest.getAddress();
 			if (address != null) {
 				for (CustomerAddressCreationRequest add : address) {
 					Address addresses = new Address();
 					addresses.setDistrict(add.getDistrict());
-					addresses.setZone(add.getZone());
+					addresses.setState(add.getState());
 					addresses.setVdc(add.getVdc());
 					addresses.setWardNo(add.getWardNo());
 					addresses.setHomeNo(add.getHomeNo());
@@ -195,14 +196,16 @@ public class CustomerService {
 		if (customer == null) {
 			throw new NotFoundException("User not foud");
 		}
+		
+		if(!customer.getId().equals(editRequest.getId())) {
+			throw new NotValideExpection("you are not authorized");
+		}
 
 		if (editRequest.getEmail() != null) {
 			emailDuplication(editRequest.getEmail(), customer);
 		}
 
-//		if (editRequest.getUsername() != null) {
-//			usernameDuplication(editRequest.getUsername(), customer);
-//		}
+
 
 		if (editRequest.getGender() != null) {
 			customer.setGender(editRequest.getGender());
@@ -224,7 +227,7 @@ public class CustomerService {
 		}
 		
 		if(editRequest.getLastName()!=null) {
-			customer.setFirstName(editRequest.getLastName());
+			customer.setLastName(editRequest.getLastName());
 		}
 
 		if (editRequest.getAddress() != null) {
@@ -243,8 +246,8 @@ public class CustomerService {
 				if (null != address.getDistrict()) {
 					add.setDistrict(address.getDistrict());
 				}
-				if (null != address.getZone()) {
-					add.setZone(address.getZone());
+				if (null != address.getState()) {
+					add.setState(add.getState());
 				}
 				if (null != address.getVdc()) {
 					add.setVdc(address.getVdc());
@@ -356,7 +359,7 @@ public class CustomerService {
 				AddressResponceDto dd = new AddressResponceDto();
 				dd.setId(u.getId());
 				dd.setDistrict(u.getDistrict());
-				dd.setZone(u.getZone());
+				dd.setState(u.getState());
 				dd.setVdc(u.getVdc());
 				dd.setWardName(u.getWardName());
 				dd.setWardNo(u.getWardNo());
@@ -395,7 +398,7 @@ public class CustomerService {
 					AddressDto dd = new AddressDto();
 					dd.setId(a.getId());
 					dd.setDistrict(a.getDistrict());
-					dd.setZone(a.getZone());
+					dd.setState(a.getState());
 					dd.setVdc(a.getVdc());
 					dd.setWardName(a.getWardName());
 					dd.setWardNo(a.getWardNo());

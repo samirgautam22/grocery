@@ -44,7 +44,7 @@ public class UserController {
 		LOG.debug("Request for user creation in accepted");
 		userService.saveUser(userId,userDto);
 		LOG.debug("user is created");
-		return new ResponseEntity<Object>(HttpStatus.CREATED);
+		return new ResponseEntity<Object>("User Created",HttpStatus.CREATED);
 	}
 	
 
@@ -53,7 +53,7 @@ public class UserController {
 	public ResponseEntity<Object> deletuser(@PathVariable("id") Long id){
 		LOG.debug("Request accepted to delete user.");
 		userService.deleteUser(id);
-		return new ResponseEntity<Object>(HttpStatus.OK);
+		return new ResponseEntity<Object>("User Deleted",HttpStatus.OK);
 		
 	}
 	
@@ -73,7 +73,7 @@ public class UserController {
 			@RequestBody PasswordEditRequest passwordEditRequest){
 		LOG.debug("Request accepted to change password.");
 		userService.changePassword(userId,passwordEditRequest);
-		return new ResponseEntity<Object>(HttpStatus.OK);
+		return new ResponseEntity<Object>("Password changed",HttpStatus.OK);
 		
 	}
 	

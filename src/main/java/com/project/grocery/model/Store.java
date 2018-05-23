@@ -29,7 +29,7 @@ import com.project.grocery.util.Status;
 public class Store implements Serializable {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	@Column(name = "store_name")
 	private String storeName;

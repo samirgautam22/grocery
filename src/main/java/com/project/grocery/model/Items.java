@@ -21,7 +21,7 @@ import javax.persistence.ManyToOne;
 public class Items implements Serializable {
 	
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
 	@Column(name="items_name")
 	private String itemName;

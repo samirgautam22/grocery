@@ -42,7 +42,7 @@ public class OrderController {
 			@RequestBody OrderCreatationRequest orderRequest ){
 		LOG.debug("Request Accepted To order item");
 		orderService.saveOrder(customerId,storeId,orderRequest);
-		return new ResponseEntity<Object>(HttpStatus.CREATED);
+		return new ResponseEntity<Object>("Order added",HttpStatus.CREATED);
 	}
 	
 	@RequestMapping(value="/listAllOrderAvaliable",method=RequestMethod.GET)

@@ -32,7 +32,7 @@ import com.project.grocery.util.UserRoles;
 public class User  implements Serializable {
 	
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
 	@Column(name = "full_name")
 	private String fullName;

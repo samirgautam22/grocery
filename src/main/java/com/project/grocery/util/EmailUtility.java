@@ -2,7 +2,6 @@ package com.project.grocery.util;
 import java.util.Properties;
 
 import javax.mail.Message;
-import javax.mail.Message.RecipientType;
 import javax.mail.MessagingException;
 import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
@@ -10,7 +9,6 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
-import com.project.grocery.exception.NotFoundException;
 
 public class EmailUtility {
 	
@@ -25,7 +23,7 @@ public class EmailUtility {
 
 				Session session = Session.getInstance(props, new javax.mail.Authenticator() {
 					protected PasswordAuthentication getPasswordAuthentication() {
-						return new PasswordAuthentication("gautamsamir22@gmail.com","email");// change
+						return new PasswordAuthentication("gautamsamir22@gmail.com","Networks@987");// change
 																							// accordingly
 					}
 					});
@@ -34,11 +32,7 @@ public class EmailUtility {
 						message1.setFrom(new InternetAddress("gautamsamir22@gmail.com"));// change
 																					// accordingly
 						
-						RecipientType s=Message.RecipientType.TO;
-						System.out.println(s);
-						if(s==null) {
-							throw new NotFoundException("Email Address not found");
-						}
+						
 						
 						message1.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
 						message1.setSubject("Verify Account");
@@ -52,7 +46,6 @@ public class EmailUtility {
 				}
 	
 	
-	//.............................................
 	
 	public static void sendResetLink(String to,String token) {
 		// Get the session object
@@ -65,7 +58,7 @@ public class EmailUtility {
 
 		Session session = Session.getInstance(props, new javax.mail.Authenticator() {
 			protected PasswordAuthentication getPasswordAuthentication() {
-				return new PasswordAuthentication("gautamsamir22@gmail.com","email");// change
+				return new PasswordAuthentication("gautamsamir22@gmail.com","Networks@987");// change
 				// accordingly
 			}
 		});

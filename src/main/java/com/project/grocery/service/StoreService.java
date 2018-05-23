@@ -100,7 +100,7 @@ public class StoreService {
 				for (StoreAddressCreatation add : address) {
 					StoreAddress addresses = new StoreAddress();
 					addresses.setDistrict(add.getDistrict());
-					addresses.setZone(add.getZone());
+					addresses.setState(add.getState());
 					addresses.setVdc(add.getVdc());
 					addresses.setWardNo(add.getWardNo());
 					addresses.setHomeNo(add.getHomeNo());
@@ -226,8 +226,8 @@ public class StoreService {
 				if (null != address.getDistrict()) {
 					add.setDistrict(address.getDistrict());
 				}
-				if (null != address.getZone()) {
-					add.setZone(address.getZone());
+				if (null != address.getState()) {
+					add.setState(address.getState());
 				}
 				if (null != address.getVdc()) {
 					add.setVdc(address.getVdc());
@@ -288,7 +288,7 @@ public class StoreService {
 					StoreAddressDto storeAddressDto = new StoreAddressDto();
 					storeAddressDto.setId(a.getId());
 					storeAddressDto.setDistrict(a.getDistrict());
-					storeAddressDto.setZone(a.getZone());
+					storeAddressDto.setState(a.getState());
 					storeAddressDto.setVdc(a.getVdc());
 					storeAddressDto.setWardNo(a.getWardNo());
 					storeAddressDto.setWardName(a.getWardName());
@@ -328,7 +328,7 @@ public class StoreService {
 				StoreAddressResponce dd = new StoreAddressResponce();
 				dd.setId(u.getId());
 				dd.setDistrict(u.getDistrict());
-				dd.setZone(u.getZone());
+				dd.setState(u.getState());
 				dd.setVdc(u.getVdc());
 				dd.setWardName(u.getWardName());
 				dd.setWardNo(u.getWardNo());

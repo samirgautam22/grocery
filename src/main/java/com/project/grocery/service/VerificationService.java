@@ -21,8 +21,8 @@ public class VerificationService {
 	VerificationRepository  verificationRepository;
 	
 	@Transactional
-	public void saveVerification(Verification verification) {
-		verificationRepository.save(verification);
+	public Verification saveVerification(Verification verification) {
+		return verificationRepository.save(verification);
 		
 	}
 

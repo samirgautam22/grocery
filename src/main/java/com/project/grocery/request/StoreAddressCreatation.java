@@ -11,23 +11,25 @@ import java.io.Serializable;
 @SuppressWarnings("serial")
 public class StoreAddressCreatation implements Serializable {
 
-	private String zone;
+	private String state;
 	private String district;
 	private String vdc;
 	private Long wardNo;
 	private String wardName;
 	private String homeNo;
+	
+	
 	/**
-	 * @return the zone
+	 * @return the state
 	 */
-	public String getZone() {
-		return zone;
+	public String getState() {
+		return state;
 	}
 	/**
-	 * @param zone the zone to set
+	 * @param state the state to set
 	 */
-	public void setZone(String zone) {
-		this.zone = zone;
+	public void setState(String state) {
+		this.state = state;
 	}
 	/**
 	 * @return the district

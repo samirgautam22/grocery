@@ -110,7 +110,7 @@ public class OrderService {
 					AddressResponceDto dd = new AddressResponceDto();
 					dd.setId(a.getId());
 					dd.setDistrict(a.getDistrict());
-					dd.setZone(a.getZone());
+					dd.setState(a.getState());
 					dd.setVdc(a.getVdc());
 					dd.setWardName(a.getWardName());
 					dd.setWardNo(a.getWardNo());
@@ -128,7 +128,7 @@ public class OrderService {
 					StoreAddressResponce dd = new StoreAddressResponce();
 					dd.setId(a.getId());
 					dd.setDistrict(a.getDistrict());
-					dd.setZone(a.getZone());
+					dd.setState(a.getState());
 					dd.setVdc(a.getVdc());
 					dd.setWardName(a.getWardName());
 					dd.setWardNo(a.getWardNo());
@@ -185,7 +185,7 @@ public class OrderService {
 				addresses.stream().forEach(a->{
 					AddressResponceDto dto=new AddressResponceDto();
 					dto.setId(u.getId());
-					dto.setZone(a.getZone());
+					dto.setState(a.getState());
 					dto.setDistrict(a.getDistrict());
 					dto.setVdc(a.getVdc());
 					dto.setWardNo(a.getWardNo());
@@ -238,7 +238,7 @@ public class OrderService {
 				addresses.stream().forEach(a->{
 					AddressResponceDto dto=new AddressResponceDto();
 					dto.setId(u.getId());
-					dto.setZone(a.getZone());
+					dto.setState(a.getState());
 					dto.setDistrict(a.getDistrict());
 					dto.setVdc(a.getVdc());
 					dto.setWardNo(a.getWardNo());
@@ -285,7 +285,7 @@ public class OrderService {
 					AddressResponceDto dd = new AddressResponceDto();
 					dd.setId(a.getId());
 					dd.setDistrict(a.getDistrict());
-					dd.setZone(a.getZone());
+					dd.setState(a.getState());
 					dd.setVdc(a.getVdc());
 					dd.setWardName(a.getWardName());
 					dd.setWardNo(a.getWardNo());
@@ -303,7 +303,7 @@ public class OrderService {
 					StoreAddressResponce dd = new StoreAddressResponce();
 					dd.setId(a.getId());
 					dd.setDistrict(a.getDistrict());
-					dd.setZone(a.getZone());
+					dd.setState(a.getState());
 					dd.setVdc(a.getVdc());
 					dd.setWardName(a.getWardName());
 					dd.setWardNo(a.getWardNo());

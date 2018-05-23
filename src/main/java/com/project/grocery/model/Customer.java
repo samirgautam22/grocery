@@ -33,7 +33,7 @@ import com.project.grocery.util.Status;
 public class Customer implements Serializable {
 	
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
 	@Column(name = "full_name")
 	private String firstName;

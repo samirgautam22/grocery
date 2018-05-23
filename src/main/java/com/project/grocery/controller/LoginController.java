@@ -55,14 +55,14 @@ public class LoginController {
 	public ResponseEntity<Object> forgetPassword(@RequestBody String Email){
 		LOG.debug("Request Accepted for Reset password");
 		loginService.resetPassword(Email);
-		return new ResponseEntity<Object>(HttpStatus.OK);
+		return new ResponseEntity<Object>("Check Email for change password",HttpStatus.OK);
 	}
 	
 	@RequestMapping(value="/resetPassword/{value}",method=RequestMethod.POST)
 	public ResponseEntity<Object> resetPassword(@PathVariable ("value") String token,@RequestBody ForgetPasswordRequest forgetPasswordRequest){
 		LOG.debug("Request Accepted to reset password");
 		loginService.resetForgetPassword(token,forgetPasswordRequest);
-		return new ResponseEntity<Object>(HttpStatus.OK);
+		return new ResponseEntity<Object>("Password Reset",HttpStatus.OK);
 	}
 	
 }

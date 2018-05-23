@@ -25,7 +25,7 @@ import com.project.grocery.util.VerificationStatus;
 public class Verification implements Serializable {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String email;
 	private String token;
