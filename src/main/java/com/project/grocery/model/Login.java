@@ -16,6 +16,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.project.grocery.util.LoginStatus;
 import com.project.grocery.util.LoginType;
 import com.project.grocery.util.Status;
@@ -76,6 +77,10 @@ public class Login implements Serializable {
 	private Date createdDate;
 
 	private String token;
+	
+	@Temporal(TemporalType.TIMESTAMP)
+	@JsonIgnore
+	private Date tokenExpirationDateTime;
 
 	/**
 	 * @return the token
@@ -286,5 +291,21 @@ public class Login implements Serializable {
 	public void setCreatedDate(Date createdDate) {
 		this.createdDate = createdDate;
 	}
+
+	/**
+	 * @return the tokenExpirationDateTime
+	 */
+	public Date getTokenExpirationDateTime() {
+		return tokenExpirationDateTime;
+	}
+
+	/**
+	 * @param tokenExpirationDateTime the tokenExpirationDateTime to set
+	 */
+	public void setTokenExpirationDateTime(Date tokenExpirationDateTime) {
+		this.tokenExpirationDateTime = tokenExpirationDateTime;
+	}
+	
+	
 
 }

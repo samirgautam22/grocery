@@ -16,6 +16,9 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import com.project.grocery.request.ItemsCreatationRequest;
 import com.project.grocery.service.ItemsService;
 
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+
 /**
  * @author:Samir Gautam
  * @Version:1.0
@@ -30,7 +33,8 @@ public class ItemsController {
 	ItemsService itemsService;
 
 	private static final Logger LOG = LoggerFactory.getLogger(ItemsController.class);
-
+	@ApiImplicitParams({
+		@ApiImplicitParam(name="token",required=true,dataType="String",paramType="header")})
 	@RequestMapping(method = RequestMethod.POST)
 	public ResponseEntity<Object> saveItems(@RequestHeader Long userID, @RequestBody ItemsCreatationRequest request,
 			@RequestParam  CommonsMultipartFile file  ) {

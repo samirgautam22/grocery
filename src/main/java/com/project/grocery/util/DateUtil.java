@@ -2,6 +2,8 @@ package com.project.grocery.util;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -47,6 +49,17 @@ public class DateUtil {
 			return true;
 		}
 		return false;
+	}
+	
+	public static Date currentDateTimePlusMinutes(int minutes) {
+		Date currentDate = new Date();
+		LocalDateTime localDateTime = currentDate.toInstant()
+				.atZone(ZoneId.systemDefault()).toLocalDateTime();
+		localDateTime = localDateTime.plusMinutes(minutes);
+		Date currentDatePlusMinutes = Date
+				.from(localDateTime.atZone(ZoneId.systemDefault()).toInstant());
+
+		return currentDatePlusMinutes;
 	}
 
 }

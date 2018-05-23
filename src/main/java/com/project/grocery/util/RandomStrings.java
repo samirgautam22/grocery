@@ -14,7 +14,7 @@ public class RandomStrings {
 	private static SecureRandom random = new SecureRandom();
 
 	public static String getToken() {
-		return new BigInteger(50, random).toString(32);
+		return new BigInteger(50, random).toString(64);
 }
 
 }

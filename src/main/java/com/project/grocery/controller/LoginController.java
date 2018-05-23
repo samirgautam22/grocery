@@ -48,7 +48,7 @@ public class LoginController {
 	@RequestMapping(value = "/logout", method = RequestMethod.POST)
 	public ResponseEntity<Object> logout(@RequestHeader Long userId) {
 		loginService.logout(userId);
-		return new ResponseEntity<Object>(HttpStatus.OK);
+		return new ResponseEntity<Object>("You are loged out from the system",HttpStatus.OK);
 	}
 	
 	@RequestMapping(value = "/forgetPassword", method = RequestMethod.POST)

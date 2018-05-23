@@ -21,6 +21,9 @@ import com.project.grocery.responce.OrderResponceDto;
 import com.project.grocery.responce.StoreOrderResponce;
 import com.project.grocery.service.OrderService;
 
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+
 /**
  * @author:Samir Gautam
  * @Version:1.0
@@ -35,16 +38,17 @@ public class OrderController {
 	OrderService orderService;
 	
 	private static final Logger LOG = LoggerFactory.getLogger(OrderController.class);
-	
+	@ApiImplicitParams({
+		@ApiImplicitParam(name="token",required=true,dataType="String",paramType="header")})
 	@RequestMapping(method=RequestMethod.POST)
-
 	public ResponseEntity<Object> saveOrder(@RequestHeader Long customerId,@RequestHeader Long storeId,
 			@RequestBody OrderCreatationRequest orderRequest ){
 		LOG.debug("Request Accepted To order item");
 		orderService.saveOrder(customerId,storeId,orderRequest);
 		return new ResponseEntity<Object>("Order added",HttpStatus.CREATED);
 	}
-	
+	@ApiImplicitParams({
+		@ApiImplicitParam(name="token",required=true,dataType="String",paramType="header")})
 	@RequestMapping(value="/listAllOrderAvaliable",method=RequestMethod.GET)
 	public ResponseEntity<Object> listAllOrder(){
 		LOG.debug("Request to list all users");
@@ -53,7 +57,8 @@ public class OrderController {
 		responce.put("order", responceDto);
 		return new ResponseEntity<Object>(responce,HttpStatus.OK);
 	}
-	
+	@ApiImplicitParams({
+		@ApiImplicitParam(name="token",required=true,dataType="String",paramType="header")})
 	@RequestMapping(value="/listOrderByStore",method=RequestMethod.GET)
 	public ResponseEntity<Object> listOrdereByStore(@RequestHeader Long storeId){
 		LOG.debug("Request accepted to List all order by store");	
@@ -63,7 +68,8 @@ public class OrderController {
 		return new ResponseEntity<Object>(responce,HttpStatus.OK);
 	}
 	
-	
+	@ApiImplicitParams({
+		@ApiImplicitParam(name="token",required=true,dataType="String",paramType="header")})
 	@RequestMapping(value="/deliverOrderByStore",method=RequestMethod.GET)
 	public ResponseEntity<Object> listAllDeliverdOrdereByStore(@RequestHeader Long storeId){
 		LOG.debug("Request accepted to List all order by store");	
@@ -72,7 +78,8 @@ public class OrderController {
 		responce.put("deliver", responceDto);
 		return new ResponseEntity<Object>(responce,HttpStatus.OK);
 	}
-	
+	@ApiImplicitParams({
+		@ApiImplicitParam(name="token",required=true,dataType="String",paramType="header")})
 	@RequestMapping(value="/listAllOrderDelivered",method=RequestMethod.GET)
 	public ResponseEntity<Object> listAllDeliveredOrder(){
 		LOG.debug("Request to list all delivered order");
@@ -82,7 +89,8 @@ public class OrderController {
 		return new ResponseEntity<Object>(responce,HttpStatus.OK);
 	}
 	
-	
+	@ApiImplicitParams({
+		@ApiImplicitParam(name="token",required=true,dataType="String",paramType="header")})
 	@RequestMapping(value="/{orderId}",method=RequestMethod.DELETE)
 	public ResponseEntity<Object> deleteOrder(@PathVariable ("orderId") Long orderId){
 		LOG.debug("Request Accepted to Delete order");

@@ -8,6 +8,7 @@ import javax.transaction.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.project.grocery.dto.LoginResponceDto;
@@ -26,7 +27,6 @@ import com.project.grocery.util.EmailUtility;
 import com.project.grocery.util.LoginStatus;
 import com.project.grocery.util.LoginType;
 import com.project.grocery.util.Md5Hashing;
-import com.project.grocery.util.RandomStrings;
 import com.project.grocery.util.Status;
 import com.project.grocery.util.TokenGenerator;
 import com.project.grocery.util.VerificationStatus;
@@ -47,6 +47,16 @@ public class LoginService {
 
 	@Autowired
 	VerificationService verificationService;
+	
+	@Value("${grocery.token.expire.enable}")
+	private String tokenExpireEnable;
+
+	@Value("${grocery.token.expire.after}")
+	private int tokenExpireAfter;
+
+	@Value("${grocery.login.password.length}")
+	private int passwordLength;
+
 
 	/**
 	 * @param username
@@ -74,7 +84,11 @@ public class LoginService {
 				login.setLastlogin(new Date());
 				login.setLoginStatus(LoginStatus.LOGGEDIN);
 				login.setDeviceId(deviceId);
-				login.setToken(RandomStrings.getToken());
+				login.setToken(TokenGenerator.getToken());
+				if (tokenExpireAfter > 0) {
+					login.setTokenExpirationDateTime(
+							DateUtil.currentDateTimePlusMinutes(tokenExpireAfter));
+				}
 				LoginResponceDto responce = getLoginResponce(login);
 				LOG.debug("Login Accepted");
 				return responce;
@@ -111,6 +125,8 @@ public class LoginService {
 				throw new LogoutFailException("User id mismatch");
 			}
 			user.setLoginStatus(LoginStatus.LOGOUT);
+			user.setToken("");
+			user.setTokenExpirationDateTime(new Date());
 			loginRepository.save(user);
 			LOG.debug("logout");
 			return user;

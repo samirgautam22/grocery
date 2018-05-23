@@ -24,6 +24,9 @@ import com.project.grocery.request.UserEditRequest;
 import com.project.grocery.responce.UserResponceDto;
 import com.project.grocery.service.UserService;
 
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+
 /**
  * @author:Samir Gautam
  * @Version:1.0
@@ -38,7 +41,8 @@ public class UserController {
 	
 	@Autowired
 	UserService userService;
-	
+	@ApiImplicitParams({
+		@ApiImplicitParam(name="token",required=true,dataType="String",paramType="header")})
 	@RequestMapping( method = RequestMethod.POST)
 	public ResponseEntity<Object> saveUser(@RequestHeader Long userId ,@Validated @RequestBody UserCreationRequest userDto) {
 		LOG.debug("Request for user creation in accepted");
@@ -48,7 +52,8 @@ public class UserController {
 	}
 	
 
-	
+	@ApiImplicitParams({
+		@ApiImplicitParam(name="token",required=true,dataType="String",paramType="header")})
 	@RequestMapping(value="/{id}",method=RequestMethod.DELETE)
 	public ResponseEntity<Object> deletuser(@PathVariable("id") Long id){
 		LOG.debug("Request accepted to delete user.");
@@ -56,7 +61,8 @@ public class UserController {
 		return new ResponseEntity<Object>("User Deleted",HttpStatus.OK);
 		
 	}
-	
+	@ApiImplicitParams({
+		@ApiImplicitParam(name="token",required=true,dataType="String",paramType="header")})
 	@RequestMapping(method=RequestMethod.PUT)
 	public ResponseEntity<Object> editUser(@RequestBody UserEditRequest userEditRequest){
 		LOG.debug("Request accepted to edit user.");
@@ -67,7 +73,8 @@ public class UserController {
 		
 		
 	}
-	
+	@ApiImplicitParams({
+		@ApiImplicitParam(name="token",required=true,dataType="String",paramType="header")})
 	@RequestMapping(value="/changePassword",method=RequestMethod.PUT)
 	public ResponseEntity<Object> changePassword(@RequestHeader Long userId,
 			@RequestBody PasswordEditRequest passwordEditRequest){
@@ -77,7 +84,8 @@ public class UserController {
 		
 	}
 	
-	
+	@ApiImplicitParams({
+		@ApiImplicitParam(name="token",required=true,dataType="String",paramType="header")})
 	@RequestMapping(method=RequestMethod.GET)
 	public ResponseEntity<Object> listAllUser(){
 		List<UserDto> user=userService.listAllUsers();
@@ -85,7 +93,8 @@ public class UserController {
 		response.put("user", user);
 		return new ResponseEntity<Object>(response,HttpStatus.OK);
 	}
-	
+	@ApiImplicitParams({
+		@ApiImplicitParam(name="token",required=true,dataType="String",paramType="header")})
 	@RequestMapping(value="/{userId}",method=RequestMethod.GET)
 	public ResponseEntity<Object> getUser(@RequestHeader Long userId){
 		UserResponceDto user=userService.getUser(userId);
