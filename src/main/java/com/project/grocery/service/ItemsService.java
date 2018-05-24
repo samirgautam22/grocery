@@ -5,7 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.commons.CommonsMultipartFile;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.project.grocery.exception.AlreadyExitException;
 import com.project.grocery.model.Items;
@@ -33,7 +33,7 @@ public class ItemsService {
 	 * @param request
 	 * @param file
 	 */
-	public Items create(Long userID, ItemsCreatationRequest request,CommonsMultipartFile file) {
+	public Items create(Long userID, ItemsCreatationRequest request,MultipartFile file) {
 		LOG.debug("Items uploded by admin");
 		Items items = itemsRepository.findItemsByItemName(request.getItemsName());
 		if (items != null) {

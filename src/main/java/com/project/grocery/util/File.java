@@ -11,7 +11,7 @@ import java.nio.file.Paths;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.commons.CommonsMultipartFile;
+
 
 import com.project.grocery.exception.NotFoundException;
 
@@ -47,7 +47,7 @@ public class File {
 	}
 	
 	
-	public static String writeImageToFile(CommonsMultipartFile file) {
+	public static String writeImageToFile(MultipartFile file) {
 		String imageUrl = UPLOADED_FOLDER + file.getOriginalFilename();
 		try {
 			BufferedOutputStream out = new BufferedOutputStream(new FileOutputStream(imageUrl));

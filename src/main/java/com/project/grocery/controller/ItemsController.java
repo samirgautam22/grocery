@@ -9,9 +9,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.commons.CommonsMultipartFile;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.project.grocery.request.ItemsCreatationRequest;
 import com.project.grocery.service.ItemsService;
@@ -37,7 +37,7 @@ public class ItemsController {
 		@ApiImplicitParam(name="token",required=true,dataType="String",paramType="header")})
 	@RequestMapping(method = RequestMethod.POST)
 	public ResponseEntity<Object> saveItems(@RequestHeader Long userID, @RequestBody ItemsCreatationRequest request,
-			@RequestParam  CommonsMultipartFile file  ) {
+			@RequestPart  MultipartFile file  ) {
 		LOG.debug("items cratation by user");
 		itemsService.create(userID, request,file);
 		return new ResponseEntity<Object>("Items added",HttpStatus.CREATED);
