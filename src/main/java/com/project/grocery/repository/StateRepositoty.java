@@ -20,4 +20,5 @@ public interface StateRepositoty extends JpaRepository<State,Long> {
 	 */
 	State findByState(String string);
 
+
 }

@@ -21,6 +21,8 @@ import org.springframework.web.multipart.MultipartFile;
 import com.project.grocery.responce.StateResponce;
 import com.project.grocery.service.StateService;
 
+import io.swagger.annotations.ApiOperation;
+
 
 /**
  * @author:Samir Gautam
@@ -37,13 +39,15 @@ public class StateController {
 	StateService stateService;
 	
 	@RequestMapping(value="/uplodeState",method=RequestMethod.POST)
+	@ApiOperation(value="List All Store",notes="Api to List All Store")
 	public ResponseEntity<Object> processState(@RequestPart MultipartFile state)  {
 		LOG.debug("Request Accepted to uplode states");
 		stateService.uplodeState(state);
 		return new ResponseEntity<Object>("State uploded",HttpStatus.OK);
 		
 	}
-	@RequestMapping(method=RequestMethod.GET)
+	@RequestMapping(value="/listStates",method=RequestMethod.GET)
+	@ApiOperation(value="List All States",notes="Api to List all states")
 	public ResponseEntity<Object> listAllState(){
 	LOG.debug("request Accepted to List All State");
 	List<StateResponce> stateResponce=stateService.listAllState();

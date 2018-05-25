@@ -24,6 +24,7 @@ import com.project.grocery.service.StoreService;
 
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
 
 /**
  * @author:Samir Gautam
@@ -41,6 +42,7 @@ public class StoreController {
 	private StoreService storeService;
 	@ApiImplicitParams({
 		@ApiImplicitParam(name="token",required=true,dataType="String",paramType="header")})
+	@ApiOperation(value="Save Store",notes="Api to save store")
 	@RequestMapping(method=RequestMethod.POST)
 	public ResponseEntity<Object> saveStore(@RequestHeader Long userId,
 			@RequestBody StoreCreatationRequest storeCreatationRequest){
@@ -52,6 +54,7 @@ public class StoreController {
 	}
 	@ApiImplicitParams({
 		@ApiImplicitParam(name="token",required=true,dataType="String",paramType="header")})
+	@ApiOperation(value="Delete Store",notes="Api to Delete Store")
 	@RequestMapping(value="/{id}",method=RequestMethod.DELETE)
 	public ResponseEntity<Object> deleteStore(@RequestHeader Long userId,@PathVariable ("id") Long id){
 		  LOG.debug("Store Delete Request");
@@ -60,6 +63,7 @@ public class StoreController {
 	}
 	@ApiImplicitParams({
 		@ApiImplicitParam(name="token",required=true,dataType="String",paramType="header")})
+	@ApiOperation(value="Edit Store",notes="Api to Edit Store")
 	@RequestMapping(method=RequestMethod.PUT)
 	public ResponseEntity<Object> editStore(@RequestBody StoreEditRequest storeEditRequest){
 		LOG.debug("Request for Store Edit Accepted..");
@@ -69,6 +73,7 @@ public class StoreController {
 	}
 	@ApiImplicitParams({
 		@ApiImplicitParam(name="token",required=true,dataType="String",paramType="header")})
+	@ApiOperation(value="List All Store",notes="Api to List All Store")
 	@RequestMapping(method=RequestMethod.GET)
 	public ResponseEntity<Object> listAllStore(){
 		LOG.debug("List All Stores");
@@ -79,6 +84,7 @@ public class StoreController {
 	}
 	@ApiImplicitParams({
 		@ApiImplicitParam(name="token",required=true,dataType="String",paramType="header")})
+	@ApiOperation(value="Get Store",notes="Api to get Store")
 	@RequestMapping(value="/{storeId}",method=RequestMethod.GET)
 	public ResponseEntity<Object> getStore(@RequestHeader Long storeId){
 		LOG.debug("Request Accepted to get store..");

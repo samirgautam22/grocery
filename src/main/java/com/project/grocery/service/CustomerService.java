@@ -168,7 +168,6 @@ public class CustomerService {
 		Customer c = customerRepository.findCustomerById(id);
 		if (c == null) {
 			throw new NotFoundException("Customer Not found !!");
-
 		}
 
 		Login l = loginRepository.findLoginByEmailAndStatusNot(c.getEmail(), Status.DELETE);
@@ -179,6 +178,7 @@ public class CustomerService {
 		c.setStatus(Status.DELETE);
 		LOG.debug("Customer Deleted");
 		customerRepository.save(c);
+		loginRepository.save(l);
 	}
 
 	/**

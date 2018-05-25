@@ -37,6 +37,18 @@ public class District implements Serializable{
 	
 	
 	/**
+	 * @param id
+	 */
+	public District(Long id) {
+		this.id=id;
+	}
+	/**
+	 * 
+	 */
+	public District() {
+		// TODO Auto-generated constructor stub
+	}
+	/**
 	 * @return the vdc
 	 */
 	public List<Vdc> getVdc() {

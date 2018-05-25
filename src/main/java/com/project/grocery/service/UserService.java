@@ -130,14 +130,17 @@ public class UserService {
 	 * @param userEditRequest
 	 */
 	@Transactional
-	public User editUser(UserEditRequest userEditRequest) {
+	public User editUser(Long userId,UserEditRequest userEditRequest) {
 
 		LOG.debug("Request For user Edit");
 		if (userEditRequest.getId() == null) {
 			throw new RequiredException("User id is needed");
 		}
-		User user = userRepository.findUserById(userEditRequest.getId());
-
+		User user = userRepository.findUserById(userId);
+		if(user==null) {
+			throw new NotFoundException("User not found");
+		}
+		
 		
 		if (userEditRequest.getEmail() != null) {
 			emailDuplication(userEditRequest.getEmail(), user);

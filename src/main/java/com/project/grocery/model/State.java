@@ -29,6 +29,17 @@ public class State implements Serializable {
 	private List<District> district;
 	
 	/**
+	 * @param id2
+	 */
+	public State(Long id) {
+		this.id=id;
+	}
+	/**
+	 * 
+	 */
+	public State() {
+	}
+	/**
 	 * @return the id
 	 */
 	public Long getId() {

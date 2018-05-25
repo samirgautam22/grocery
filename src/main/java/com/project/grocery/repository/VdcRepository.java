@@ -1,8 +1,11 @@
 package com.project.grocery.repository;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import com.project.grocery.model.District;
 import com.project.grocery.model.Vdc;
 
 /**
@@ -13,5 +16,17 @@ import com.project.grocery.model.Vdc;
  */
 @Repository
 public interface VdcRepository extends JpaRepository<Vdc,Long> {
+
+	/**
+	 * @param string
+	 * @return
+	 */
+	Vdc findByVdc(String string);
+
+	/**
+	 * @param district
+	 * @return
+	 */
+	List<Vdc> findAllVdcByDistrict(District district);
 
 }

@@ -2,6 +2,8 @@ package com.project.grocery.service;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -18,6 +20,7 @@ import com.project.grocery.model.District;
 import com.project.grocery.model.State;
 import com.project.grocery.repository.DistrictRepository;
 import com.project.grocery.repository.StateRepositoty;
+import com.project.grocery.responce.DistrictResponce;
 
 
 
@@ -75,6 +78,29 @@ public class DistrictService {
 			e.printStackTrace();
 		}
 		
+	}
+	
+	/**
+	 * @param state
+	 * @return
+	 */
+	public List<DistrictResponce> getDistrict(String state) {
+		LOG.debug("Request Accepted to List a district");
+		
+		State stat=stateRepository.findByState(state);
+		if(stat==null) {
+			throw new AlreadyExitException("State not found");
+		}
+		System.out.println(stat.getId());
+		
+		List<District> district=districtRepository.findAllDistrictByState(new State(stat.getId()));
+		List<DistrictResponce> districtResponces=new ArrayList<>();
+		district.stream().forEach(u->{
+			DistrictResponce responce=new DistrictResponce();
+			responce.setDistrict(u.getDistrict());
+			districtResponces.add(responce);
+		});
+		return districtResponces;
 	}
 
 }
