@@ -32,4 +32,16 @@ public interface StoreAddressRepository extends JpaRepository<StoreAddress,Long>
 	List<Store> findAllStoreByStore(String storeName);
 
 
+
+	/**
+	 * @param state
+	 * @param district
+	 * @param vdc
+	 * @param wardNo
+	 * @return
+	 */
+	List<StoreAddress> findAddressByStateAndDistrictAndVdcAndWardNo(String state, String district, String vdc,
+			Long wardNo);
+
+
 }

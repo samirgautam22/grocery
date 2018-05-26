@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.project.grocery.dto.StoreDto;
 import com.project.grocery.request.StoreCreatationRequest;
 import com.project.grocery.request.StoreEditRequest;
+import com.project.grocery.responce.StoreByAddressDto;
 import com.project.grocery.responce.StoreResponceDto;
 import com.project.grocery.service.StoreService;
 
@@ -95,15 +96,14 @@ public class StoreController {
 		
 	}
 	
-//	@RequestMapping(value="/address",method=RequestMethod.GET)
-//	public ResponseEntity<Object> getStoreByAddress(@RequestHeader String zone,@RequestHeader String district, 
-//			@RequestHeader String vdc,@RequestHeader Long wardNo){
-//		LOG.debug("Request Accepted to get store By Address..");
-//		List<StoreDto> addressresponce=storeService.getStoreAddress(zone,district,vdc,wardNo);
-//		Map<Object,Object> responce=new HashMap<>();
-//		responce.put("address", addressresponce);
-//		return new ResponseEntity<Object>(responce,HttpStatus.OK);
-//		
-//	}
+	@RequestMapping(value="/address",method=RequestMethod.GET)
+	public ResponseEntity<Object> getStoreByAddress(@RequestHeader Long customerId){
+		LOG.debug("Request Accepted to get store By Address..");
+		List<StoreByAddressDto> addressresponce=storeService.getStoreAddress(customerId);
+		Map<Object,Object> responce=new HashMap<>();
+		responce.put("Store", addressresponce);
+		return new ResponseEntity<Object>(responce,HttpStatus.OK);
+		
+	}
 
 }

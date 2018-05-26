@@ -23,7 +23,7 @@ public class EmailUtility {
 
 				Session session = Session.getInstance(props, new javax.mail.Authenticator() {
 					protected PasswordAuthentication getPasswordAuthentication() {
-						return new PasswordAuthentication("gautamsamir22@gmail.com","Networks@987");// change
+						return new PasswordAuthentication("gautamsamir22@gmail.com","your pass");// change
 																							// accordingly
 					}
 					});
@@ -36,7 +36,7 @@ public class EmailUtility {
 						
 						message1.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
 						message1.setSubject("Verify Account");
-						message1.setText("Click Here to verify your Account:" +"http://localhost:8080/swagger-ui.html#!/customer-controller/getVerificationUsingGET/"+token);
+						message1.setText("Click Here to verify your Account:" +"api to verify"+token);
 						Transport.send(message1);
 
 					} catch (MessagingException e) {
@@ -58,7 +58,7 @@ public class EmailUtility {
 
 		Session session = Session.getInstance(props, new javax.mail.Authenticator() {
 			protected PasswordAuthentication getPasswordAuthentication() {
-				return new PasswordAuthentication("gautamsamir22@gmail.com","Networks@987");// change
+				return new PasswordAuthentication("gautamsamir22@gmail.com","your pass");// change
 				// accordingly
 			}
 		});

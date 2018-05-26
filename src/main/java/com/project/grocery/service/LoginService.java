@@ -3,6 +3,7 @@ package com.project.grocery.service;
 import java.security.NoSuchAlgorithmException;
 import java.util.Date;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
 
 import org.slf4j.Logger;
@@ -23,6 +24,7 @@ import com.project.grocery.repository.LoginRepository;
 import com.project.grocery.repository.VerificationRepository;
 import com.project.grocery.request.ForgetPasswordRequest;
 import com.project.grocery.util.DateUtil;
+import com.project.grocery.util.DynamicAddress;
 import com.project.grocery.util.EmailUtility;
 import com.project.grocery.util.LoginStatus;
 import com.project.grocery.util.LoginType;
@@ -83,6 +85,9 @@ public class LoginService {
 			if (Md5Hashing.getPw(password).equals(login.getPassword())) {
 				login.setLastlogin(new Date());
 				login.setLoginStatus(LoginStatus.LOGGEDIN);
+				HttpServletRequest request = null;
+				String s=DynamicAddress.getClientIpAddress(request);
+				System.out.println(s);
 				login.setDeviceId(deviceId);
 				login.setToken(TokenGenerator.getToken());
 				if (tokenExpireAfter > 0) {

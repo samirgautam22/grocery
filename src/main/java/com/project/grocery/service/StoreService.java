@@ -16,10 +16,13 @@ import com.project.grocery.dto.StoreDto;
 import com.project.grocery.exception.AlreadyExitException;
 import com.project.grocery.exception.NotFoundException;
 import com.project.grocery.exception.RequiredException;
+import com.project.grocery.model.Address;
+import com.project.grocery.model.Customer;
 import com.project.grocery.model.Login;
 import com.project.grocery.model.Store;
 import com.project.grocery.model.StoreAddress;
 import com.project.grocery.model.User;
+import com.project.grocery.repository.CustomerRepository;
 import com.project.grocery.repository.LoginRepository;
 import com.project.grocery.repository.StoreAddressRepository;
 import com.project.grocery.repository.StoreRepository;
@@ -29,6 +32,7 @@ import com.project.grocery.request.StoreAddressEdit;
 import com.project.grocery.request.StoreCreatationRequest;
 import com.project.grocery.request.StoreEditRequest;
 import com.project.grocery.responce.StoreAddressResponce;
+import com.project.grocery.responce.StoreByAddressDto;
 import com.project.grocery.responce.StoreResponceDto;
 import com.project.grocery.util.EmailUtility;
 import com.project.grocery.util.LoginStatus;
@@ -63,6 +67,9 @@ public class StoreService {
 	@Autowired
 	UserRepository userRepository;
 
+	@Autowired
+	CustomerRepository customerRepository;
+
 	/**
 	 * @param userId
 	 * @param storeCreatationRequest
@@ -70,6 +77,11 @@ public class StoreService {
 	@Transactional
 	public Store saveStore(Long userId, StoreCreatationRequest storeCreatationRequest) {
 		LOG.debug("Message For Store Creatation");
+		
+		User u=userRepository.findUserById(userId);
+		if(u==null) {
+			throw new NotFoundException("User is not found");
+		}
 
 		Login l = loginRepository.findLoginByUsername(storeCreatationRequest.getUsername());
 		if (l != null) {
@@ -122,17 +134,17 @@ public class StoreService {
 				login.setCreatedDate(new Date());
 				login.setStatus(Status.ACTIVE);
 				login.setLoginType(LoginType.STOER);
-				Login ll=loginRepository.save(login);
-				if(ll!=null) {
-					EmailUtility.sendNewPassword(storeCreatationRequest.getEmail(), ll.getPassword(), storeCreatationRequest.getUsername());
+				Login ll = loginRepository.save(login);
+				if (ll != null) {
+					EmailUtility.sendNewPassword(storeCreatationRequest.getEmail(), ll.getPassword(),
+							storeCreatationRequest.getUsername());
 				}
-				
+
 				LOG.debug("Login Added");
 			} catch (NoSuchAlgorithmException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			
 
 		}
 		return store;
@@ -158,9 +170,9 @@ public class StoreService {
 			throw new NotFoundException("User Not found");
 
 		}
-		
-		Login l=loginRepository.findLoginByEmailAndStatusNot(store.getEmail(),Status.DELETE);
-		if(l==null) {
+
+		Login l = loginRepository.findLoginByEmailAndStatusNot(store.getEmail(), Status.DELETE);
+		if (l == null) {
 			throw new NotFoundException("Store Not found !!");
 		}
 		l.setStatus(Status.DELETE);
@@ -341,29 +353,46 @@ public class StoreService {
 		return storeResponceDto;
 	}
 
+	/**
+	 * @param zone
+	 * @param district
+	 * @param vdc
+	 * @param wardNo
+	 * @return
+	 */
+	public List<StoreByAddressDto> getStoreAddress(Long customerId) {
 
-//	/**
-//	 * @param zone
-//	 * @param district
-//	 * @param vdc
-//	 * @param wardNo
-//	 * @return
-//	 */
-//	public List<StoreDto> getStoreAddress(String zone, String district, String vdc, Long wardNo) {
-//
-//		List<StoreAddress> address = storeAddressRepository.findStoreByZoneAndDistrictAndVdcAndWardNo(zone, district,
-//				vdc, wardNo);
-//		if (address == null) {
-//			throw new NotFoundException("No Store Found");
-//
-//		}
-//		StoreAddress storeAddress=new StoreAddress();
-//		
-//		List<Store> store=storeRepository.findByStoreAddress(address);
-//		System.out.println(store);
-//
-//		List<StoreDto> storeDto = new ArrayList<>();
-//		return storeDto;
-//
-//	}
+		Customer customer=customerRepository.findByIdAndStatusNot(customerId, Status.DELETE);
+		if(customer==null) {
+			throw new NotFoundException("Customer Not found !!");
+		}
+		List<StoreByAddressDto> storeDto=new ArrayList<>();
+		List<Address> add = customer.getAddress();
+		if (add != null) {
+			add.stream().forEach(u -> {
+				String district=u.getDistrict();
+				String state=u.getState();
+				String vdc=u.getVdc();
+				Long wardNo=u.getWardNo();
+				System.out.println(district+""+state+""+vdc+""+wardNo);
+				
+				List<StoreAddress> address=storeAddressRepository.
+						findAddressByStateAndDistrictAndVdcAndWardNo(state, district, vdc, wardNo);
+
+						address.stream().forEach(a->{
+							StoreByAddressDto dto=new StoreByAddressDto();
+							dto.setStoreName(a.getStore().getStoreName());
+							dto.setPhoneNo(a.getStore().getPhoneNo());
+							dto.setEmail(a.getStore().getEmail());
+							dto.setPanNo(a.getStore().getPanNo());
+							storeDto.add(dto);
+						});
+			});
+		}
+		
+		
+		
+		return storeDto;
+
+	}
 }

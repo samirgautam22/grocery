@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import com.project.grocery.dto.StoreDto;
 import com.project.grocery.model.Store;
 import com.project.grocery.util.Status;
 
@@ -61,6 +62,13 @@ public interface StoreRepository extends JpaRepository<Store, Long> {
 	 * @return
 	 */
 	Store findStoreById(Long id);
+
+
+	/**
+	 * @param store
+	 * @return
+	 */
+	List<StoreDto> findAllStoreById(Store store);
 
 
 	/**
