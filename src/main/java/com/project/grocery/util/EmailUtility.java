@@ -89,7 +89,7 @@ public class EmailUtility {
 		props.put("mail.smtp.port", "465");
 		Session session = Session.getInstance(props, new javax.mail.Authenticator() {
 			protected PasswordAuthentication getPasswordAuthentication() {
-				return new PasswordAuthentication("gautamsamir22@gmail.com", "Networks@987");// change
+				return new PasswordAuthentication("gautamsamir22@gmail.com", "pass");// change
 			}
 		});
 
