@@ -13,6 +13,8 @@ import com.project.grocery.filter.SwaggerUrlFilter;
 
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
+import springfox.documentation.service.ApiInfo;
+import springfox.documentation.service.Contact;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
@@ -27,6 +29,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @SuppressWarnings("deprecation")
 @Configuration
 @EnableSwagger2
+@Profile("enable-swagger")
 public class SwaggerConfig extends WebMvcConfigurerAdapter {
 
 	private static final Logger LOG = LoggerFactory.getLogger(SwaggerConfig.class);
@@ -45,7 +48,15 @@ public class SwaggerConfig extends WebMvcConfigurerAdapter {
 		LOG.info("swagger implementation");
 		return new Docket(DocumentationType.SWAGGER_2).select()
 				.apis(RequestHandlerSelectors.basePackage("com.project.grocery.controller")).paths(PathSelectors.any())
-				.build();
+				.build().apiInfo(metaInfo());
+	}
+	
+	private ApiInfo metaInfo() {
+
+		ApiInfo apiInfo = new ApiInfo("Delivery Sewa", "", "", "",
+				new Contact("", "", "gautamsamir77@gmail.com"), "", "");
+
+		return apiInfo;
 	}
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })

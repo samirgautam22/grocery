@@ -68,4 +68,12 @@ public class LoginController {
 		return new ResponseEntity<Object>("Password Reset",HttpStatus.OK);
 	}
 	
+	@ApiOperation(value="token check")
+	@RequestMapping(value="/checkToken",method=RequestMethod.POST)
+	public ResponseEntity<Object> checkToken(@RequestHeader String token){
+		LOG.debug("Token checking");
+		loginService.chekToken(token);
+		return new ResponseEntity<Object>("Token is valid",HttpStatus.OK);
+	}
+	
 }

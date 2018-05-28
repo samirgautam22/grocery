@@ -66,4 +66,19 @@ public interface LoginRepository extends JpaRepository<Login,Long> {
 	 */
 	Login findByUsernameAndStatus(String username, Status blocked);
 
+
+	/**
+	 * @param token
+	 * @return
+	 */
+	Login findByToken(String token);
+
+
+	/**
+	 * @param loginId
+	 * @param token
+	 * @return
+	 */
+	Login findByIdAndToken(Long loginId, String token);
+
 }

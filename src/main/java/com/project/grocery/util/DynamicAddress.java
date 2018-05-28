@@ -3,6 +3,10 @@ package com.project.grocery.util;
 import java.util.StringTokenizer;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.MediaType;
 
 /**
  * @author:Samir Gautam
@@ -35,5 +39,8 @@ public class DynamicAddress {
 	        return new StringTokenizer(xForwardedForHeader, ",").nextToken().trim();
 	    }
 	}
+	
+	
+	
 
 }

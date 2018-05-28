@@ -1,6 +1,13 @@
 package com.project.grocery.service;
 
 import java.security.NoSuchAlgorithmException;
+
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.MediaType;
+
+
 import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
@@ -24,7 +31,6 @@ import com.project.grocery.repository.LoginRepository;
 import com.project.grocery.repository.VerificationRepository;
 import com.project.grocery.request.ForgetPasswordRequest;
 import com.project.grocery.util.DateUtil;
-import com.project.grocery.util.DynamicAddress;
 import com.project.grocery.util.EmailUtility;
 import com.project.grocery.util.LoginStatus;
 import com.project.grocery.util.LoginType;
@@ -59,6 +65,23 @@ public class LoginService {
 	@Value("${grocery.login.password.length}")
 	private int passwordLength;
 
+	 @Autowired
+	  HttpServletRequest request;
+
+   
+
+    private  String getClientIp() {
+
+        String remoteAddr = "";
+
+        if (request != null) {
+            remoteAddr = request.getHeader("X-FORWARDED-FOR");
+            if (remoteAddr == null || "".equals(remoteAddr)) {
+                remoteAddr = request.getRemoteAddr();
+            }
+        }
+        return remoteAddr;
+    }
 
 	/**
 	 * @param username
@@ -85,9 +108,18 @@ public class LoginService {
 			if (Md5Hashing.getPw(password).equals(login.getPassword())) {
 				login.setLastlogin(new Date());
 				login.setLoginStatus(LoginStatus.LOGGEDIN);
-				HttpServletRequest request = null;
-				String s=DynamicAddress.getClientIpAddress(request);
-				System.out.println(s);
+				
+				String ip=getClientIp();
+				System.out.println("my ip="+ip);
+				Client client = ClientBuilder.newClient();
+				  Response response = client.target("https://api.ipdata.co/")
+				    .request(MediaType.TEXT_PLAIN_TYPE)
+				    .header("Accept", "application/json")
+				    .get();
+				  
+				  System.out.println("body:" + response.readEntity(String.class));
+				
+				
 				login.setDeviceId(deviceId);
 				login.setToken(TokenGenerator.getToken());
 				if (tokenExpireAfter > 0) {
@@ -227,4 +259,65 @@ public class LoginService {
 		LOG.debug("Password is reset");
 	}
 
+	/**
+	 * @param token
+	 */
+	public void chekToken(String token) {
+		Login login=loginRepository.findByToken(token);
+		if(login==null) {
+			throw new NotFoundException("Token is invallied");
+		}
+		if (!DateUtil.isCurrentTimeBeforeThanGivenTime(login.getTokenExpirationDateTime()))
+			throw new ExpireException("token Expired");
+
+	
 }
+
+	/**
+	 * @param loginId
+	 * @param token
+	 * @return
+	 */
+	public boolean isValidToken(Long loginId, String token) {
+		
+		if(loginId==null || token==null) {
+			return false;
+		}
+		Login login = loginRepository.findByIdAndToken(loginId, token);
+		if (null == login) {
+			return false;
+		}
+		LOG.debug("Login found.");
+		if (null != tokenExpireEnable) {
+			if (tokenExpireEnable.equalsIgnoreCase("ENABLE")) {
+				if (!DateUtil.isCurrentTimeBeforeThanGivenTime(
+						login.getTokenExpirationDateTime()))
+					return false;
+			}
+		}
+		return true;
+	}
+	}
+	
+//	public boolean isValidToken(Long userId, String token) {
+//		if (userId.equals(0L)) {
+//			throw new ServiceException("userId or loginId required in header parameter.");
+//		}
+//		if (null == userId || null == token) {
+//			return false;
+//		}
+//		// Login user = userRepository.getOne(userId);
+//		LOG.debug("User id {} and token {}", userId, token);
+//		// Login login = loginRepository.findByIdAndToken(user.getLoginId(), token);
+//		LoginToken login = loginTokenRepository.findByLoginIdAndToken(userId, token);
+//		if (null == login) {
+//			return false;
+//		}
+//		LOG.debug("Login found.");
+//		if (tokenExpireEnable.equalsIgnoreCase(Constant.ENABLE)) {
+//			if (!DateUtils.isCurrentTimeBeforeThanGivenTime(login.getTokenExpirationDateTime()))
+//				return false;
+//		}
+//		return true;
+//	}
+

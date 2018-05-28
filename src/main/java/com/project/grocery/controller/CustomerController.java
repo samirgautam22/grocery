@@ -84,8 +84,7 @@ public class CustomerController {
 	@ApiImplicitParams({
 		@ApiImplicitParam(name="token",required=true,dataType="String",paramType="header")})
 	@RequestMapping(value="/customer/{customerId}",method=RequestMethod.GET)
-	public ResponseEntity<Object> getCustomer(@PathVariable Long customerId
-			){
+	public ResponseEntity<Object> getCustomer(@PathVariable Long customerId){
 		LOG.debug("Request accepted to get customer.");
 		CustomerResponceDto customerResponce= customerService.getCustomer(customerId);
 		Map<Object, Object> response = new HashMap<Object, Object>();
@@ -97,15 +96,13 @@ public class CustomerController {
 	@ApiImplicitParams({
 		@ApiImplicitParam(name="token",required=true,dataType="String",paramType="header")})
 	@RequestMapping(value="/listAll",method=RequestMethod.GET)
-	public ResponseEntity<Object> listAllCustomer(){
+	public ResponseEntity<Object> listAllCustomer(@RequestHeader Long loginId){
 		List<CustomerDto> customer=customerService.listAllCustomer();
 		Map<Object, Object> response = new HashMap<Object, Object>();
 		response.put("customers", customer);
 		return new ResponseEntity<Object>(response,HttpStatus.OK);
 	}
 	@ApiOperation(value="verifivation",notes="Api to get verification")
-	@ApiImplicitParams({
-		@ApiImplicitParam(name="token",required=true,dataType="String",paramType="header")})
 	@RequestMapping(value="/{value}",method=RequestMethod.GET)
 	public ResponseEntity<Object> getVerification(@PathVariable ("value") String token){
 		LOG.debug("Request To verify Account");

@@ -61,5 +61,13 @@ public class DateUtil {
 
 		return currentDatePlusMinutes;
 	}
+	
+	public static boolean isCurrentTimeBeforeThanGivenTime(Date when) {
+		Date now = new Date();
+		if (now.before(when)) {
+			return true;
+		}
+		return false;
+	}
 
 }
