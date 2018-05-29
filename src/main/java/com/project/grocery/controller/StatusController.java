@@ -23,8 +23,7 @@ public class StatusController {
 	
 	private static final Logger LOG = LoggerFactory.getLogger(StatusController.class);
 
-	@ApiImplicitParams({
-			@ApiImplicitParam(name = "token", required = true, dataType = "string", paramType = "header") })
+	
 	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<Object> check() {
 		LOG.info("Checking status.");
